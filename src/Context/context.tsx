@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createContext } from "react";
 import ToastProvider from "@/lib/ToastProvider";
 import { toast } from "react-toastify";
+import { getInquilinos } from "@/Routes/getInquilinos";
 
 type TypeInquilinos = {
     id: number
@@ -52,18 +53,9 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [changePage, setChangePage] = useState(false)
 
     const fetchInquilinos = async () => {
-        const { data, error } = await supabase
-            .from('inquilinos')
-            .select('*')
-            .order('id');
-
-        if (error) {
-            console.error("Erro ao buscar inquilinos:", error);
-            toast.error("Ocorreu um erro ao buscar os inquilinos.");
-        } else {
-            setInquilinos(data || []);
-        }
-    };
+        const data = await getInquilinos();
+        setInquilinos(data || []);
+    }
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
         const { id, ...fieldsToUpdate } = inquilinoData;
@@ -176,7 +168,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                 },
                 (payload) => {
                     console.log('Change received:', payload);
-                    fetchInquilinos();
+                    fetchInquilinos(); 
                 }
             )
             .subscribe();

@@ -8,6 +8,10 @@ interface OptionsCar {
   isDisabled: boolean;
 }
 
+interface selectedCarr {
+  selectedCar: boolean;
+}
+
 export const InquilinoSection = styled.section`
     display: flex;
     gap: 2rem;
@@ -23,8 +27,6 @@ export const ActionsInquilino = styled.div`
 export const ActionsInquilinoRegister = styled.div`
 display: flex;
 flex-direction: column;
-width: 100%;
-
 `
 
 export const OptionsActionInquilos = styled.div`
@@ -109,9 +111,7 @@ export const IconInquilino = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: right;
-  width: 100%;
-
+  justify-content: center;
 `
 export const FormContainer = styled.div`
 
@@ -130,16 +130,42 @@ export const InputForm = styled.input`
       padding: 0rem;
 `
 export const InputFormCarro = styled(InputForm)`
-  padding-left: 17px;
+        transition: ease-in .2s;
+
 
 `
 
-export const LabelTemCarro = styled(Label)`
+export const LabelTemCarro = styled(Label) <selectedCarr>`
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   align-items: center;
   gap: .5rem;
-  width: 100%;
+  margin-top: 10px;
+  width: 5rem;
+  margin-left: 1.2rem;
+
+  padding: .3rem;
+  border-radius: 5px;
+
+  background-color: transparent;
+  border: 2px solid var(--defaultText); 
+  transition: ease-in .2s;
+
+
+  ${({ selectedCar }) =>
+    selectedCar &&
+    `
+      background: var(--focusText);
+      color: #000;
+      border: 2px solid transparent; 
+      transition: ease-in .2s;
+    `}
+
+    :hover {
+        cursor: pointer;
+        transition: ease-in .2s;
+    }
 `
 
 
@@ -203,11 +229,6 @@ export const Input = styled.input`
   width: 100%;
 `;
 
-export const TdEdit = styled.td`
-  display: flex;
-  flex-direction: column;
-`
-
 // ---------------- TESTE
 export const InputWrapper = styled.div`
   position: relative;
@@ -222,7 +243,7 @@ export const StyledInput = styled.input`
   border-radius: 5px; 
   padding: 10px;
   font-size: 16px; 
-  width: 200%; 
+  width: 150%; 
   box-sizing: border-box;
   position: relative;
   z-index: 1; 
@@ -253,9 +274,34 @@ export const StyledInputCPF = styled(StyledInput)`
   width: 100%;
 `
 export const InputWrapperCPF = styled(InputWrapper)`
+margin-left: 8.1rem;
+`
+
+export const SpanTemCarro = styled.div<selectedCarr>`
+  margin-left: -.8rem;
+  margin-top: -1.2rem;
+  padding: 0rem .6rem;
+  background-color: #fff;
+  transition: ease-in .2s;
+
+
+  font-family: outfit;
+  font-weight: 600;
+  ${({ selectedCar }) =>
+    selectedCar &&
+    `
+    margin-left: 0rem;
+    margin-top: 0rem;
+    padding: 0rem;
+    color: var(--brancoPastelFont);
+    background: var(--focusText);
+    transition: ease-in .2s;
+
+    `}
 `
 
 // ---------------------------------carro---------------------------------
+
 export const InputQuantidadeCarros = styled(InputText) <OptionsCar>`
   width: 40%;
   ${({ isDisabled }) =>
@@ -277,6 +323,7 @@ export const StyledInputQuantidadeCarros = styled(StyledInput) <OptionsCar>`
 `;
 
 export const InputWrapperQuantidadeCarros = styled(InputWrapper)`
+
 `;
 // -------------------------------------------
 export const InputModeloCarro = styled(InputText) <OptionsCar>`
@@ -290,7 +337,7 @@ export const InputModeloCarro = styled(InputText) <OptionsCar>`
 `;
 
 export const StyledInputModeloCarro = styled(StyledInput) <OptionsCar>`
-  width: 150%;
+  width: 100%;
   ${({ isDisabled }) =>
     isDisabled &&
     `   
@@ -300,6 +347,7 @@ export const StyledInputModeloCarro = styled(StyledInput) <OptionsCar>`
 `;
 
 export const InputWrapperModeloCarro = styled(InputWrapper)`
+margin-left: -4rem;
 `;
 
 export const InputPlacaCarro = styled(InputText) <OptionsCar>`
@@ -323,6 +371,7 @@ export const StyledInputPlacaCarro = styled(StyledInput) <OptionsCar>`
 `;
 
 export const InputWrapperPlacaCarro = styled(InputWrapper)`
+  margin-left: .6rem;
 `;
 // ------------------------------------------------------------------
 
@@ -362,16 +411,17 @@ export const InputWrapperBloco = styled(InputWrapper)`
 `;
 
 export const InputComunicadoImportante = styled(InputText)`
-  width: 100%;
+  width: 40%;
 `;
 
 export const StyledInputComunicadoImportante = styled(StyledInput)`
-  width: 200%;
   height: 100px;
 `;
 
 export const InputWrapperComunicadoImportante = styled(InputWrapper)`
+  width: 57.5%;
 `;
+
 export const StyledSelectStatus = styled.select`
   width: 100%;
   padding: 0.5rem;
@@ -382,19 +432,24 @@ export const StyledSelectStatus = styled.select`
 `;
 
 export const CreateInqui = styled.button`
-font-weight: 600;
-    font-size: 20px;
-    padding: 1rem;
+  width: 88%;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 1rem;
+  transition: ease-in .2s;
+  background-color: var(--focusText);
+  color: var(--brancoPastelFont);
+  border-radius: 10px;
+  text-align: center;
+
+
+  :hover {
+    cursor: pointer;
     transition: ease-in .2s;
-    background-color: var(--focusText);
-    color: var(--brancoPastelFont);
-    border-radius: 10px;
-    text-align: center;
+  }
 
-
-    :hover {
-        cursor: pointer;
-        transition: ease-in .2s;
-    }
-
+`
+export const SeparationResidenc = styled.div`
+  display: flex;
+  align-items: center;
 `

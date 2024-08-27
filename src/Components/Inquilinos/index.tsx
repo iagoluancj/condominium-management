@@ -2,10 +2,14 @@ import { useContext, useState } from "react";
 import { TypeInquilinos } from "../Nav/Nav";
 import { SupaContext } from "@/Context/context";
 import { toast } from "react-toastify";
-import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Table, Thead, Th, Td, Tr, Button, Input, TdEdit, Form, Label, InputForm, DivLabel, FormContainer, InputText, InputCPF, StyledInputCPF, InputWrapperCPF, InputWrapperComunicadoImportante, StyledInputComunicadoImportante, InputComunicadoImportante, StyledInputQuantidadeCarros, InputWrapperQuantidadeCarros, InputModeloCarro, StyledInputModeloCarro, InputWrapperModeloCarro, InputPlacaCarro, StyledInputPlacaCarro, InputWrapperPlacaCarro, InputApartamento, StyledInputApartamento, InputWrapperApartamento, InputStatus, StyledInputStatus, InputWrapperStatus, InputBloco, StyledInputBloco, InputWrapperBloco, InputQuantidadeCarros, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui } from "./styles";
+import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, InputForm, DivLabel, FormContainer, InputText, InputCPF, StyledInputCPF, InputWrapperCPF, InputWrapperComunicadoImportante, StyledInputComunicadoImportante, InputComunicadoImportante, StyledInputQuantidadeCarros, InputWrapperQuantidadeCarros, InputModeloCarro, StyledInputModeloCarro, InputWrapperModeloCarro, InputPlacaCarro, StyledInputPlacaCarro, InputWrapperPlacaCarro, InputApartamento, StyledInputApartamento, InputWrapperApartamento, InputStatus, StyledInputStatus, InputWrapperStatus, InputBloco, StyledInputBloco, InputWrapperBloco, InputQuantidadeCarros, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input } from "./styles";
 import { FiEdit } from "react-icons/fi";
+
 import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../Modal/modal";
+import Tables from "./table";
+import InquilinosTable from "./table";
+import DeletedInquilinosTable from "./InquilinosDeletados";
 
 type SortField = keyof TypeInquilinos;
 
@@ -105,11 +109,13 @@ export default function Inquilinos() {
                 ...prevData,
                 [name]: checked
             }));
+            console.log('checado')
         } else {
             setFormData(prevData => ({
                 ...prevData,
                 [name]: value
             }));
+            console.log('não checado')
         }
     };
 
@@ -238,48 +244,51 @@ export default function Inquilinos() {
             <ActionsInquilinoRegister>
                 <HeaderInquilinos>
                     <TitleHeader>{title}</TitleHeader>
-                    <BrevelyDescription>Um texto bem bacana aqui para chamar atenção</BrevelyDescription>
+                    <BrevelyDescription>Um texto bem bacana aqui</BrevelyDescription>
                 </HeaderInquilinos>
                 <div>
                     {selected === 'cadasterInquilino' && (
                         <Form onSubmit={handleCreate}>
                             <FormContainer>
                                 <h3>Dados pessoais</h3>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapper>
-                                            <StyledInput
-                                                type="text"
-                                                placeholder="Nome completo"
-                                                name="nome"
-                                                value={formData.nome}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <InputText>* Nome</InputText>
-                                        </InputWrapper>
-                                    </Label>
-                                </DivLabel>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperCPF>
-                                            <StyledInputCPF
-                                                type="number"
-                                                name="cpf"
-                                                value={formData.cpf}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <InputCPF>* CPF</InputCPF>
-                                        </InputWrapperCPF>
-                                    </Label>
-                                </DivLabel>
+                                <SeparationResidenc>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapper>
+                                                <StyledInput
+                                                    type="text"
+                                                    placeholder="Nome completo"
+                                                    name="nome"
+                                                    value={formData.nome}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                <InputText>* Nome</InputText>
+                                            </InputWrapper>
+                                        </Label>
+                                    </DivLabel>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperCPF>
+                                                <StyledInputCPF
+                                                    type="number"
+                                                    name="cpf"
+                                                    value={formData.cpf}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                <InputCPF>* CPF</InputCPF>
+                                            </InputWrapperCPF>
+                                        </Label>
+                                    </DivLabel>
+                                </SeparationResidenc>
                             </FormContainer>
                             <FormContainer>
                                 <DivLabel>
                                     <h3>Possui carro?</h3>
-                                    <LabelTemCarro>
-                                        Sim
+                                    <LabelTemCarro selectedCar={formData.tem_carro}
+                                    >
+                                        <SpanTemCarro selectedCar={formData.tem_carro}>Sim</SpanTemCarro>
                                         <InputFormCarro
                                             type="checkbox"
                                             name="tem_carro"
@@ -288,99 +297,103 @@ export default function Inquilinos() {
                                         />
                                     </LabelTemCarro>
                                 </DivLabel>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperQuantidadeCarros>
-                                            <StyledInputQuantidadeCarros
-                                                type="number"
-                                                name="quantidade_carros"
-                                                value={formData.quantidade_carros}
-                                                onChange={handleChange}
-                                                disabled={!formData.tem_carro}
-                                                isDisabled={!formData.tem_carro}
-                                            />
-                                            <InputQuantidadeCarros isDisabled={!formData.tem_carro}>Quantos</InputQuantidadeCarros>
-                                        </InputWrapperQuantidadeCarros>
-                                    </Label>
-                                </DivLabel>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperModeloCarro>
-                                            <StyledInputModeloCarro
-                                                type="text"
-                                                name="modelo_carro"
-                                                value={formData.modelo_carro}
-                                                onChange={handleChange}
-                                                disabled={!formData.tem_carro}
-                                                isDisabled={!formData.tem_carro}
+                                <SeparationResidenc>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperQuantidadeCarros>
+                                                <StyledInputQuantidadeCarros
+                                                    type="number"
+                                                    name="quantidade_carros"
+                                                    value={formData.quantidade_carros}
+                                                    onChange={handleChange}
+                                                    disabled={!formData.tem_carro}
+                                                    isDisabled={!formData.tem_carro}
+                                                />
+                                                <InputQuantidadeCarros isDisabled={!formData.tem_carro}>Quantos</InputQuantidadeCarros>
+                                            </InputWrapperQuantidadeCarros>
+                                        </Label>
+                                    </DivLabel>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperModeloCarro>
+                                                <StyledInputModeloCarro
+                                                    type="text"
+                                                    name="modelo_carro"
+                                                    value={formData.modelo_carro}
+                                                    onChange={handleChange}
+                                                    disabled={!formData.tem_carro}
+                                                    isDisabled={!formData.tem_carro}
 
-                                            />
-                                            <InputModeloCarro isDisabled={!formData.tem_carro}>Modelo</InputModeloCarro>
-                                        </InputWrapperModeloCarro>
-                                    </Label>
-                                </DivLabel>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperPlacaCarro>
-                                            <StyledInputPlacaCarro
-                                                type="text"
-                                                name="placa_carro"
-                                                value={formData.placa_carro}
-                                                onChange={handleChange}
-                                                disabled={!formData.tem_carro}
-                                                isDisabled={!formData.tem_carro}
-                                            />
-                                            <InputPlacaCarro isDisabled={!formData.tem_carro}>Placa</InputPlacaCarro>
-                                        </InputWrapperPlacaCarro>
-                                    </Label>
-                                </DivLabel>
+                                                />
+                                                <InputModeloCarro isDisabled={!formData.tem_carro}>Modelo</InputModeloCarro>
+                                            </InputWrapperModeloCarro>
+                                        </Label>
+                                    </DivLabel>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperPlacaCarro>
+                                                <StyledInputPlacaCarro
+                                                    type="text"
+                                                    name="placa_carro"
+                                                    value={formData.placa_carro}
+                                                    onChange={handleChange}
+                                                    disabled={!formData.tem_carro}
+                                                    isDisabled={!formData.tem_carro}
+                                                />
+                                                <InputPlacaCarro isDisabled={!formData.tem_carro}>Placa</InputPlacaCarro>
+                                            </InputWrapperPlacaCarro>
+                                        </Label>
+                                    </DivLabel>
+                                </SeparationResidenc>
                             </FormContainer>
                             <FormContainer>
                                 <h3>Da residencia</h3>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperApartamento>
-                                            <StyledInputApartamento
-                                                type="text"
-                                                name="apartamento"
-                                                value={formData.apartamento}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <InputApartamento>* Apartamento</InputApartamento>
-                                        </InputWrapperApartamento>
-                                    </Label>
-                                </DivLabel>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperStatus>
-                                            <InputStatus>* Status</InputStatus>
-                                            <StyledSelectStatus
-                                                name="status"
-                                                value={formData.status}
-                                                onChange={handleChange}
-                                                required
-                                            >
-                                                <option value="inquilino">Inquilino</option>
-                                                <option value="proprietario">Proprietário</option>
-                                            </StyledSelectStatus>
-                                        </InputWrapperStatus>
-                                    </Label>
-                                </DivLabel>
-                                <DivLabel>
-                                    <Label>
-                                        <InputWrapperBloco>
-                                            <StyledInputBloco
-                                                type="text"
-                                                name="bloco"
-                                                value={formData.bloco}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <InputBloco>* Bloco</InputBloco>
-                                        </InputWrapperBloco>
-                                    </Label>
-                                </DivLabel>
+                                <SeparationResidenc>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperApartamento>
+                                                <StyledInputApartamento
+                                                    type="text"
+                                                    name="apartamento"
+                                                    value={formData.apartamento}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                <InputApartamento>* Apartamento</InputApartamento>
+                                            </InputWrapperApartamento>
+                                        </Label>
+                                    </DivLabel>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperStatus>
+                                                <InputStatus>* Status</InputStatus>
+                                                <StyledSelectStatus
+                                                    name="status"
+                                                    value={formData.status}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value="inquilino">Inquilino</option>
+                                                    <option value="proprietario">Proprietário</option>
+                                                </StyledSelectStatus>
+                                            </InputWrapperStatus>
+                                        </Label>
+                                    </DivLabel>
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperBloco>
+                                                <StyledInputBloco
+                                                    type="text"
+                                                    name="bloco"
+                                                    value={formData.bloco}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                <InputBloco>* Bloco</InputBloco>
+                                            </InputWrapperBloco>
+                                        </Label>
+                                    </DivLabel>
+                                </SeparationResidenc>
                                 <DivLabel>
                                     <Label>
                                         <InputWrapperComunicadoImportante>
@@ -390,270 +403,19 @@ export default function Inquilinos() {
                                                 value={formData.comunicado_importante}
                                                 onChange={handleChange}
                                             />
-                                            <InputComunicadoImportante>* Comunicado Importante</InputComunicadoImportante>
+                                            <InputComunicadoImportante>Observações</InputComunicadoImportante>
                                         </InputWrapperComunicadoImportante>
                                     </Label>
                                 </DivLabel>
                             </FormContainer>
-
-
                             <CreateInqui type="submit">Criar Inquilino</CreateInqui>
                         </Form>
                     )}
                     {selected === 'currentInquilino' && (
-                        <Table>
-                            <Thead>
-                                <Tr>
-                                    <Th>Nome</Th>
-                                    <Th>CPF</Th>
-                                    <Th>Tem Carro</Th>
-                                    <Th>Quantidade de Carros</Th>
-                                    <Th>Modelo do Carro</Th>
-                                    <Th>Placa do Carro</Th>
-                                    <Th>Apartamento</Th>
-                                    <Th>Status</Th>
-                                    <Th>Comunicado Importante</Th>
-                                    <Th>Bloco</Th>
-                                    <Th>Ações</Th>
-                                </Tr>
-                            </Thead>
-                            <tbody>
-                                {filterByName
-                                    ? displayedInquilinosFindByName
-                                        .filter((inquilino) => !inquilino.is_deleted)
-                                        .map((inquilino) => (
-                                            <Tr key={inquilino.id} style={{ backgroundColor: getBlockColor(String(inquilino[sortField])) }}>
-                                                {editId === inquilino.id ? (
-                                                    <>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="nome"
-                                                                value={formData.nome}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="number"
-                                                                name="cpf"
-                                                                value={formData.cpf}
-                                                                onChange={handleChange}
-                                                                disabled
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="checkbox"
-                                                                name="tem_carro"
-                                                                checked={formData.tem_carro}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="number"
-                                                                name="quantidade_carros"
-                                                                value={formData.quantidade_carros}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="modelo_carro"
-                                                                value={formData.modelo_carro}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="placa_carro"
-                                                                value={formData.placa_carro}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="apartamento"
-                                                                value={formData.apartamento}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <select
-                                                                name="status"
-                                                                value={formData.status}
-                                                                onChange={handleChange}
-                                                            >
-                                                                <option value="inquilino">Inquilino</option>
-                                                                <option value="proprietario">Proprietário</option>
-                                                            </select>
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="comunicado_importante"
-                                                                value={formData.comunicado_importante}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="bloco"
-                                                                value={formData.bloco}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Button onClick={handleSave}>Salvar</Button>
-                                                            <Button onClick={() => setEditId(null)}>Cancelar</Button>
-                                                        </Td>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Td>{inquilino.nome}</Td>
-                                                        <Td>{inquilino.cpf}</Td>
-                                                        <Td>{inquilino.tem_carro ? "Sim" : "Não"}</Td>
-                                                        <Td>{inquilino.quantidade_carros}</Td>
-                                                        <Td>{inquilino.modelo_carro}</Td>
-                                                        <Td>{inquilino.placa_carro}</Td>
-                                                        <Td>{inquilino.apartamento}</Td>
-                                                        <Td>{inquilino.status}</Td>
-                                                        <Td>{inquilino.comunicado_importante}</Td>
-                                                        <Td>{inquilino.bloco}</Td>
-                                                        <Td>
-                                                            <Button onClick={() => handleEditTable(inquilino)}>Editar</Button>
-                                                            <Button onClick={handleDeleted(inquilino.cpf)}>Deletar</Button>
-                                                        </Td>
-                                                    </>
-                                                )}
-                                            </Tr>
-                                        ))
-                                    : displayedInquilinos
-                                        .filter((inquilino) => !inquilino.is_deleted)
-                                        .map((inquilino) => (
-                                            <Tr key={inquilino.id} style={{ backgroundColor: getBlockColor(String(inquilino[sortField])) }}>
-                                                {editId === inquilino.id ? (
-                                                    <>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="nome"
-                                                                value={formData.nome}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="number"
-                                                                name="cpf"
-                                                                value={formData.cpf}
-                                                                onChange={handleChange}
-                                                                disabled
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="checkbox"
-                                                                name="tem_carro"
-                                                                checked={formData.tem_carro}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="number"
-                                                                name="quantidade_carros"
-                                                                value={formData.quantidade_carros}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="modelo_carro"
-                                                                value={formData.modelo_carro}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="placa_carro"
-                                                                value={formData.placa_carro}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="apartamento"
-                                                                value={formData.apartamento}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <select
-                                                                name="status"
-                                                                value={formData.status}
-                                                                onChange={handleChange}
-                                                            >
-                                                                <option value="inquilino">Inquilino</option>
-                                                                <option value="proprietario">Proprietário</option>
-                                                            </select>
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="comunicado_importante"
-                                                                value={formData.comunicado_importante}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Input
-                                                                type="text"
-                                                                name="bloco"
-                                                                value={formData.bloco}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </Td>
-                                                        <Td>
-                                                            <Button onClick={handleSave}>Salvar</Button>
-                                                            <Button onClick={() => setEditId(null)}>Cancelar</Button>
-                                                        </Td>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Td>{inquilino.nome}</Td>
-                                                        <Td>{inquilino.cpf}</Td>
-                                                        <Td>{inquilino.tem_carro ? "Sim" : "Não"}</Td>
-                                                        <Td>{inquilino.quantidade_carros}</Td>
-                                                        <Td>{inquilino.modelo_carro}</Td>
-                                                        <Td>{inquilino.placa_carro}</Td>
-                                                        <Td>{inquilino.apartamento}</Td>
-                                                        <Td>{inquilino.status}</Td>
-                                                        <Td>{inquilino.comunicado_importante}</Td>
-                                                        <Td>{inquilino.bloco}</Td>
-                                                        <Td>
-                                                            <TdEdit>
-                                                                <Button onClick={() => handleEditTable(inquilino)}>Editar</Button>
-                                                                <Button onClick={handleDeleted(inquilino.cpf)}>Deletar</Button>
-                                                            </TdEdit>
-                                                        </Td>
-                                                    </>
-                                                )}
-                                            </Tr>
-                                        ))}
-                            </tbody>
-                        </Table>
+                        <Tables />
                     )}
                     {selected === 'deletedsInquilinos' && (
-                        <span>Inquilinos deletados</span>
+                        <DeletedInquilinosTable />
                     )}
                 </div>
             </ActionsInquilinoRegister>
