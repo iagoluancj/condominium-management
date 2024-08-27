@@ -1,23 +1,19 @@
 import styled from "styled-components";
 
 interface OptionActionProps {
-  isSelected: boolean;
+  $isSelected: boolean;
 }
 
 interface OptionsCar {
-  isDisabled: boolean;
+  $isDisabled: boolean;
 }
 
-interface selectedCarr {
-  selectedCar: boolean;
-}
-
-interface PropsDeleted {
-  isDeleted: boolean;
+interface selectCar {
+  $selectedCar: boolean;
 }
 
 interface PropsSelectedCurrent {
-  isSelectedCurrent: boolean;
+  $isSelectedCurrent: boolean;
 }
 
 
@@ -26,8 +22,8 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     gap: 2rem;
     margin-top: 15vh;
 
-    ${({ isSelectedCurrent }) =>
-    isSelectedCurrent &&
+    ${({ $isSelectedCurrent }) =>
+    $isSelectedCurrent &&
     `  
        margin-left: 25vh;
     `}
@@ -60,8 +56,8 @@ export const OptionAction = styled.div<OptionActionProps>`
     transition: ease-in .2s;
 
 
-    ${({ isSelected }) =>
-    isSelected &&
+    ${({ $isSelected }) =>
+    $isSelected &&
     `
         background-color: var(--focusText);
         color: var(--brancoPastelFont);
@@ -155,7 +151,7 @@ export const InputFormCarro = styled(InputForm)`
 
 `
 
-export const LabelTemCarro = styled(Label) <selectedCarr>`
+export const LabelTemCarro = styled(Label) <selectCar>`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -173,8 +169,8 @@ export const LabelTemCarro = styled(Label) <selectedCarr>`
   transition: ease-in .2s;
 
 
-  ${({ selectedCar }) =>
-    selectedCar &&
+  ${({ $selectedCar }) =>
+    $selectedCar &&
     `
       background: var(--focusText);
       color: #000;
@@ -312,7 +308,7 @@ export const InputWrapperCPF = styled(InputWrapper)`
 margin-left: 8.1rem;
 `
 
-export const SpanTemCarro = styled.div<selectedCarr>`
+export const SpanTemCarro = styled.div<selectCar>`
   margin-left: -.8rem;
   margin-top: -1.2rem;
   padding: 0rem .6rem;
@@ -322,8 +318,8 @@ export const SpanTemCarro = styled.div<selectedCarr>`
 
   font-family: outfit;
   font-weight: 600;
-  ${({ selectedCar }) =>
-    selectedCar &&
+  ${({ $selectedCar }) =>
+    $selectedCar &&
     `
     margin-left: 0rem;
     margin-top: 0rem;
@@ -339,8 +335,8 @@ export const SpanTemCarro = styled.div<selectedCarr>`
 
 export const InputQuantidadeCarros = styled(InputText) <OptionsCar>`
   width: 40%;
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `  
         color: var(--defaultText);
 
@@ -349,8 +345,8 @@ export const InputQuantidadeCarros = styled(InputText) <OptionsCar>`
 
 export const StyledInputQuantidadeCarros = styled(StyledInput) <OptionsCar>`
   width: 70%;
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `   
         color: var(--defaultText);
         border: 2px solid var(--defaultText); 
@@ -363,8 +359,8 @@ export const InputWrapperQuantidadeCarros = styled(InputWrapper)`
 // -------------------------------------------
 export const InputModeloCarro = styled(InputText) <OptionsCar>`
   width: 35%;
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `  
         color: var(--defaultText);
 
@@ -373,8 +369,8 @@ export const InputModeloCarro = styled(InputText) <OptionsCar>`
 
 export const StyledInputModeloCarro = styled(StyledInput) <OptionsCar>`
   width: 100%;
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `   
         color: var(--defaultText);
         border: 2px solid var(--defaultText); 
@@ -387,8 +383,8 @@ margin-left: -4rem;
 
 export const InputPlacaCarro = styled(InputText) <OptionsCar>`
   width: 25%;
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `  
         color: var(--defaultText);
 
@@ -397,8 +393,8 @@ export const InputPlacaCarro = styled(InputText) <OptionsCar>`
 
 export const StyledInputPlacaCarro = styled(StyledInput) <OptionsCar>`
   width: 75%;
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `   
         color: var(--defaultText);
         border: 2px solid var(--defaultText); 

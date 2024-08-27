@@ -192,7 +192,7 @@ export default function Inquilinos() {
     const displayedInquilinos = sortedInquilinos();
 
     return (
-        <InquilinoSection isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
+        <InquilinoSection $isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
             <ActionsInquilino>
                 <IconInquilino>
                     <h2>Gerenciamento de inquilinos
@@ -200,19 +200,19 @@ export default function Inquilinos() {
                     <FiEdit size={18} />
                 </IconInquilino>
                 <OptionsActionInquilos>
-                    <OptionAction onClick={() => alterSelected('cadasterInquilino')} isSelected={selected === 'cadasterInquilino'}>
+                    <OptionAction onClick={() => alterSelected('cadasterInquilino')} $isSelected={selected === 'cadasterInquilino'}>
                         <span>
                             Cadastro de inquilino
                         </span>
                         <IoIosArrowForward />
                     </OptionAction>
-                    <OptionAction onClick={() => alterSelected('currentInquilino')} isSelected={selected === 'currentInquilino'}>
+                    <OptionAction onClick={() => alterSelected('currentInquilino')} $isSelected={selected === 'currentInquilino'}>
                         <span>
                             Inquilinos atuais
                         </span>
                         <IoIosArrowForward />
                     </OptionAction>
-                    <OptionAction onClick={() => alterSelected('deletedsInquilinos')} isSelected={selected === 'deletedsInquilinos'}>
+                    <OptionAction onClick={() => alterSelected('deletedsInquilinos')} $isSelected={selected === 'deletedsInquilinos'}>
                         <span>
                             Inquilinos deletados
                         </span>
@@ -265,9 +265,9 @@ export default function Inquilinos() {
                             <FormContainer>
                                 <DivLabel>
                                     <h3>Possui carro?</h3>
-                                    <LabelTemCarro selectedCar={formData.tem_carro}
+                                    <LabelTemCarro $selectedCar={formData.tem_carro}
                                     >
-                                        <SpanTemCarro selectedCar={formData.tem_carro}>Sim</SpanTemCarro>
+                                        <SpanTemCarro $selectedCar={formData.tem_carro}>Sim</SpanTemCarro>
                                         <InputFormCarro
                                             type="checkbox"
                                             name="tem_carro"
@@ -286,9 +286,9 @@ export default function Inquilinos() {
                                                     value={formData.quantidade_carros}
                                                     onChange={handleChange}
                                                     disabled={!formData.tem_carro}
-                                                    isDisabled={!formData.tem_carro}
+                                                    $isDisabled={!formData.tem_carro}
                                                 />
-                                                <InputQuantidadeCarros isDisabled={!formData.tem_carro}>Quantos</InputQuantidadeCarros>
+                                                <InputQuantidadeCarros $isDisabled={!formData.tem_carro}>Quantos</InputQuantidadeCarros>
                                             </InputWrapperQuantidadeCarros>
                                         </Label>
                                     </DivLabel>
@@ -301,10 +301,10 @@ export default function Inquilinos() {
                                                     value={formData.modelo_carro}
                                                     onChange={handleChange}
                                                     disabled={!formData.tem_carro}
-                                                    isDisabled={!formData.tem_carro}
+                                                    $isDisabled={!formData.tem_carro}
 
                                                 />
-                                                <InputModeloCarro isDisabled={!formData.tem_carro}>Modelo</InputModeloCarro>
+                                                <InputModeloCarro $isDisabled={!formData.tem_carro}>Modelo</InputModeloCarro>
                                             </InputWrapperModeloCarro>
                                         </Label>
                                     </DivLabel>
@@ -317,9 +317,9 @@ export default function Inquilinos() {
                                                     value={formData.placa_carro}
                                                     onChange={handleChange}
                                                     disabled={!formData.tem_carro}
-                                                    isDisabled={!formData.tem_carro}
+                                                    $isDisabled={!formData.tem_carro}
                                                 />
-                                                <InputPlacaCarro isDisabled={!formData.tem_carro}>Placa</InputPlacaCarro>
+                                                <InputPlacaCarro $isDisabled={!formData.tem_carro}>Placa</InputPlacaCarro>
                                             </InputWrapperPlacaCarro>
                                         </Label>
                                     </DivLabel>
