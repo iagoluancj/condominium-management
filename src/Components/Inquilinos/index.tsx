@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { TypeInquilinos } from "../Nav/Nav";
 import { SupaContext } from "@/Context/context";
 import { toast } from "react-toastify";
 import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, InputForm, DivLabel, FormContainer, InputText, InputCPF, StyledInputCPF, InputWrapperCPF, InputWrapperComunicadoImportante, StyledInputComunicadoImportante, InputComunicadoImportante, StyledInputQuantidadeCarros, InputWrapperQuantidadeCarros, InputModeloCarro, StyledInputModeloCarro, InputWrapperModeloCarro, InputPlacaCarro, StyledInputPlacaCarro, InputWrapperPlacaCarro, InputApartamento, StyledInputApartamento, InputWrapperApartamento, InputStatus, StyledInputStatus, InputWrapperStatus, InputBloco, StyledInputBloco, InputWrapperBloco, InputQuantidadeCarros, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input } from "./styles";
@@ -8,8 +7,22 @@ import { FiEdit } from "react-icons/fi";
 import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../Modal/modal";
 import Tables from "./table";
-import InquilinosTable from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
+
+export type TypeInquilinos = {
+  id: number;
+  nome: string;
+  cpf: number;
+  tem_carro: boolean;
+  quantidade_carros: number;
+  modelo_carro: string;
+  placa_carro: string;
+  apartamento: string;
+  status: string;
+  comunicado_importante: string;
+  is_deleted: boolean;
+  bloco: string
+};
 
 type SortField = keyof TypeInquilinos;
 
@@ -21,7 +34,6 @@ export default function Inquilinos() {
     const [editId, setEditId] = useState<number | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [filterTerm, setFilterTerm] = useState<string>("");
-    const [filterByName, setFilterByName] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -96,10 +108,6 @@ export default function Inquilinos() {
         }
     };
 
-    const handleSave = async () => {
-        setShowModal(true);
-    };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
 
@@ -118,17 +126,6 @@ export default function Inquilinos() {
             console.log('não checado')
         }
     };
-
-    const handleDeleted = (cpf: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        setCpfToDelete(cpf);
-        setShowDeleteModal(true);
-    };
-
-    const handleEditTable = (inquilino: TypeInquilinos) => {
-        setEditId(inquilino.id);
-        setFormData(inquilino);
-    }
 
     const alterSelected = (inquilino: string) => {
         let newTitle = '';
@@ -183,25 +180,6 @@ export default function Inquilinos() {
         }
     };
 
-    const getBlockColor = (colorByOrder: string) => {
-        switch (colorByOrder) {
-            case 'A':
-                return 'lightblue';
-            case 'B':
-                return 'lightgreen';
-            case 'C':
-                return 'lightcoral';
-            case 'D':
-                return 'violet';
-            case 'inquilino':
-                return 'red';
-            case 'proprietario':
-                return 'blue';
-            default:
-                return 'lightgray';
-        }
-    };
-
     const filteredInquilinos = () => {
         const term = filterTerm.toLowerCase();
         return sortedInquilinos().filter((inquilino) =>
@@ -214,11 +192,12 @@ export default function Inquilinos() {
     const displayedInquilinos = sortedInquilinos();
 
     return (
-        <InquilinoSection>
+        <InquilinoSection isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
             <ActionsInquilino>
                 <IconInquilino>
-                    <h2>Gerenciamento de inquilinos                     <FiEdit size={18} />
+                    <h2>Gerenciamento de inquilinos
                     </h2>
+                    <FiEdit size={18} />
                 </IconInquilino>
                 <OptionsActionInquilos>
                     <OptionAction onClick={() => alterSelected('cadasterInquilino')} isSelected={selected === 'cadasterInquilino'}>
@@ -229,7 +208,7 @@ export default function Inquilinos() {
                     </OptionAction>
                     <OptionAction onClick={() => alterSelected('currentInquilino')} isSelected={selected === 'currentInquilino'}>
                         <span>
-                            Inquilino atuais
+                            Inquilinos atuais
                         </span>
                         <IoIosArrowForward />
                     </OptionAction>

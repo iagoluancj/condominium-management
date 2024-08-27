@@ -1,4 +1,6 @@
 import React from "react";
+import { ButtonDeleted } from "../Inquilinos/styles";
+import { ButtonDeletedModal, ButtonModal } from "./styles";
 
 interface ModalProps {
   show: boolean;
@@ -14,8 +16,8 @@ const ConfirmModal: React.FC<ModalProps> = ({ show, onClose, onConfirm, message 
     <div className="modal-overlay">
       <div className="modal-container">
         <p>{message}</p>
-        <button onClick={onConfirm}>Confirmar</button>
-        <button onClick={onClose}>Cancelar</button>
+        <ButtonDeletedModal onClick={onConfirm}>Confirmar</ButtonDeletedModal>
+        <ButtonModal onClick={onClose}>Cancelar</ButtonModal>
       </div>
     </div>
   );

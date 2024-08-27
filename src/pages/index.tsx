@@ -17,8 +17,8 @@ export default function Home() {
       <SupaProvider>
         <NextUIProvider>
           <>
-            <NavBar></NavBar>
-            <Main></Main>
+          <NavBar></NavBar>
+          <Main></Main>
             {/* <Nav/> //Criado inicialmente para testes */}
           </>
         </NextUIProvider>

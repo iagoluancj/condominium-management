@@ -11,6 +11,9 @@ export const Navigation = styled.nav`
     position: absolute;
     z-index: 5;
     margin-top: 0vh;
+
+    transition: ease-in .1s;
+
 `
 
 export const NavContainer = styled.div`
@@ -19,12 +22,18 @@ export const NavContainer = styled.div`
     justify-content: space-between;
     margin: 0rem 2rem 0rem 2rem ;
     margin-top: 0vh;
+
+    transition: ease-in .1s;
+
 `
 
 export const IconsRight = styled.div`
     display: flex;
     flex-direction: row;
     gap: 2rem;
+
+    transition: ease-in .1s;
+
  `
 
 export const Icons = styled.button`
@@ -43,7 +52,12 @@ export const MenuDiv = styled.div`
     background-color: var(--brancoPastelFont);
     position: absolute;
 
+    display: flex;
+    flex-direction: column;
     margin-right: 10rem;
+
+    transition: ease-in .1s;
+
 `
 
 export const NavMenu = styled.div`
@@ -55,6 +69,11 @@ export const NavMenu = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    transition: ease-in .1s;
+
+
+
 `
 
 export const NavIconMenu = styled.div`
@@ -63,58 +82,64 @@ export const NavIconMenu = styled.div`
     justify-content: center;
     padding-left: 1rem;
     gap: .5rem;
+
+    transition: ease-in .1s;
+
 `
 
 export const MenuContainer = styled.div`
+    :hover {
+        color: var(--focusText);
+        transition: ease-in .1s;
+
+    }
+    transition: ease-in .1s;
+
 
 `
 
 export const IconsContainer = styled.div`
     padding: 1rem 0rem 0rem 1rem;
     transition: ease-in .1s;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: ease-in .1s;
 
-    :hover {
-        color: var(--focusText);
-        transition: ease-in .1s;
-    }
 `
 
 export const IconsMenu = styled.button`
     cursor: pointer;
+    width: 70%;
     transition: ease-in .1s;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: .5rem;
+    justify-content: space-between;
     color: var(--defaultText);
     padding-left: 1rem;
 
-    p {
+    span {
         font-weight: 500;
-    }
-
-    :hover {
-        color: var(--focusText);
-        transition: ease-in .1s;
     }
 
     div {
         display: flex;
         align-items: center;
         gap: .5rem;
-        margin-left: -1rem;
-        margin-top: 2rem;
     }
+    
 `
 
 export const CloseMenu = styled.button`
-    width: 100%;
     height: 3rem;
+    margin-top: 1rem;
     color: var(--focusText);
     text-align: center;
+    padding: 1rem 0rem; 
 
-    span {
-        :hover {
-        }
-    }
+    :hover {
+        background-color: var(--focusText);
+        color: var(--brancoPastelFont);
+    }  
 `

@@ -30,7 +30,7 @@ type SupaContextType = {
     createInquilino: (inquilinoData: Omit<TypeInquilinos, 'id'>) => void;
     deletedInquilinoDEFINITIVY: (cpf: number) => void
     deletedInquilino: (cpf: number) => void
-    handleChangePage: () => void
+    handleChangePage: (change: boolean) => void
 }
 
 type SupaProviderProps = {
@@ -133,8 +133,8 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
-    const handleChangePage = () => {
-        if (changePage) {
+    const handleChangePage = (change: boolean) => {
+        if (change) {
             setChangePage(false)
         } else {
             setChangePage(true)

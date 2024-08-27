@@ -12,11 +12,25 @@ interface selectedCarr {
   selectedCar: boolean;
 }
 
-export const InquilinoSection = styled.section`
+interface PropsDeleted {
+  isDeleted: boolean;
+}
+
+interface PropsSelectedCurrent {
+  isSelectedCurrent: boolean;
+}
+
+
+export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     display: flex;
     gap: 2rem;
     margin-top: 15vh;
 
+    ${({ isSelectedCurrent }) =>
+    isSelectedCurrent &&
+    `  
+       margin-left: 25vh;
+    `}
 `
 
 export const ActionsInquilino = styled.div`
@@ -27,6 +41,7 @@ export const ActionsInquilino = styled.div`
 export const ActionsInquilinoRegister = styled.div`
 display: flex;
 flex-direction: column;
+margin-bottom: 2rem;
 `
 
 export const OptionsActionInquilos = styled.div`
@@ -88,9 +103,14 @@ export const IconInquilino = styled.div`
     gap: .5rem;
     color: var(--focusText);
     margin-left: -1rem;
+    padding: 1rem 0rem 2rem 0rem;
 
     p {
         font-weight: 500;
+    }
+
+    h2 {
+      font-size: 24px;
     }
 
     :hover {
@@ -160,6 +180,7 @@ export const LabelTemCarro = styled(Label) <selectedCarr>`
       color: #000;
       border: 2px solid transparent; 
       transition: ease-in .2s;
+      padding: 0rem;
     `}
 
     :hover {
@@ -212,15 +233,29 @@ export const Button = styled.button`
   cursor: pointer;
   border-radius: 4px;
   font-size: 14px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid transparent;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: transparent;
+    border: 1px solid var(--focusText);
+    color: var(--defaultText);
+
   }
 
   &:active {
     background-color: #004080;
   }
 `;
+
+export const ButtonDeleted = styled(Button)`
+  background-color: #ff6666;
+`
+
+export const ButtonSave = styled(Button)`
+  background-color: #66cc66;
+`
 
 export const Input = styled.input`
   padding: 4px;

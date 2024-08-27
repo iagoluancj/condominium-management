@@ -12,12 +12,17 @@ export default function NavBar() {
     const { handleChangePage } = useContext(SupaContext);
 
     const handleMenu = () => {
-        if (toggleMenu) {
-            setToggleMenu(false)
-        } else {
-            setToggleMenu(true)
+        setToggleMenu(!toggleMenu);
+    };
+
+    const toggleChangePage = (page: string) => {
+        if (page === 'home') {
+            handleChangePage(!true)
+        } else if (page === 'inquilinos') {
+            handleChangePage(!false)
         }
-    }
+    };
+
 
     return (
         <>
@@ -43,13 +48,13 @@ export default function NavBar() {
                     </NavMenu>
                     <MenuContainer>
                         <IconsContainer>
-                            <IconsMenu onClick={handleChangePage}>
+                            <IconsMenu onClick={() => toggleChangePage('home')}>
                                 <BiHome size={30} />
-                                <p>Home</p>
+                                <span>Home</span>
                             </IconsMenu>
-                            <IconsMenu onClick={handleChangePage}>
-                                <FiEdit size={28} />
-                                <p>Inquilinos</p>
+                            <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
+                                <FiEdit size={24} />
+                                <span>Inquilinos</span>
                             </IconsMenu>
                         </IconsContainer>
                     </MenuContainer>
@@ -57,7 +62,7 @@ export default function NavBar() {
                         <IconsMenu>
                             <div>
                                 <IoClose size={28} />
-                                <span>Fechar menu</span>
+                                <span>Fechar</span>
                             </div>
                         </IconsMenu>
                     </CloseMenu>
