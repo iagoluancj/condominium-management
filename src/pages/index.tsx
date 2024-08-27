@@ -4,8 +4,8 @@ import SupaProvider from "../Context/context";
 
 
 import { NextUIProvider } from '@nextui-org/react'
-import NavBar from "@/components/Nav/NavBar";
-import Main from "@/components/Main/index";
+import NavBar from '../../src/components/Nav/NavBar';
+import Main from '../../src/components/Main/index';
 
 export default function Home() {
 
@@ -17,8 +17,8 @@ export default function Home() {
       <SupaProvider>
         <NextUIProvider>
           <>
-          <NavBar></NavBar>
-          <Main></Main>
+            <NavBar></NavBar>
+            <Main></Main>
             {/* <Nav/> //Criado inicialmente para testes */}
           </>
         </NextUIProvider>
