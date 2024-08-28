@@ -4,7 +4,7 @@ import SupaProvider from "../Context/context";
 
 
 import { NextUIProvider } from '@nextui-org/react'
-import { MainInquilinos, NavBar } from "@/components";
+import { MainInquilinos, NavBar } from "@/Components";
 
 export default function Home() {
 
