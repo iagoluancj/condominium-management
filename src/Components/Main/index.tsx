@@ -5,7 +5,7 @@ import Inquilinos from "../Inquilinos";
 import { MainContainer, MainContainerDiv } from "./styles";
 import { SupaContext } from "@/Context/context";
 
-export default function Main() {
+export default function MainInquilinos() {
     const { ChangePage } = useContext(SupaContext);
 
     return (
