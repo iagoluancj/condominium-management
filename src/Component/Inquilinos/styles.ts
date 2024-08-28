@@ -25,7 +25,6 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     ${({ $isSelectedCurrent }) =>
     $isSelectedCurrent &&
     `  
-       margin-left: 25vh;
     `}
 `
 
@@ -77,8 +76,8 @@ export const Icon = styled.div`
 export const HeaderInquilinos = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
     gap: .5rem;
+    margin-bottom: 1rem;
 `
 
 export const TitleHeader = styled.div`
@@ -87,6 +86,7 @@ export const TitleHeader = styled.div`
 `
 
 export const BrevelyDescription = styled.div`
+     width: 100%;
     color: var(--defaultText);
 `
 
@@ -229,7 +229,6 @@ export const Button = styled.button`
   cursor: pointer;
   border-radius: 4px;
   font-size: 14px;
-  width: 100%;
   text-align: center;
   border: 1px solid transparent;
 

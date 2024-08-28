@@ -3,7 +3,7 @@ import { SupaContext } from "@/Context/context";
 
 export default function DeletedInquilinosTable() {
     const { typeInquilinos } = useContext(SupaContext);
-    const filteredDeletedInquilinos = typeInquilinos.filter(inquilino => inquilino.is_deleted);
+    const filteredDeletedInquilinos = typeInquilinos.filter(inquilino => inquilino.is_deleted).sort((a, b) => a.nome.localeCompare(b.nome));
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

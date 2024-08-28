@@ -10,18 +10,18 @@ import Tables from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
 
 export type TypeInquilinos = {
-  id: number;
-  nome: string;
-  cpf: number;
-  tem_carro: boolean;
-  quantidade_carros: number;
-  modelo_carro: string;
-  placa_carro: string;
-  apartamento: string;
-  status: string;
-  comunicado_importante: string;
-  is_deleted: boolean;
-  bloco: string
+    id: number;
+    nome: string;
+    cpf: number;
+    tem_carro: boolean;
+    quantidade_carros: number;
+    modelo_carro: string;
+    placa_carro: string;
+    apartamento: string;
+    status: string;
+    comunicado_importante: string;
+    is_deleted: boolean;
+    bloco: string
 };
 
 type SortField = keyof TypeInquilinos;
@@ -223,7 +223,11 @@ export default function Inquilinos() {
             <ActionsInquilinoRegister>
                 <HeaderInquilinos>
                     <TitleHeader>{title}</TitleHeader>
-                    <BrevelyDescription>Um texto bem bacana aqui</BrevelyDescription>
+                    <BrevelyDescription>
+                        <span>
+                            Gerencie inquilinos de forma eficiente: cadastre, visualize, edite e acesse registros com facilidade.
+                        </span>
+                    </BrevelyDescription>
                 </HeaderInquilinos>
                 <div>
                     {selected === 'cadasterInquilino' && (

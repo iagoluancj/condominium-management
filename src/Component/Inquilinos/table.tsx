@@ -76,6 +76,7 @@ export default function Tables() {
                 return acc;
             }, {} as Record<string, TypeInquilinos[]>);
 
+            // Ordenação crescente dos blocos
             const sortedBlocks = Object.keys(groupedInquilinos).sort();
 
             return sortedBlocks.flatMap(block =>
@@ -83,7 +84,7 @@ export default function Tables() {
                     const aName = a['nome'];
                     const bName = b['nome'];
                     return typeof aName === 'string' && typeof bName === 'string'
-                        ? aName.localeCompare(bName)
+                        ? aName.localeCompare(bName) // Ordem crescente dos nomes
                         : 0;
                 })
             );
@@ -92,7 +93,7 @@ export default function Tables() {
                 const aValue = a[sortField];
                 const bValue = b[sortField];
                 return typeof aValue === 'string' && typeof bValue === 'string'
-                    ? aValue.localeCompare(bValue)
+                    ? aValue.localeCompare(bValue) // Ordem crescente
                     : 0;
             });
         }
@@ -131,7 +132,6 @@ export default function Tables() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        // Atualize o estado com base no nome e valor do campo
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
@@ -162,7 +162,36 @@ export default function Tables() {
 
     return (
         <>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div className="flex flex-row justify-evenly mt-10 gap-10 mb-5">
+                <Input
+                    type="text"
+                    placeholder="Procure por nome ou CPF"
+                    value={filterTerm}
+                    onChange={(e) => setFilterTerm(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                />
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => setSortField('nome')}
+                        className={`p-2 rounded ${sortField === 'nome' ? 'bg-blue-500 text-white border-b-4 border-blue-500' : 'bg-blue-100 text-gray-700 border-b-2 border-gray-300'}`}
+                    >
+                        Nome
+                    </button>
+                    <button
+                        onClick={() => setSortField('status')}
+                        className={`p-2 border rounded ${sortField === 'status' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                    >
+                        Proprietario/Inquilino
+                    </button>
+                    <button
+                        onClick={() => setSortField('bloco')}
+                        className={`p-2 border rounded ${sortField === 'bloco' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                    >
+                        Bloco
+                    </button>
+                </div>
+            </div>
+            <div className="relative  shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -176,7 +205,7 @@ export default function Tables() {
                         </tr>
                     </thead>
                     <tbody>
-                        {(filterByName ? displayedInquilinosFindByName : displayedInquilinos)
+                        {(filterByName ? displayedInquilinos : displayedInquilinosFindByName)
                             .filter((inquilino) => !inquilino.is_deleted)
                             .map((inquilino) => (
                                 <tr key={inquilino.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
