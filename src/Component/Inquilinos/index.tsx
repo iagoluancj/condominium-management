@@ -300,7 +300,7 @@ export default function Inquilinos() {
                                                     onChange={handleChange}
                                                     disabled={!formData.tem_carro}
                                                     $isDisabled={!formData.tem_carro}
-
+                                                    maxLength={14}
                                                 />
                                                 <InputModeloCarro $isDisabled={!formData.tem_carro}>Modelo</InputModeloCarro>
                                             </InputWrapperModeloCarro>
@@ -316,6 +316,7 @@ export default function Inquilinos() {
                                                     onChange={handleChange}
                                                     disabled={!formData.tem_carro}
                                                     $isDisabled={!formData.tem_carro}
+                                                    maxLength={7}
                                                 />
                                                 <InputPlacaCarro $isDisabled={!formData.tem_carro}>Placa</InputPlacaCarro>
                                             </InputWrapperPlacaCarro>
@@ -335,6 +336,7 @@ export default function Inquilinos() {
                                                     value={formData.apartamento}
                                                     onChange={handleChange}
                                                     required
+                                                    maxLength={5}
                                                 />
                                                 <InputApartamento>* Apartamento</InputApartamento>
                                             </InputWrapperApartamento>
@@ -364,6 +366,7 @@ export default function Inquilinos() {
                                                     name="bloco"
                                                     value={formData.bloco}
                                                     onChange={handleChange}
+                                                    maxLength={2}
                                                     required
                                                 />
                                                 <InputBloco>* Bloco</InputBloco>

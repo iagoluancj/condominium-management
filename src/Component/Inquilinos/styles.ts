@@ -208,16 +208,24 @@ export const Button = styled.button`
   }
 
   &:active {
-    background-color: #004080;
+    /* background-color: #004080; */
   }
 `;
 
 export const ButtonDeleted = styled(Button)`
   background-color: #ff6666;
+
+  &:hover {
+    border: 1px solid #ff6666;
+  } 
 `
 
 export const ButtonSave = styled(Button)`
   background-color: #66cc66;
+
+  &:hover {
+    border: 1px solid #66cc66;
+  } 
 `
 
 export const Input = styled.input`
@@ -225,6 +233,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+
 `;
 
 // ---------------- TESTE
@@ -232,6 +241,8 @@ export const InputWrapper = styled.div`
   position: relative;
   display: inline-block;
   margin: 20px;  
+
+
 `;
 
 // Estilo para o input
@@ -245,6 +256,8 @@ export const StyledInput = styled.input`
   position: relative;
   z-index: 1; 
   background-color: white; 
+
+
 `;
 
 // Texto na linha da borda
