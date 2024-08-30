@@ -13,7 +13,6 @@ export const Navigation = styled.nav`
     margin-top: 0vh;
 
     transition: ease-in .1s;
-
 `
 
 export const NavContainer = styled.div`
@@ -24,7 +23,6 @@ export const NavContainer = styled.div`
     margin-top: 0vh;
 
     transition: ease-in .1s;
-
 `
 
 export const IconsRight = styled.div`
@@ -33,12 +31,11 @@ export const IconsRight = styled.div`
     gap: 2rem;
 
     transition: ease-in .1s;
-
  `
 
 export const Icons = styled.button`
     cursor: pointer;
-    transition: 5s;
+    transition: ease-in .2s;
 
     :hover {
         transition: .1s;
@@ -99,12 +96,18 @@ export const MenuContainer = styled.div`
 `
 
 export const IconsContainer = styled.div`
-    padding: 1rem 0rem 0rem 1rem;
+    margin-top: 1rem;
     transition: ease-in .1s;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     transition: ease-in .1s;
+    justify-content: start;
+
+    :hover {
+        background-color: var(--focusText);
+        color: var(--brancoPastelFont);
+        border-radius: 3px;
+    }  
 
 `
 
@@ -115,8 +118,9 @@ export const IconsMenu = styled.button`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    gap: .5rem;
     color: var(--defaultText);
+    padding: .5rem 0rem;
     padding-left: 1rem;
 
     span {
@@ -128,6 +132,7 @@ export const IconsMenu = styled.button`
         align-items: center;
         gap: .5rem;
     }
+    
     
 `
 

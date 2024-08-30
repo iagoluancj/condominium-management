@@ -208,7 +208,7 @@ export default function Tables() {
                         {(filterByName ? displayedInquilinos : displayedInquilinosFindByName)
                             .filter((inquilino) => !inquilino.is_deleted)
                             .map((inquilino) => (
-                                <tr key={inquilino.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                <tr key={inquilino.id} className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl">
                                     <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {editId === inquilino.id ? (
                                             <Input
@@ -325,7 +325,11 @@ export default function Tables() {
                                             </>
                                         ) : (
                                             <>
-                                                <p><strong>{inquilino.status}</strong></p>
+                                                <p><strong>
+                                                    {inquilino.status === 'inquilino' && 'Inquilino'}
+                                                    {inquilino.status === 'proprietario' && 'Proprietário'}
+                                                    {inquilino.status === 'tenente' && 'Tenente'}
+                                                </strong></p>
                                                 <p>{inquilino.comunicado_importante}</p>
                                             </>
                                         )}

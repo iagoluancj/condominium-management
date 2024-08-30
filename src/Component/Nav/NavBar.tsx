@@ -4,8 +4,10 @@ import { GrNotification, GrUser } from 'react-icons/gr'
 import { GiProtectionGlasses } from 'react-icons/gi'
 import { FiEdit } from 'react-icons/fi'
 import { useContext, useState } from 'react'
-import { IoClose } from 'react-icons/io5'
+import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
+import { MdEmojiPeople } from "react-icons/md";
+
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
@@ -55,6 +57,14 @@ export default function NavBar() {
                             <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
                                 <FiEdit size={24} />
                                 <span>Inquilinos</span>
+                            </IconsMenu>
+                            <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
+                                <IoPeopleSharp size={24} />
+                                <span>Moradores</span>
+                            </IconsMenu>
+                            <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
+                                <MdEmojiPeople  size={24} />
+                                <span>Visitantes</span>
                             </IconsMenu>
                         </IconsContainer>
                     </MenuContainer>

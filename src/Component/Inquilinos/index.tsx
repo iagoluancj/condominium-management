@@ -110,6 +110,7 @@ export default function Inquilinos() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
+        const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
 
         if (type === "checkbox") {
             const { checked } = e.target as HTMLInputElement;
@@ -117,15 +118,50 @@ export default function Inquilinos() {
                 ...prevData,
                 [name]: checked
             }));
-            console.log('checado')
+            console.log('checado');
         } else {
-            setFormData(prevData => ({
-                ...prevData,
-                [name]: value
-            }));
-            console.log('não checado')
+            if (name === "nome") {
+                if (regex.test(value)) {
+                    setFormData(prevData => ({
+                        ...prevData,
+                        [name]: value
+                    }));
+                    console.log('Valor atualizado: apenas letras');
+                } else {
+                    console.log('Entrada inválida: apenas letras são permitidas');
+                }
+            } else if (name === "cpf") {
+                const numericValue = value.replace(/\D/g, ''); 
+                if (numericValue.length <= 11) {
+                    setFormData(prevData => ({
+                        ...prevData,
+                        [name]: numericValue ? parseInt(numericValue) : 0 
+                    }));
+                    console.log('Valor atualizado: apenas números');
+                } else {
+                    console.log('Entrada inválida: máximo de 11 números');
+                }
+            } else if (name === "quantidade_carros") {
+                const numericValue = parseInt(value);
+                if (!isNaN(numericValue) && numericValue <= 9) {
+                    setFormData(prevData => ({
+                        ...prevData,
+                        [name]: numericValue
+                    }));
+                    console.log('Valor atualizado: quantidade de carros');
+                } else {
+                    console.log('Entrada inválida: o valor máximo permitido é 9');
+                }
+            } else {
+                setFormData(prevData => ({
+                    ...prevData,
+                    [name]: value
+                }));
+                console.log('não checado');
+            }
         }
     };
+
 
     const alterSelected = (inquilino: string) => {
         let newTitle = '';
@@ -146,50 +182,6 @@ export default function Inquilinos() {
         setTitle(newTitle)
         setSelected(inquilino);
     };
-
-    const sortedInquilinos = () => {
-        if (sortField === 'bloco') {
-            const groupedInquilinos: Record<string, TypeInquilinos[]> = typeInquilinos.reduce((acc, inquilino) => {
-                const bloco = inquilino['bloco'];
-                if (bloco) {
-                    const key = (bloco as string).toUpperCase();
-                    (acc[key] = acc[key] || []).push(inquilino);
-                }
-                return acc;
-            }, {} as Record<string, TypeInquilinos[]>);
-
-            const sortedBlocks = Object.keys(groupedInquilinos).sort();
-
-            return sortedBlocks.flatMap(block =>
-                groupedInquilinos[block].sort((a, b) => {
-                    const aName = a['nome'];
-                    const bName = b['nome'];
-                    return typeof aName === 'string' && typeof bName === 'string'
-                        ? aName.localeCompare(bName)
-                        : 0;
-                })
-            );
-        } else {
-            return [...typeInquilinos].sort((a: any, b: any) => {
-                const aValue = a[sortField];
-                const bValue = b[sortField];
-                return typeof aValue === 'string' && typeof bValue === 'string'
-                    ? aValue.localeCompare(bValue)
-                    : 0;
-            });
-        }
-    };
-
-    const filteredInquilinos = () => {
-        const term = filterTerm.toLowerCase();
-        return sortedInquilinos().filter((inquilino) =>
-            !inquilino.is_deleted &&
-            (inquilino.nome.toLowerCase().includes(term) || inquilino.cpf.toString().includes(term))
-        );
-    };
-
-    const displayedInquilinosFindByName = filteredInquilinos();
-    const displayedInquilinos = sortedInquilinos();
 
     return (
         <InquilinoSection $isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
@@ -239,11 +231,12 @@ export default function Inquilinos() {
                                         <Label>
                                             <InputWrapper>
                                                 <StyledInput
-                                                    type="text"
+                                                    type=""
                                                     placeholder="Nome completo"
                                                     name="nome"
                                                     value={formData.nome}
                                                     onChange={handleChange}
+                                                    pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
                                                     required
                                                 />
                                                 <InputText>* Nome</InputText>
@@ -254,11 +247,12 @@ export default function Inquilinos() {
                                         <Label>
                                             <InputWrapperCPF>
                                                 <StyledInputCPF
-                                                    type="number"
+                                                    type="text"
                                                     name="cpf"
                                                     value={formData.cpf}
                                                     onChange={handleChange}
                                                     required
+                                                    maxLength={12}
                                                 />
                                                 <InputCPF>* CPF</InputCPF>
                                             </InputWrapperCPF>

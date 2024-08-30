@@ -91,7 +91,6 @@ export const BrevelyDescription = styled.div`
 `
 
 export const IconInquilino = styled.div`
-    cursor: pointer;
     transition: ease-in .1s;
     display: flex;
     flex-direction: row;
@@ -188,38 +187,6 @@ export const LabelTemCarro = styled(Label) <selectCar>`
 
 // CSS Table
 
-export const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 10px;
-`;
-
-export const Thead = styled.thead`
-  background-color: #f4f4f4;
-`;
-
-export const Th = styled.th`
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-  font-weight: bold;
-`;
-
-export const Td = styled.td`
-  border: 1px solid #ddd;
-  padding: 8px;
-`;
-
-export const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  &:hover {
-    background-color: #f1f1f1;
-  }
-`;
-
 export const Button = styled.button`
   background-color: #007bff;
   color: #fff;
@@ -231,12 +198,13 @@ export const Button = styled.button`
   font-size: 14px;
   text-align: center;
   border: 1px solid transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
   &:hover {
     background-color: transparent;
     border: 1px solid var(--focusText);
     color: var(--defaultText);
-
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
 
   &:active {
@@ -263,8 +231,7 @@ export const Input = styled.input`
 export const InputWrapper = styled.div`
   position: relative;
   display: inline-block;
-  margin: 20px;
-  
+  margin: 20px;  
 `;
 
 // Estilo para o input
@@ -298,13 +265,12 @@ export const InputText = styled.div`
 
 export const InputCPF = styled(InputText)`
   width: 25%;
-  
 `
 export const StyledInputCPF = styled(StyledInput)`
   width: 100%;
 `
 export const InputWrapperCPF = styled(InputWrapper)`
-margin-left: 8.1rem;
+  margin-left: 8.1rem;
 `
 
 export const SpanTemCarro = styled.div<selectCar>`
@@ -316,7 +282,7 @@ export const SpanTemCarro = styled.div<selectCar>`
 
 
   font-family: outfit;
-  font-weight: 600;
+  font-weight: 400;
   ${({ $selectedCar }) =>
     $selectedCar &&
     `
