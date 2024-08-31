@@ -8,7 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../Modal/modal";
 import Tables from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
-import { TypeInquilinos } from "@/@Types/types";
+import { TypeInquilinos } from "@/Types/types";
 
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
 import ConfirmModal from "../Modal/modal";
 import { Button, ButtonDeleted, ButtonSave, Input } from "./styles";
-import { TypeInquilinos } from "@/@Types/types";
+import { TypeInquilinos } from "@/Types/types";
 
 type SortField = keyof TypeInquilinos;
 
