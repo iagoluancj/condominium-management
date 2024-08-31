@@ -77,10 +77,10 @@ export default function Tables() {
                 }
                 return acc;
             }, {} as Record<string, TypeInquilinos[]>);
-
+    
             // Ordenação crescente dos blocos
             const sortedBlocks = Object.keys(groupedInquilinos).sort();
-
+    
             return sortedBlocks.flatMap(block =>
                 groupedInquilinos[block].sort((a, b) => {
                     const aName = a['nome'];
@@ -91,7 +91,7 @@ export default function Tables() {
                 })
             );
         } else {
-            return [...typeInquilinos].sort((a: any, b: any) => {
+            return [...typeInquilinos].sort((a: TypeInquilinos, b: TypeInquilinos) => {
                 const aValue = a[sortField];
                 const bValue = b[sortField];
                 return typeof aValue === 'string' && typeof bValue === 'string'
@@ -100,6 +100,7 @@ export default function Tables() {
             });
         }
     };
+    
 
     const confirmSave = async () => {
         try {
