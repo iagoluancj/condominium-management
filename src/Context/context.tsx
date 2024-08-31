@@ -5,23 +5,25 @@ import { createContext } from "react";
 import ToastProvider from "@/lib/ToastProvider";
 import { toast } from "react-toastify";
 import { getInquilinos } from "@/Routes/getInquilinos";
+import { TypeInquilinos } from "@/Types/types";
 
-type TypeInquilinos = {
-    id: number
-    nome: string // deve aceitar somente LETRAS. 
-    cpf: number
-    tem_carro: boolean
-    quantidade_carros: number
-    modelo_carro: string
-    placa_carro: string
-    apartamento: string
-    status: string
-    // É string, mas pode ser somente 'proprietario' ou 'inquilino', ajustar para que se fugir disso.
-    // ao remodular o banco, alterar para 0 e 1.
-    comunicado_importante: string
-    is_deleted: boolean
-    bloco: string
-}
+// type TypeInquilinos = {
+//     id: number
+//     nome: string // deve aceitar somente LETRAS. 
+//     cpf: number
+//     tem_carro: boolean
+//     quantidade_carros: number
+//     modelo_carro: string
+//     placa_carro: string
+//     apartamento: string
+//     status: string
+//     // É string, mas pode ser somente 'proprietario' ou 'inquilino', ajustar para que se fugir disso.
+//     // ao remodular o banco, alterar para 0 e 1.
+//     comunicado_importante: string
+//     is_deleted: boolean
+//     bloco: string
+//     createdAt: Date;
+// }
 
 type SupaContextType = {
     typeInquilinos: TypeInquilinos[]
@@ -117,6 +119,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                         comunicado_importante,
                         is_deleted: false,
                         updated_at: new Date().toISOString(),
+                        created_at: new Date().toISOString(),
                         bloco
                     }
                 ]);

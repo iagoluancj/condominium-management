@@ -1,13 +1,12 @@
-import { BiHome, BiMenu, BiNotification } from 'react-icons/bi'
-import { CloseMenu, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
+import { BiHome, BiMenu, BiNotification, BiSolidBuildings } from 'react-icons/bi'
+import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
 import { GrNotification, GrUser } from 'react-icons/gr'
-import { GiProtectionGlasses } from 'react-icons/gi'
 import { FiEdit } from 'react-icons/fi'
+import { CgDarkMode } from "react-icons/cg";
 import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
-import { MdEmojiPeople } from "react-icons/md";
-
+import { MdApartment, MdEmojiPeople } from "react-icons/md";
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
@@ -34,6 +33,7 @@ export default function NavBar() {
                         <BiMenu size={30} />
                     </Icons>
                     <IconsRight>
+                        <IconDarkOrLight><CgDarkMode size={40} /></IconDarkOrLight>
                         <Icons><GrNotification size={25} /></Icons>
                         <Icons><GrUser size={25} /></Icons>
                     </IconsRight>
@@ -44,7 +44,7 @@ export default function NavBar() {
                 <MenuDiv>
                     <NavMenu>
                         <NavIconMenu>
-                            <GiProtectionGlasses size={70} />
+                            <MdApartment size={70} />
                             <span>Condominium Management</span>
                         </NavIconMenu>
                     </NavMenu>
@@ -63,7 +63,7 @@ export default function NavBar() {
                                 <span>Moradores</span>
                             </IconsMenu>
                             <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
-                                <MdEmojiPeople  size={24} />
+                                <MdEmojiPeople size={24} />
                                 <span>Visitantes</span>
                             </IconsMenu>
                         </IconsContainer>

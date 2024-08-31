@@ -28,6 +28,9 @@ export default function HomePage() {
             </main>
             <footer className="text-end mt-8">
                 <p className="text-gray-600">© 2024 Condominium Management. Todos os direitos reservados.</p>
+                <p>
+                    Created By <a href="https://iagoluancj.github.io/Portifolio-React/" target='_blank'><strong><i>Iago Jesus</i></strong></a>
+                </p>
             </footer>
         </div>
     );

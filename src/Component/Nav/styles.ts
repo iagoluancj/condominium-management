@@ -41,6 +41,19 @@ export const Icons = styled.button`
         transition: .1s;
     }
 `
+
+export const IconDarkOrLight = styled(Icons)`
+        transition: .2 ease-in-out;
+
+    :hover { 
+        color: #000;
+        background-color: white;
+        border-radius: 50%;
+        transform: scale(1.1);
+        transition: .2 ease-in-out;
+    }
+`
+
 export const MenuDiv = styled.div`
     width: 11rem;
     height: 1200px;
