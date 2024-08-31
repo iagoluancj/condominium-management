@@ -12,5 +12,5 @@ export type TypeInquilinos = {
     comunicado_importante: string;
     is_deleted: boolean;
     bloco: string
-    createdAt: Date;
+    created_at: string;
 };

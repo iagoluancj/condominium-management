@@ -56,7 +56,7 @@ export const IconDarkOrLight = styled(Icons)`
 
 export const MenuDiv = styled.div`
     width: 11rem;
-    height: 1200px;
+    height: 100%;
     box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.1);
     z-index: 6;
     background-color: var(--brancoPastelFont);
@@ -104,8 +104,6 @@ export const MenuContainer = styled.div`
 
     }
     transition: ease-in .1s;
-
-
 `
 
 export const IconsContainer = styled.div`
@@ -119,14 +117,13 @@ export const IconsContainer = styled.div`
     :hover {
         background-color: var(--focusText);
         color: var(--brancoPastelFont);
-        border-radius: 3px;
     }  
 
 `
 
 export const IconsMenu = styled.button`
     cursor: pointer;
-    width: 70%;
+    width: 100%;
     transition: ease-in .1s;
     display: flex;
     flex-direction: row;
@@ -134,7 +131,9 @@ export const IconsMenu = styled.button`
     gap: .5rem;
     color: var(--defaultText);
     padding: .5rem 0rem;
-    padding-left: 1rem;
+    padding-left: 2rem;
+    margin-left: -1rem;        
+    border-radius: 5px;
 
     span {
         font-weight: 500;
@@ -145,7 +144,10 @@ export const IconsMenu = styled.button`
         align-items: center;
         gap: .5rem;
     }
-    
+
+    &:hover {
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, .2);
+    }    
     
 `
 
@@ -155,6 +157,8 @@ export const CloseMenu = styled.button`
     color: var(--focusText);
     text-align: center;
     padding: 1rem 0rem; 
+    padding-left: 5rem;
+    margin-left: -5rem;
 
     :hover {
         background-color: var(--focusText);

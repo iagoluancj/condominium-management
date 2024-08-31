@@ -1,12 +1,12 @@
 import { BiHome, BiMenu, BiNotification, BiSolidBuildings } from 'react-icons/bi'
 import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
 import { GrNotification, GrUser } from 'react-icons/gr'
-import { FiEdit } from 'react-icons/fi'
+import { FiCodesandbox, FiEdit } from 'react-icons/fi'
 import { CgDarkMode } from "react-icons/cg";
 import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
-import { MdApartment, MdEmojiPeople } from "react-icons/md";
+import { MdApartment, MdDeliveryDining, MdEmojiPeople, MdLocalShipping } from "react-icons/md";
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
@@ -58,13 +58,17 @@ export default function NavBar() {
                                 <FiEdit size={24} />
                                 <span>Inquilinos</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
+                            <IconsMenu onClick={() => toggleChangePage('')}>
                                 <IoPeopleSharp size={24} />
                                 <span>Moradores</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
+                            <IconsMenu onClick={() => toggleChangePage('')}>
                                 <MdEmojiPeople size={24} />
                                 <span>Visitantes</span>
+                            </IconsMenu>
+                            <IconsMenu onClick={() => toggleChangePage('')}>
+                                <MdLocalShipping  size={24} />
+                                <span>Encomendas</span>
                             </IconsMenu>
                         </IconsContainer>
                     </MenuContainer>

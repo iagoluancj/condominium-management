@@ -101,7 +101,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     };
 
     const createInquilino = async (inquilinoData: Omit<TypeInquilinos, 'id'>) => {
-        const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento, status, comunicado_importante, bloco } = inquilinoData;
+        const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento, status, comunicado_importante, bloco, created_at } = inquilinoData;
 
         try {
             const { data, error } = await supabase
@@ -119,7 +119,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                         comunicado_importante,
                         is_deleted: false,
                         updated_at: new Date().toISOString(),
-                        created_at: new Date().toISOString(),
+                        created_at,
                         bloco
                     }
                 ]);

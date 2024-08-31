@@ -21,6 +21,7 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     display: flex;
     gap: 2rem;
     margin-top: 15vh;
+    margin-left: 10vh;
 
 
 

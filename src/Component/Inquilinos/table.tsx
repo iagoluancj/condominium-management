@@ -29,7 +29,7 @@ export default function Tables() {
         comunicado_importante: "",
         is_deleted: false,
         bloco: '',
-        createdAt: new Date()
+        created_at: ''
     });
 
     // const getBlockColor = (colorByOrder: string) => {
@@ -61,10 +61,10 @@ export default function Tables() {
                 }
                 return acc;
             }, {} as Record<string, TypeInquilinos[]>);
-    
+
             // Ordenação crescente dos blocos
             const sortedBlocks = Object.keys(groupedInquilinos).sort();
-    
+
             return sortedBlocks.flatMap(block =>
                 groupedInquilinos[block].sort((a, b) => {
                     const aName = a['nome'];
@@ -84,7 +84,7 @@ export default function Tables() {
             });
         }
     };
-    
+
 
     const confirmSave = async () => {
         try {
@@ -133,7 +133,9 @@ export default function Tables() {
 
     const handleEditTable = (inquilino: TypeInquilinos) => {
         setEditId(inquilino.id);
-        setFormData(inquilino);
+        setFormData({
+            ...inquilino,
+        });
     }
 
     // const handleSave = async () => {
@@ -144,12 +146,28 @@ export default function Tables() {
         setShowModal(false);
     };
 
+    const formatDateString = (dateString: string) => {
+        const date = new Date(dateString);
+
+        if (isNaN(date.getTime())) {
+            return 'Data não disponível';
+        }
+
+        // Ajusta a data para o fuso horário local
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+
+        return `${day}/${month}/${year}`;
+    };
+
+
     const displayedInquilinosFindByName = filteredInquilinos();
     const displayedInquilinos = sortedInquilinos();
 
     return (
         <>
-            <div className="flex flex-row justify-evenly mt-10 gap-10 mb-5">
+            <div className="flex flex-row justify-evenly mt-10 gap-10 mb-5 w-[900px]">
                 <Input
                     type="text"
                     placeholder="Procure por nome ou CPF"
@@ -177,33 +195,33 @@ export default function Tables() {
                         Bloco
                     </button>
                     <button
-                        onClick={() => setSortField('createdAt')}
-                        className={`p-2 border rounded ${sortField === 'createdAt' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                        onClick={() => setSortField('created_at')}
+                        className={`p-2 border rounded ${sortField === 'created_at' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
                     >
                         Criação
                     </button>
                 </div>
             </div>
-            <div className="relative  shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
+            <div className="relative  shadow-md sm:rounded-lg justify-center items-center">
+                <table className="w-[100%] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center" >
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 justify-center items-center">
+                        <tr className="justify-center items-center">
                             <th scope="col" className="px-4 py-3 w-24">Nome</th>
                             <th scope="col" className="px-4 py-3 w-32">CPF</th>
                             <th scope="col" className="px-4 py-3 w-20">Tem Carro</th>
                             <th scope="col" className="px-4 py-3 w-40">Carro</th>
                             <th scope="col" className="px-4 py-3 w-40">Localização</th>
                             <th scope="col" className="px-4 py-3 w-64">Status e Observação</th>
-                            {sortField === 'createdAt' ? <th scope="col" className="px-4 py-3 w-64">Criado em:</th> : ''}
+                            {sortField === 'created_at' ? <th scope="col" className="px-4 py-3 w-64">Criado em:</th> : ''}
                             <th scope="col" className="px-4 py-3 w-32">Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="justify-center items-center">
                         {(filterByName ? displayedInquilinos : displayedInquilinosFindByName)
                             .filter((inquilino) => !inquilino.is_deleted)
                             .map((inquilino) => (
                                 <tr key={inquilino.id} className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl">
-                                    <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-[3%]">
                                         {editId === inquilino.id ? (
                                             <Input
                                                 type="text"
@@ -213,7 +231,7 @@ export default function Tables() {
                                             />
                                         ) : inquilino.nome}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 w-[3%]">
                                         {editId === inquilino.id ? (
                                             <Input
                                                 type="number"
@@ -224,7 +242,7 @@ export default function Tables() {
                                             />
                                         ) : inquilino.cpf}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 w-[8%]">
                                         {editId === inquilino.id ? (
                                             <Input
                                                 type="checkbox"
@@ -234,7 +252,7 @@ export default function Tables() {
                                             />
                                         ) : inquilino.tem_carro ? "Sim" : "Não"}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 w-[10%]">
                                         {editId === inquilino.id ? (
                                             <div>
                                                 <span>
@@ -267,13 +285,13 @@ export default function Tables() {
                                             </div>
                                         ) : (
                                             <div>
-                                                <p>{inquilino.quantidade_carros === 1 ? `${inquilino.quantidade_carros} carro` : `${inquilino.quantidade_carros} carros`}</p>
+                                                <p>{inquilino.quantidade_carros === 1 ? <strong>{inquilino.quantidade_carros} Carro</strong> : <strong>{inquilino.quantidade_carros} Carros</strong>}</p>
                                                 <p>{inquilino.modelo_carro}</p>
-                                                <p>{inquilino.placa_carro}</p>
+                                                <p><strong>{inquilino.placa_carro}</strong></p>
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 w-[3%]">
                                         {editId === inquilino.id ? (
                                             <div>
                                                 <span>
@@ -322,34 +340,31 @@ export default function Tables() {
                                                 <p><strong>
                                                     {inquilino.status === 'inquilino' && 'Inquilino'}
                                                     {inquilino.status === 'proprietario' && 'Proprietário'}
-                                                    {inquilino.status === 'tenente' && 'Tenente'}
                                                 </strong></p>
                                                 <p>{inquilino.comunicado_importante}</p>
                                             </>
                                         )}
                                     </td>
-                                    {sortField === 'createdAt'
+                                    {sortField === 'created_at'
                                         ?
-                                        <td className="px-4">
+                                        <td className="px-4 w-[100%]">
                                             {editId === inquilino.id ? (
                                                 <div>
-                                                    <span>
-                                                        Criado em:
-                                                        <Input
-                                                            type="text"
-                                                            name="createdAt"
-                                                            onChange={handleChange}
-                                                            disabled
-                                                        />
-                                                    </span>
+                                                    <div>
+                                                        <span>
+                                                            {formData.created_at ? formatDateString(formData.created_at) : 'Data não disponível'}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             ) : (
-                                                <span>{formData.createdAt.toLocaleDateString()}</span>
+                                                <span>
+                                                    {inquilino.created_at ? formatDateString(inquilino.created_at) : 'Data não disponível a'}
+                                                </span>
                                             )}
                                         </td>
                                         :
                                         ''}
-                                    <td className="px-4 py-4 flex flex-col">
+                                    <td className="px-4 py-4 flex flex-col w-[120px]">
                                         {editId === inquilino.id ? (
                                             <>
                                                 <ButtonSave className="mb-2" onClick={confirmSave}>Salvar</ButtonSave>

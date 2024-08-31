@@ -17,6 +17,9 @@ export default function Inquilinos() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const obj = selected === 'currentInquilino' ? { className: 'w-[1000px]' } : {};
+
+
     const [formData, setFormData] = useState<TypeInquilinos>({
         id: 0,
         nome: "",
@@ -30,7 +33,7 @@ export default function Inquilinos() {
         comunicado_importante: "",
         is_deleted: false,
         bloco: '',
-        createdAt: new Date()
+        created_at: ''
     });
 
     const closeModal = () => {
@@ -66,8 +69,13 @@ export default function Inquilinos() {
             return;
         }
 
+        const currentDate = new Date().toISOString();
+
         try {
-            await createInquilino(formData);
+            await createInquilino({
+                ...formData,
+                created_at: currentDate
+            });
             setFormData({
                 id: 0,
                 nome: "",
@@ -81,7 +89,7 @@ export default function Inquilinos() {
                 comunicado_importante: "",
                 is_deleted: false,
                 bloco: '',
-                createdAt: new Date()
+                created_at: ''
             });
         } catch (error) {
             console.log(error)
@@ -98,7 +106,6 @@ export default function Inquilinos() {
                 ...prevData,
                 [name]: checked
             }));
-            console.log('checado');
         } else {
             if (name === "nome") {
                 if (regex.test(value)) {
@@ -106,7 +113,6 @@ export default function Inquilinos() {
                         ...prevData,
                         [name]: value
                     }));
-                    console.log('Valor atualizado: apenas letras');
                 } else {
                     console.log('Entrada inválida: apenas letras são permitidas');
                 }
@@ -128,16 +134,13 @@ export default function Inquilinos() {
                         ...prevData,
                         [name]: numericValue
                     }));
-                    console.log('Valor atualizado: quantidade de carros');
                 } else {
-                    console.log('Entrada inválida: o valor máximo permitido é 9');
                 }
             } else {
                 setFormData(prevData => ({
                     ...prevData,
                     [name]: value
                 }));
-                console.log('não checado');
             }
         }
     };
@@ -201,7 +204,7 @@ export default function Inquilinos() {
                         </span>
                     </BrevelyDescription>
                 </HeaderInquilinos>
-                <div>
+                <div {...obj} >
                     {selected === 'cadasterInquilino' && (
                         <Form onSubmit={handleCreate}>
                             <FormContainer>
@@ -372,7 +375,9 @@ export default function Inquilinos() {
                         </Form>
                     )}
                     {selected === 'currentInquilino' && (
-                        <Tables />
+                        <div className="w-[50%]">
+                            <Tables />
+                        </div>
                     )}
                     {selected === 'deletedsInquilinos' && (
                         <DeletedInquilinosTable />
