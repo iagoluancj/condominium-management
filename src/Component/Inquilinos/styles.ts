@@ -1,4 +1,5 @@
 import styled from "styled-components";
+const imageFundo = require('../../Assets/semFundo.png');
 
 interface OptionActionProps {
   $isSelected: boolean;
@@ -22,10 +23,15 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     gap: 2rem;
     margin-top: 15vh;
 
+
+
     ${({ $isSelectedCurrent }) =>
     $isSelectedCurrent &&
     `  
     `}
+`
+
+export const ImageDiv = styled.img`
 `
 
 export const ActionsInquilino = styled.div`

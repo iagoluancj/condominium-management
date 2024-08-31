@@ -16,6 +16,7 @@ export type TypeInquilinos = {
     comunicado_importante: string;
     is_deleted: boolean;
     bloco: string
+    createdAt: Date;
 };
 
 
@@ -23,7 +24,7 @@ type SortField = keyof TypeInquilinos;
 
 export default function Tables() {
     const [sortField, setSortField] = useState<SortField>('nome');
-    const { typeInquilinos, updateInquilino, createInquilino, deletedInquilino } = useContext(SupaContext);
+    const { typeInquilinos, updateInquilino, deletedInquilino } = useContext(SupaContext);
     const [editId, setEditId] = useState<number | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [filterTerm, setFilterTerm] = useState<string>("");
@@ -43,7 +44,8 @@ export default function Tables() {
         status: "inquilino",
         comunicado_importante: "",
         is_deleted: false,
-        bloco: ''
+        bloco: '',
+        createdAt: new Date()
     });
 
     // const getBlockColor = (colorByOrder: string) => {
@@ -189,6 +191,12 @@ export default function Tables() {
                     >
                         Bloco
                     </button>
+                    <button
+                        onClick={() => setSortField('createdAt')}
+                        className={`p-2 border rounded ${sortField === 'createdAt' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                    >
+                        Criação
+                    </button>
                 </div>
             </div>
             <div className="relative  shadow-md sm:rounded-lg">
@@ -201,6 +209,7 @@ export default function Tables() {
                             <th scope="col" className="px-4 py-3 w-40">Carro</th>
                             <th scope="col" className="px-4 py-3 w-40">Localização</th>
                             <th scope="col" className="px-4 py-3 w-64">Status e Observação</th>
+                            {sortField === 'createdAt' ? <th scope="col" className="px-4 py-3 w-64">Criado em:</th> : ''}
                             <th scope="col" className="px-4 py-3 w-32">Ações</th>
                         </tr>
                     </thead>
@@ -334,6 +343,27 @@ export default function Tables() {
                                             </>
                                         )}
                                     </td>
+                                    {sortField === 'createdAt'
+                                        ?
+                                        <td className="px-4">
+                                            {editId === inquilino.id ? (
+                                                <div>
+                                                    <span>
+                                                        Criado em:
+                                                        <Input
+                                                            type="text"
+                                                            name="createdAt"
+                                                            onChange={handleChange}
+                                                            disabled
+                                                        />
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <span>{formData.createdAt.toLocaleDateString()}</span>
+                                            )}
+                                        </td>
+                                        :
+                                        ''}
                                     <td className="px-4 py-4 flex flex-col">
                                         {editId === inquilino.id ? (
                                             <>

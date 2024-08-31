@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
 import { toast } from "react-toastify";
-import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, InputForm, DivLabel, FormContainer, InputText, InputCPF, StyledInputCPF, InputWrapperCPF, InputWrapperComunicadoImportante, StyledInputComunicadoImportante, InputComunicadoImportante, StyledInputQuantidadeCarros, InputWrapperQuantidadeCarros, InputModeloCarro, StyledInputModeloCarro, InputWrapperModeloCarro, InputPlacaCarro, StyledInputPlacaCarro, InputWrapperPlacaCarro, InputApartamento, StyledInputApartamento, InputWrapperApartamento, InputStatus, StyledInputStatus, InputWrapperStatus, InputBloco, StyledInputBloco, InputWrapperBloco, InputQuantidadeCarros, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input } from "./styles";
+import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, InputForm, DivLabel, FormContainer, InputText, InputCPF, StyledInputCPF, InputWrapperCPF, InputWrapperComunicadoImportante, StyledInputComunicadoImportante, InputComunicadoImportante, StyledInputQuantidadeCarros, InputWrapperQuantidadeCarros, InputModeloCarro, StyledInputModeloCarro, InputWrapperModeloCarro, InputPlacaCarro, StyledInputPlacaCarro, InputWrapperPlacaCarro, InputApartamento, StyledInputApartamento, InputWrapperApartamento, InputStatus, StyledInputStatus, InputWrapperStatus, InputBloco, StyledInputBloco, InputWrapperBloco, InputQuantidadeCarros, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input, ImageDiv } from "./styles";
 import { FiEdit } from "react-icons/fi";
 
 import { IoIosArrowForward } from "react-icons/io";
@@ -22,6 +22,7 @@ export type TypeInquilinos = {
     comunicado_importante: string;
     is_deleted: boolean;
     bloco: string
+    createdAt: string;
 };
 
 type SortField = keyof TypeInquilinos;
@@ -29,11 +30,7 @@ type SortField = keyof TypeInquilinos;
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')
     const [title, setTitle] = useState('Cadastrar novo inquilino')
-    const [sortField, setSortField] = useState<SortField>('nome');
-    const { typeInquilinos, updateInquilino, createInquilino, deletedInquilino } = useContext(SupaContext);
-    const [editId, setEditId] = useState<number | null>(null);
-    const [editMode, setEditMode] = useState<number | null>(null);
-    const [filterTerm, setFilterTerm] = useState<string>("");
+    const { updateInquilino, createInquilino, deletedInquilino } = useContext(SupaContext);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -49,7 +46,8 @@ export default function Inquilinos() {
         status: "inquilino",
         comunicado_importante: "",
         is_deleted: false,
-        bloco: ''
+        bloco: '',
+        createdAt: ''
     });
 
     const closeModal = () => {
@@ -59,8 +57,6 @@ export default function Inquilinos() {
     const confirmSave = async () => {
         try {
             await updateInquilino(formData);
-            setEditMode(null);
-            setEditId(0)
         } catch (error) {
             console.error("Erro ao editar o inquilino:", error);
         } finally {
@@ -101,7 +97,8 @@ export default function Inquilinos() {
                 status: "inquilino",
                 comunicado_importante: "",
                 is_deleted: false,
-                bloco: ''
+                bloco: '',
+                createdAt: ''
             });
         } catch (error) {
             console.log(error)
@@ -131,11 +128,11 @@ export default function Inquilinos() {
                     console.log('Entrada inválida: apenas letras são permitidas');
                 }
             } else if (name === "cpf") {
-                const numericValue = value.replace(/\D/g, ''); 
+                const numericValue = value.replace(/\D/g, '');
                 if (numericValue.length <= 11) {
                     setFormData(prevData => ({
                         ...prevData,
-                        [name]: numericValue ? parseInt(numericValue) : 0 
+                        [name]: numericValue ? parseInt(numericValue) : 0
                     }));
                     console.log('Valor atualizado: apenas números');
                 } else {
