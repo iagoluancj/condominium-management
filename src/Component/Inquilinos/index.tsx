@@ -375,7 +375,7 @@ export default function Inquilinos() {
                         </Form>
                     )}
                     {selected === 'currentInquilino' && (
-                        <div className="w-[50%]">
+                        <div className="">
                             <Tables />
                         </div>
                     )}

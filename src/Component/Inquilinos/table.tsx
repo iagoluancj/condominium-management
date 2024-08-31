@@ -203,7 +203,7 @@ export default function Tables() {
                 </div>
             </div>
             <div className="relative  shadow-md sm:rounded-lg justify-center items-center">
-                <table className="w-[100%] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center" >
+                <table className=" text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center" >
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 justify-center items-center">
                         <tr className="justify-center items-center">
                             <th scope="col" className="px-4 py-3 w-24">Nome</th>
@@ -291,7 +291,7 @@ export default function Tables() {
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-4 py-4 w-[3%]">
+                                    <td className="px-4 py-4 ">
                                         {editId === inquilino.id ? (
                                             <div>
                                                 <span>
@@ -315,7 +315,7 @@ export default function Tables() {
                                             </div>
                                         ) : `${inquilino.apartamento} - ${inquilino.bloco}`}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 ">
                                         {editId === inquilino.id ? (
                                             <>
                                                 <select
@@ -341,13 +341,13 @@ export default function Tables() {
                                                     {inquilino.status === 'inquilino' && 'Inquilino'}
                                                     {inquilino.status === 'proprietario' && 'Proprietário'}
                                                 </strong></p>
-                                                <p>{inquilino.comunicado_importante}</p>
+                                                <p>{inquilino.comunicado_importante === '' ? <span>Sem observação adicional</span> : inquilino.comunicado_importante}</p>
                                             </>
                                         )}
                                     </td>
                                     {sortField === 'created_at'
                                         ?
-                                        <td className="px-4 w-[100%]">
+                                        <td className="px-4 ">
                                             {editId === inquilino.id ? (
                                                 <div>
                                                     <div>
