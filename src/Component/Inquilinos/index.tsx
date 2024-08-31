@@ -8,24 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../Modal/modal";
 import Tables from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
-
-export type TypeInquilinos = {
-    id: number;
-    nome: string;
-    cpf: number;
-    tem_carro: boolean;
-    quantidade_carros: number;
-    modelo_carro: string;
-    placa_carro: string;
-    apartamento: string;
-    status: string;
-    comunicado_importante: string;
-    is_deleted: boolean;
-    bloco: string
-    createdAt: Date;
-};
-
-type SortField = keyof TypeInquilinos;
+import { TypeInquilinos } from "@/@Types/types";
 
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')

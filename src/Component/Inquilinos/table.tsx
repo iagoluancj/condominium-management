@@ -2,23 +2,7 @@ import React, { useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
 import ConfirmModal from "../Modal/modal";
 import { Button, ButtonDeleted, ButtonSave, Input } from "./styles";
-
-export type TypeInquilinos = {
-    id: number;
-    nome: string;
-    cpf: number;
-    tem_carro: boolean;
-    quantidade_carros: number;
-    modelo_carro: string;
-    placa_carro: string;
-    apartamento: string;
-    status: string;
-    comunicado_importante: string;
-    is_deleted: boolean;
-    bloco: string
-    createdAt: Date;
-};
-
+import { TypeInquilinos } from "@/@Types/types";
 
 type SortField = keyof TypeInquilinos;
 
