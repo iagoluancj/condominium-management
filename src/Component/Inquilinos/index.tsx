@@ -22,7 +22,7 @@ export type TypeInquilinos = {
     comunicado_importante: string;
     is_deleted: boolean;
     bloco: string
-    createdAt: string;
+    createdAt: Date;
 };
 
 type SortField = keyof TypeInquilinos;
@@ -47,7 +47,7 @@ export default function Inquilinos() {
         comunicado_importante: "",
         is_deleted: false,
         bloco: '',
-        createdAt: ''
+        createdAt: new Date()
     });
 
     const closeModal = () => {
@@ -98,7 +98,7 @@ export default function Inquilinos() {
                 comunicado_importante: "",
                 is_deleted: false,
                 bloco: '',
-                createdAt: ''
+                createdAt: new Date()
             });
         } catch (error) {
             console.log(error)

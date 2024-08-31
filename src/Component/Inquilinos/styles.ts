@@ -1,5 +1,4 @@
 import styled from "styled-components";
-const imageFundo = require('../../Assets/semFundo.png');
 
 interface OptionActionProps {
   $isSelected: boolean;
