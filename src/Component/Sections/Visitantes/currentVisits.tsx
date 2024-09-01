@@ -229,7 +229,7 @@ export default function VisitsTable() {
                 show={showDeleteModal}
                 onClose={() => setShowDeleteModal(false)}
                 onConfirm={confirmDelete}
-                message="Realmente deseja deletar este inquilino?"
+                message="Realmente deseja deletar essa visita?"
             />
         </div>
     );
