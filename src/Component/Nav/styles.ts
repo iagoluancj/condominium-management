@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Navigation = styled.nav`
     width: 100%;
-    background-color: var(--backgroundColor);
+    background-color: var(--focusText);
     height: 5rem;
     color: var(--brancoPastelFont);
     display: flex;
@@ -56,7 +56,7 @@ export const IconDarkOrLight = styled(Icons)`
 
 export const MenuDiv = styled.div`
     width: 11rem;
-    height: 100%;
+    height: calc(100vh + 100vw);
     box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.1);
     z-index: 6;
     background-color: var(--brancoPastelFont);
@@ -67,13 +67,12 @@ export const MenuDiv = styled.div`
     margin-right: 10rem;
 
     transition: ease-in .1s;
-
 `
 
 export const NavMenu = styled.div`
     width: 100%;
     height: 5rem;
-    background-color: #00003E;
+    background-color: var(--focusText);
     color: var(--brancoPastelFont);
     box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -81,8 +80,6 @@ export const NavMenu = styled.div`
     justify-content: center;
 
     transition: ease-in .1s;
-
-
 
 `
 

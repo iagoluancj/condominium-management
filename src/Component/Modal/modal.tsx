@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonDeleted } from "../Inquilinos/styles";
+import { ButtonDeleted } from "../Sections/Inquilinos/styles";
 import { ButtonDeletedModal, ButtonModal } from "./styles";
 
 interface ModalProps {

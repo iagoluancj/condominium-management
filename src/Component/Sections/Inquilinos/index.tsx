@@ -5,10 +5,11 @@ import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, 
 import { FiEdit } from "react-icons/fi";
 
 import { IoIosArrowForward } from "react-icons/io";
-import ConfirmModal from "../Modal/modal";
+import ConfirmModal from "../../Modal/modal";
 import Tables from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
 import { TypeInquilinos } from "@/Types/types";
+import { IoPeopleSharp } from "react-icons/io5";
 
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')
@@ -18,8 +19,6 @@ export default function Inquilinos() {
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
     const obj = selected === 'currentInquilino' ? { className: 'w-[1000px]' } : {};
-
-
     const [formData, setFormData] = useState<TypeInquilinos>({
         id: 0,
         nome: "",
@@ -172,7 +171,7 @@ export default function Inquilinos() {
                 <IconInquilino>
                     <h2>Gerenciamento de inquilinos
                     </h2>
-                    <FiEdit size={18} />
+                    <IoPeopleSharp size={18} />
                 </IconInquilino>
                 <OptionsActionInquilos>
                     <OptionAction onClick={() => alterSelected('cadasterInquilino')} $isSelected={selected === 'cadasterInquilino'}>
@@ -337,6 +336,7 @@ export default function Inquilinos() {
                                                 >
                                                     <option value="inquilino">Inquilino</option>
                                                     <option value="proprietario">Proprietário</option>
+                                                    <option value="morador">Morador</option>
                                                 </StyledSelectStatus>
                                             </InputWrapperStatus>
                                         </Label>

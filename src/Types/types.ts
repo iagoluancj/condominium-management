@@ -14,3 +14,18 @@ export type TypeInquilinos = {
     bloco: string
     created_at: string;
 };
+
+export type TypeVisit = {
+    id: number;
+    nomevisitante: string;
+    datavisita: string;
+    fimvisita: string;
+    localvisita: string;
+    cpfinquilinopermissao: string;
+    horarioinicio: string;
+    horariofim: string;
+    cpfvisitante: string;
+    observacoes: string;
+    created_at: string;
+    deleted_at: string;
+};

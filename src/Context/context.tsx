@@ -5,7 +5,7 @@ import { createContext } from "react";
 import ToastProvider from "@/lib/ToastProvider";
 import { toast } from "react-toastify";
 import { getInquilinos } from "@/Routes/getInquilinos";
-import { TypeInquilinos } from "@/Types/types";
+import { TypeInquilinos, TypeVisit, } from "@/Types/types";
 
 // type TypeInquilinos = {
 //     id: number
@@ -27,12 +27,16 @@ import { TypeInquilinos } from "@/Types/types";
 
 type SupaContextType = {
     typeInquilinos: TypeInquilinos[]
-    ChangePage: boolean,
+    contextVisits: TypeVisit[]
+    ChangePage: string,
     updateInquilino: (inquilinoData: TypeInquilinos) => void;
+    updateVisitante: (visitanteData: TypeVisit) => void;
     createInquilino: (inquilinoData: Omit<TypeInquilinos, 'id'>) => void;
+    createVisit: (visitData: Omit<TypeVisit, 'id'>) => void;
     deletedInquilinoDEFINITIVY: (cpf: number) => void
     deletedInquilino: (cpf: number) => void
-    handleChangePage: (change: boolean) => void
+    deletedVisits: (cpf: number) => void
+    handleChangePage: (change: string) => void
 }
 
 type SupaProviderProps = {
@@ -41,23 +45,28 @@ type SupaProviderProps = {
 
 export const SupaContext = createContext({
     typeInquilinos: [],
-    ChangePage: false,
+    contextVisits: [],
+    ChangePage: '',
     updateInquilino: () => { },
+    updateVisitante: () => { },
     deletedInquilinoDEFINITIVY: () => { },
     deletedInquilino: () => { },
+    deletedVisits: () => { },
     createInquilino: () => { },
+    createVisit: () => { },
     handleChangePage: () => { },
     children: null
 } as SupaContextType)
 
 const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [inquilinos, setInquilinos] = useState<TypeInquilinos[]>([])
-    const [changePage, setChangePage] = useState(false)
+    const [visits, setVisits] = useState<TypeVisit[]>([])
+    const [changePage, setChangePage] = useState('Visitantes')
 
-    const fetchInquilinos = async () => {
-        const data = await getInquilinos();
-        setInquilinos(data || []);
-    }
+    // const fetchInquilinos = async () => {
+    //     const data = await getInquilinos();
+    //     setInquilinos(data || []);
+    // }
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
         const { id, ...fieldsToUpdate } = inquilinoData;
@@ -72,6 +81,21 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             toast.success("Inquilino editado.");
         }
     };
+
+    const updateVisitante = async (visitanteData: TypeVisit) => {
+        const { id, ...fieldsToUpdate } = visitanteData;
+        const { data, error } = await supabase
+            .from('visitantes')
+            .update(fieldsToUpdate)
+            .eq('id', id);
+
+        if (error) {
+            toast.error("Ocorreu um erro ao tentar editar o visitante.");
+        } else {
+            toast.success("Visitante editado com sucesso.");
+        }
+    };
+
 
     const deletedInquilinoDEFINITIVY = async (cpf: number) => {
         const { data, error } = await supabase
@@ -99,6 +123,44 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             }
         }
     };
+
+    const deletedVisits = async (id: number) => {
+        try {
+            // Obtendo o registro da visita para pegar o valor atual de `fimvisita`
+            const { data: visit, error: fetchError } = await supabase
+                .from('visitantes')
+                .select('fimvisita')
+                .eq('id', id)
+                .single();
+
+            if (fetchError) {
+                throw new Error(fetchError.message);
+            }
+
+            if (visit) {
+                const { data, error } = await supabase
+                    .from('visitantes')
+                    .update({
+                        deletado: true,
+                        deleted_date: visit.fimvisita, // Grava histórico da data original
+                        fimvisita: new Date().toISOString() // Atualiza com a data e hora atual
+                    })
+                    .eq('id', id);
+
+                if (error) {
+                    throw new Error(error.message);
+                }
+
+                toast.success("Visita deletada com sucesso.");
+            } else {
+                toast.error("Visita não encontrada.");
+            }
+        } catch (error) {
+            toast.error(`Ocorreu um erro ao tentar deletar a visita`);
+        }
+    };
+
+
 
     const createInquilino = async (inquilinoData: Omit<TypeInquilinos, 'id'>) => {
         const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento, status, comunicado_importante, bloco, created_at } = inquilinoData;
@@ -136,16 +198,60 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
-    const handleChangePage = (change: boolean) => {
-        if (change) {
-            setChangePage(false)
-        } else {
-            setChangePage(true)
+    const createVisit = async (
+        visitData: Omit<TypeVisit, 'id'>
+    ) => {
+        const {
+            nomevisitante,
+            datavisita,
+            fimvisita,
+            localvisita,
+            cpfinquilinopermissao,
+            horarioinicio,
+            horariofim,
+            cpfvisitante,
+            observacoes,
+            created_at,
+            deleted_at
+        } = visitData;
+
+        try {
+            const { data, error } = await supabase
+                .from('visitantes')
+                .insert([
+                    {
+                        nomevisitante,
+                        datavisita,
+                        fimvisita,
+                        localvisita,
+                        cpfinquilinopermissao,
+                        horarioinicio,
+                        horariofim,
+                        cpfvisitante,
+                        observacoes,
+                        created_at,
+                        deleted_at
+                    }
+                ]);
+
+            if (error) {
+                console.error(error);
+                toast.error("Erro ao registrar a visita.");
+            } else {
+                toast.success("Visita registrada com sucesso!");
+            }
+        } catch (error) {
+            console.error("Erro ao criar a visita", error);
+            toast.error("Erro ao registrar a visita.");
         }
+    };
+
+    const handleChangePage = (change: string) => {
+        setChangePage(change)
     }
 
     useEffect(() => {
-        const getAll = async () => {
+        const getAllInquilinos = async () => {
             let { data: inquilinoData } = await supabase
                 .from('inquilinos')
                 .select('*')
@@ -155,13 +261,26 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             return { inquilinoData };
         }
 
+        const getAllVisitantes = async () => {
+            let { data: visitanteData } = await supabase
+                .from('visitantes')
+                .select('*')
+                .order('id')
+                .returns<TypeVisit[]>()
+
+            return { visitanteData };
+        }
+
         (async () => {
-            const { inquilinoData } = await getAll();
+            const { inquilinoData } = await getAllInquilinos();
             setInquilinos(inquilinoData || []);
+
+            const { visitanteData } = await getAllVisitantes();
+            setVisits(visitanteData || [])
         })();
 
-        const channel = supabase
-            .channel('schema-db-changes')
+        const inquilinosChannel = supabase
+            .channel('inquilinos-db-changes')
             .on(
                 'postgres_changes',
                 {
@@ -170,19 +289,36 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                     table: 'inquilinos',
                 },
                 (payload) => {
-                    console.log('Change received:', payload);
-                    fetchInquilinos(); 
+                    console.log('Change received for inquilinos:', payload);
+                    getAllInquilinos().then(({ inquilinoData }) => setInquilinos(inquilinoData || []));
+                }
+            )
+            .subscribe();
+
+        const visitantesChannel = supabase
+            .channel('visitantes-db-changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'visitantes',
+                },
+                (payload) => {
+                    console.log('Change received for visitantes:', payload);
+                    getAllVisitantes().then(({ visitanteData }) => setVisits(visitanteData || []));
                 }
             )
             .subscribe();
 
         return () => {
-            channel.unsubscribe();
+            inquilinosChannel.unsubscribe();
+            visitantesChannel.unsubscribe();
         };
     }, []);
 
     return (
-        <SupaContext.Provider value={{ ChangePage: changePage, typeInquilinos: inquilinos, updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, handleChangePage }}>
+        <SupaContext.Provider value={{ ChangePage: changePage, typeInquilinos: inquilinos, contextVisits: visits, updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, updateVisitante, handleChangePage, deletedVisits, createVisit }}>
             <ToastProvider>
                 {children}
             </ToastProvider>

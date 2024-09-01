@@ -152,8 +152,6 @@ export const InputForm = styled.input`
 `
 export const InputFormCarro = styled(InputForm)`
         transition: ease-in .2s;
-
-
 `
 
 export const LabelTemCarro = styled(Label) <selectCar>`

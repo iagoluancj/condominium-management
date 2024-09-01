@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
-import ConfirmModal from "../Modal/modal";
+import ConfirmModal from "../../Modal/modal";
 import { Button, ButtonDeleted, ButtonSave, Input } from "./styles";
 import { TypeInquilinos } from "@/Types/types";
 
@@ -340,8 +340,9 @@ export default function Tables() {
                                                 <p><strong>
                                                     {inquilino.status === 'inquilino' && 'Inquilino'}
                                                     {inquilino.status === 'proprietario' && 'Proprietário'}
+                                                    {inquilino.status === 'morador' && 'Morador'}
                                                 </strong></p>
-                                                <p>{inquilino.comunicado_importante === '' ? <span>Sem observação adicional</span> : inquilino.comunicado_importante}</p>
+                                                <p>{inquilino.comunicado_importante === '' ? <span>Sem observação adicional.</span> : inquilino.comunicado_importante}</p>
                                             </>
                                         )}
                                     </td>

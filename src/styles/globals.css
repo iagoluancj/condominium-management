@@ -14,6 +14,10 @@
 }
 
 
+input {
+    border: none;
+    outline: none;
+}
 
 .modal-overlay {
     position: fixed;
@@ -53,4 +57,4 @@ button {
     cursor: pointer;
     outline: none;
     box-shadow: none;
-  }
+}

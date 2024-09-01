@@ -1,7 +1,8 @@
-import { BiHome, BiMenu, BiNotification, BiSolidBuildings } from 'react-icons/bi'
+import { BiMenu} from 'react-icons/bi'
 import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
 import { GrNotification, GrUser } from 'react-icons/gr'
-import { FiCodesandbox, FiEdit } from 'react-icons/fi'
+import { TiHome } from "react-icons/ti";
+import { FaEdit } from "react-icons/fa";
 import { CgDarkMode } from "react-icons/cg";
 import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
@@ -17,11 +18,7 @@ export default function NavBar() {
     };
 
     const toggleChangePage = (page: string) => {
-        if (page === 'home') {
-            handleChangePage(!true)
-        } else if (page === 'inquilinos') {
-            handleChangePage(!false)
-        }
+        handleChangePage(page)
     };
 
 
@@ -50,23 +47,19 @@ export default function NavBar() {
                     </NavMenu>
                     <MenuContainer>
                         <IconsContainer>
-                            <IconsMenu onClick={() => toggleChangePage('home')}>
-                                <BiHome size={30} />
+                            <IconsMenu onClick={() => toggleChangePage('HomePage')}>
+                                <TiHome size={30} />
                                 <span>Home</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('inquilinos')}>
-                                <FiEdit size={24} />
+                            <IconsMenu onClick={() => toggleChangePage('Inquilinos')}>
+                                <IoPeopleSharp  size={24} />
                                 <span>Inquilinos</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('')}>
-                                <IoPeopleSharp size={24} />
-                                <span>Moradores</span>
-                            </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('')}>
+                            <IconsMenu onClick={() => toggleChangePage('Visitantes')}>
                                 <MdEmojiPeople size={24} />
                                 <span>Visitantes</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('')}>
+                            <IconsMenu onClick={() => toggleChangePage('Encomendas')}>
                                 <MdLocalShipping  size={24} />
                                 <span>Encomendas</span>
                             </IconsMenu>

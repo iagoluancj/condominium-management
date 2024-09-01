@@ -15,11 +15,10 @@ export default function Home() {
         <title>Condominium Management</title>
       </Head>
       <SupaProvider>
-          <>
-            <NavBar></NavBar>
-            <MainInquilinos></MainInquilinos>
-            {/* <Nav/> //Criado inicialmente para testes */}
-          </>
+        <>
+          <NavBar></NavBar>
+          <MainInquilinos></MainInquilinos>
+        </>
       </SupaProvider>
     </>
   );
