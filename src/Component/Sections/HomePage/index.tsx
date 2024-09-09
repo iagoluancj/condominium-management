@@ -1,37 +1,90 @@
-import React from 'react';
+import styled from 'styled-components';
+import teste from './images/developing.svg'
+import { DivContainer, Container, Content, Footer, FooterLink, FooterText, Header, ImageWrapper, Subtitle } from './styles';
+import page2 from './images/page2.svg'
 
-export default function HomePage() {
-    return (
-        <div className="container mx-auto p-4 mt-[15vh]">
-            <header className="mb-8">
-                <h1 className="text-4xl font-bold">Bem-vindo à Página Inicial</h1>
-                <p className="text-lg text-gray-600 mt-2">Descubra as principais funcionalidades e novidades do nosso sistema de gerenciamento de condomínio.</p>
-            </header>
-            <main>
-                <section className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-4">Principais Recursos</h2>
-                    <ul className="list-disc list-inside pl-5">
-                        <li className="mb-2">Cadastro de Inquilinos: Facilite o registro e a administração dos moradores do seu condomínio.</li>
-                        <li className="mb-2">Visualização dos Inquilinos: Acesse uma lista atualizada dos inquilinos com informações detalhadas.</li>
-                        <li className="mb-2">Visão Geral do Condomínio: Obtenha uma visão completa das operações e status do seu condomínio.</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2 className="text-2xl font-semibold mb-4">Notícias e Atualizações</h2>
-                    <p className="mb-4">Mantenha-se informado sobre as últimas novidades e desenvolvimentos no nosso sistema.</p>
-                    <ul className="list-disc list-inside pl-5">
-                        <li className="mb-2">Guia de Moradores em Desenvolvimento: Em breve, um guia completo para auxiliar no gerenciamento dos moradores.</li>
-                        <li className="mb-2">Guia de Visitantes em Desenvolvimento: Estamos preparando um guia para facilitar o acesso e a gestão de visitantes.</li>
-                        <li className="mb-2">Formulário Completo: Nosso formulário para cadastro e solicitações está agora 100% funcional em suas validações e pronto para uso.</li>
-                    </ul>
-                </section>
-            </main>
-            <footer className="text-end mt-8">
-                <p className="text-gray-600">© 2024 Condominium Management. Todos os direitos reservados.</p>
-                <p>
-                    Created By <a href="https://iagoluancj.github.io/Portifolio-React/" target='_blank'><strong><i>Iago Jesus</i></strong></a>
-                </p>
-            </footer>
-        </div>
-    );
-}
+import peoples from './images/peoples.svg'
+import hands from './images/hands.svg'
+import building from './images/building.svg'
+
+import members from './images/members.svg'
+import click from './images/click.svg'
+import hand from './images/hand.svg'
+import card from './images/card.svg'
+import { MdCardMembership } from 'react-icons/md';
+import { IoPeopleSharp } from 'react-icons/io5';
+import { FaPrayingHands } from 'react-icons/fa';
+
+export const HomePage = () => (
+    <>
+        <Container>
+            {/* <div>
+                <h1>Manage your entire community in a single system</h1>
+                <p>Who is Nextcent suitable for?</p>
+            </div>
+            <div>
+                <div>
+                    <img src={peoples.src} alt="" />
+                    <h4>Membership Organisations</h4>
+                    <p>Our membership management software provides full automation of membership renewals and payments</p>
+                </div>
+                <div>
+                    <img src={hands.src} alt="" />
+                    <h4>National Associations</h4>
+                    <p>Our membership management software provides full automation of membership renewals and payments</p>
+                </div>
+                <div>
+                    <img src={building.src} alt="" />
+                    <h4>Clubs And Groups</h4>
+                    <p>Our membership management software provides full automation of membership renewals and payments</p>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src={page2.src} alt="" />
+                </div>
+                <div>
+                    <h3>The unseen of spending three years at Pixelgrade</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet justo ipsum. Sed accumsan quam vitae est varius fringilla. Pellentesque placerat vestibulum lorem sed porta. Nullam mattis tristique iaculis. Nullam pulvinar sit amet risus pretium auctor. Etiam quis massa pulvinar, aliquam quam vitae, tempus sem. Donec elementum pulvinar odio.</p>
+                    <button>Learn More</button>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h2>Helping a local <span>business reinvent itself</span></h2>
+                    <p>We reached here with our hard work and dedication</p>
+                </div>
+                <div>
+                    <div>
+                        <IoPeopleSharp />
+                        <div>
+                            <h3>2,245,341</h3>
+                            <p>Members</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src={click.src} alt="" />
+                        <div>
+                            <h3>828,867</h3>
+                            <p>Event Bookings</p>
+                        </div>
+                    </div>
+                    <div>
+                        <FaPrayingHands />
+                        <div>
+                            <h3>46,328</h3>
+                            <p>Clubs</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src={card.src} alt="" />
+                        <div>
+                            <h3>1,926,436</h3>
+                            <p>Payments</p>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
+        </Container>
+    </>
+);

@@ -12,6 +12,9 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/x-data-grid": "^7.14.0",
     "@nextui-org/react": "^2.4.6",
     "@nextui-org/system": "^2.2.5",
@@ -32,6 +35,7 @@
     "react-toastify": "^10.0.5",
     "shadcn-ui": "^0.8.0",
     "styled-components": "^6.1.12",
+    "swiper": "^11.1.12",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   },

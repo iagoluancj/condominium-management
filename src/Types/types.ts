@@ -29,3 +29,19 @@ export type TypeVisit = {
     created_at: string;
     deleted_at: string;
 };
+
+export type TypeEncomendas = {
+    id: number;
+    receivedby: string;
+    receivedto: string;
+    datareceived: string;
+    description: string;
+    deletedat: string | null;
+    acknowledgmentstatus: boolean;
+};
+
+export type TypeFuncionarios = {
+    id: number;
+    nome: string;
+    cpf: string;
+};

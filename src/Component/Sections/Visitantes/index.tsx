@@ -1,9 +1,9 @@
 import { SupaContext } from '@/Context/context';
-import { TypeVisit } from '@/Types/types';
-import React, { useContext, useState } from 'react';
+import { TypeInquilinos, TypeVisit } from '@/Types/types';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import InputComponent from '@/Component/Input';
-import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, Form, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
+import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, Form, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
 import { IoIosArrowForward } from 'react-icons/io';
 import { IoPeopleSharp } from 'react-icons/io5';
 import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, InputVisit, LabelVisit, SpanVisit } from './styles';
@@ -12,7 +12,7 @@ import CurrentVisits from './currentVisits';
 import { MdEmojiPeople } from 'react-icons/md';
 
 export default function Visitantes() {
-    const { createVisit } = useContext(SupaContext);
+    const { createVisit, typeInquilinos } = useContext(SupaContext);
     const [selected, setSelected] = useState('cadasterVisit')
     const [visitPerHour, setVisitPerHour] = useState(false)
     const [title, setTitle] = useState('Cadastrar uma nova visita')
@@ -31,7 +31,7 @@ export default function Visitantes() {
         deleted_at: ""
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
         if (name === 'cpfvisitante' || name === 'cpfinquilinopermissao') {
@@ -84,6 +84,14 @@ export default function Visitantes() {
         }));
     };
 
+    const getCPFmoradores = (typeInquilinos: TypeInquilinos[]): string[] => {
+        return typeInquilinos
+            .filter(inquilino => !inquilino.is_deleted) 
+            .map(inquilino => String(inquilino.cpf));   
+    };
+
+    const validCpfs = getCPFmoradores(typeInquilinos)
+
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -92,24 +100,34 @@ export default function Visitantes() {
             return;
         }
 
+        if (!validCpfs.includes(formData.cpfinquilinopermissao)) {
+            toast.error('Não existe morador com esse CPF.');
+            return;
+        }
+
+        if (formData.localvisita = '') {
+            toast.error('Preencha o local da visita.');
+            return;
+        }
+
         const currentDate = new Date().toISOString();
 
         const fimVisita = formData.fimvisita && formData.fimvisita !== "0"
             ? formData.fimvisita
-            : new Date().toISOString().slice(0, 10); 
+            : new Date().toISOString().slice(0, 10);
 
         try {
             await createVisit({
                 ...formData,
                 created_at: currentDate,
                 fimvisita: fimVisita,
-                deleted_at: "" 
+                deleted_at: ""
             });
             setFormData({
                 id: 0,
                 nomevisitante: "",
                 datavisita: "0",
-                fimvisita: "", 
+                fimvisita: "",
                 localvisita: "",
                 cpfinquilinopermissao: "",
                 horarioinicio: "0",
@@ -184,7 +202,7 @@ export default function Visitantes() {
                 </HeaderInquilinos>
                 {selected === 'cadasterVisit' && (
                     <Form onSubmit={handleCreate}>
-                        <p>Dados pessoais:</p>
+                        <H3Pessoal>Dados pessoais:</H3Pessoal>
                         <ContainerForm>
                             <InputComponent
                                 label="Nome do Visitante"
@@ -201,7 +219,7 @@ export default function Visitantes() {
                                 required
                             />
                         </ContainerForm>
-                        <h2>Inicio e fim:</h2>
+                        <H3Pessoal>Inicio e fim:</H3Pessoal>
                         <ContainerForm>
                             <LabelVisit $visitHour={visitPerHour}
                             >
@@ -253,19 +271,21 @@ export default function Visitantes() {
                                 />
                             </ContainerFormStyles>
                         </ContainerForm>
-                        <h2>Da visita:</h2>
+                        <H3Pessoal>Da visita:</H3Pessoal>
                         <ContainerForm>
                             <InputComponent
                                 label="Local da Visita: AP - Bloco"
                                 name="localvisita"
                                 value={formData.localvisita}
                                 onChange={handleChange}
+                                required
                             />
                             <InputComponent
-                                label="CPF do Inquilino aprovador"
+                                label="CPF do morador aprovador"
                                 name="cpfinquilinopermissao"
                                 value={formData.cpfinquilinopermissao}
                                 onChange={handleChange}
+                                suggestions={validCpfs}
                                 required
                             />
                         </ContainerForm>
@@ -275,6 +295,7 @@ export default function Visitantes() {
                             type='textarea'
                             value={formData.observacoes}
                             onChange={handleChange}
+                            height={100}
                         />
                         <ButtonCreateVisit type="submit">Criar visita</ButtonCreateVisit>
                     </Form>

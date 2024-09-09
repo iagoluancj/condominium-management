@@ -3,7 +3,8 @@ import Head from "next/head";
 import SupaProvider from "../Context/context";
 
 import { MainInquilinos, NavBar } from "@/Component";
-import logo from '../Assets/semFundo.png'
+import logo from '../Assets/iconLogo.png'
+import FooterCM from "@/Component/Footer";
 
 export default function Home() {
 
@@ -18,6 +19,7 @@ export default function Home() {
         <>
           <NavBar></NavBar>
           <MainInquilinos></MainInquilinos>
+          <FooterCM></FooterCM>
         </>
       </SupaProvider>
     </>

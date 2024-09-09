@@ -7,7 +7,7 @@ import Inquilinos from "../Sections/Inquilinos";
 import Visitantes from "../Sections/Visitantes";
 import Moradores from "../Sections/Moradores";
 import Encomendas from "../Sections/Encomendas";
-import HomePage from "../Sections/HomePage";
+import { HomePage } from "../Sections/HomePage";
 
 
 export default function MainInquilinos() {

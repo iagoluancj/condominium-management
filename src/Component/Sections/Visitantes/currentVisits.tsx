@@ -199,7 +199,7 @@ export default function VisitsTable() {
                                         </div>
                                     )}
                                 </td>
-                                <td className="px-4 py-4 flex flex-col w-[120px]">
+                                <td className="px-4 py-4 flex flex-col w-[120px] text-center">
                                     {editId === visit.id ? (
                                         <>
                                             <ButtonSave className="mb-2" onClick={confirmSave}>Salvar</ButtonSave>

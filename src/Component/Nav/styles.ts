@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface SelectedOption {
+    $isActive: boolean;
+}
+
 export const Navigation = styled.nav`
     width: 100%;
     background-color: var(--focusText);
@@ -55,12 +59,12 @@ export const IconDarkOrLight = styled(Icons)`
 `
 
 export const MenuDiv = styled.div`
-    width: 11rem;
-    height: calc(100vh + 100vw);
+    width: 13rem;
     box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.1);
     z-index: 6;
     background-color: var(--brancoPastelFont);
     position: absolute;
+    border-radius: 0rem 0rem 15px 0rem;
 
     display: flex;
     flex-direction: column;
@@ -87,11 +91,12 @@ export const NavIconMenu = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 1rem;
+    margin: 0rem .3rem;
+    padding: .8rem 0rem;
     gap: .5rem;
+    background: #ffffff59;
 
     transition: ease-in .1s;
-
 `
 
 export const MenuContainer = styled.div`
@@ -109,16 +114,11 @@ export const IconsContainer = styled.div`
     display: flex;
     flex-direction: column;
     transition: ease-in .1s;
+    gap: .4rem;
     justify-content: start;
-
-    :hover {
-        background-color: var(--focusText);
-        color: var(--brancoPastelFont);
-    }  
-
 `
 
-export const IconsMenu = styled.button`
+export const IconsMenu = styled.button<SelectedOption>`
     cursor: pointer;
     width: 100%;
     transition: ease-in .1s;
@@ -131,6 +131,12 @@ export const IconsMenu = styled.button`
     padding-left: 2rem;
     margin-left: -1rem;        
     border-radius: 5px;
+    box-shadow: ${(props) => props.$isActive
+        ? '0px 4px 6px rgba(0, 0, 0, 0.3)'
+        : ''};
+
+    background-color: ${(props) => props.$isActive ? 'var(--focusText)' : 'transparent'};
+    color: ${(props) => props.$isActive ? 'var(--brancoPastelFont)' : 'var(--defaultText)'};
 
     span {
         font-weight: 500;
@@ -144,8 +150,13 @@ export const IconsMenu = styled.button`
 
     &:hover {
         box-shadow: 0px 4px 6px rgba(0, 0, 0, .2);
+        background-color: var(--focusText);
+        color: var(--brancoPastelFont);
+
+        span {
+            color: var(--brancoPastelFont);
+        }
     }    
-    
 `
 
 export const CloseMenu = styled.button`

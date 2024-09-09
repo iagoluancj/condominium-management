@@ -25,7 +25,6 @@ export const ButtonCreateVisit = styled.button`
 export const ContainerForm = styled.div`
   display: flex;
   margin-bottom: 1rem;
-  margin-top: .8rem;
   gap: 1rem;
 `
 export const ContainerFormStyles = styled.div`
@@ -33,6 +32,7 @@ export const ContainerFormStyles = styled.div`
     width: 100%;
     flex-direction: column;
     gap: 1rem;
+    transition: ease-in .2s;
 `
 
 export const LabelVisit = styled.label<VisitPerHour>`
@@ -46,10 +46,10 @@ export const LabelVisit = styled.label<VisitPerHour>`
   height: 2rem;
   padding: .3rem;
   border-radius: 5px;
+  transition: ease-in .2s;
 
   background-color: transparent;
   border: 2px solid var(--defaultText); 
-  transition: ease-in .2s;
 
 
   ${({ $visitHour }) =>
@@ -86,7 +86,6 @@ export const SpanVisit = styled.div<VisitPerHour>`
     color: var(--brancoPastelFont);
     background: var(--focusText);
     transition: ease-in .2s;
-
     `}
 `
 
@@ -94,4 +93,5 @@ export const InputVisit = styled.input`
   transition: ease-in .2s;
   margin: 0rem;
   padding: 0rem;
+  transition: ease-in .2s;
 `

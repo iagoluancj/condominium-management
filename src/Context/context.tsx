@@ -4,37 +4,23 @@ import { useEffect, useState } from "react";
 import { createContext } from "react";
 import ToastProvider from "@/lib/ToastProvider";
 import { toast } from "react-toastify";
-import { getInquilinos } from "@/Routes/getInquilinos";
-import { TypeInquilinos, TypeVisit, } from "@/Types/types";
-
-// type TypeInquilinos = {
-//     id: number
-//     nome: string // deve aceitar somente LETRAS. 
-//     cpf: number
-//     tem_carro: boolean
-//     quantidade_carros: number
-//     modelo_carro: string
-//     placa_carro: string
-//     apartamento: string
-//     status: string
-//     // É string, mas pode ser somente 'proprietario' ou 'inquilino', ajustar para que se fugir disso.
-//     // ao remodular o banco, alterar para 0 e 1.
-//     comunicado_importante: string
-//     is_deleted: boolean
-//     bloco: string
-//     createdAt: Date;
-// }
+import { TypeEncomendas, TypeFuncionarios, TypeInquilinos, TypeVisit, } from "@/Types/types";
 
 type SupaContextType = {
     typeInquilinos: TypeInquilinos[]
     contextVisits: TypeVisit[]
+    contextFuncionarios: TypeFuncionarios[]
+    contextEncomendas: TypeEncomendas[]
     ChangePage: string,
     updateInquilino: (inquilinoData: TypeInquilinos) => void;
     updateVisitante: (visitanteData: TypeVisit) => void;
+    updateEncomenda: (encomendaData: TypeEncomendas) => void;
     createInquilino: (inquilinoData: Omit<TypeInquilinos, 'id'>) => void;
     createVisit: (visitData: Omit<TypeVisit, 'id'>) => void;
+    createEncomenda: (encomendaData: Omit<TypeEncomendas, 'id'>) => void;
     deletedInquilinoDEFINITIVY: (cpf: number) => void
     deletedInquilino: (cpf: number) => void
+    deletedEncomenda: (id: number) => void
     deletedVisits: (cpf: number) => void
     handleChangePage: (change: string) => void
 }
@@ -46,14 +32,19 @@ type SupaProviderProps = {
 export const SupaContext = createContext({
     typeInquilinos: [],
     contextVisits: [],
+    contextEncomendas: [],
+    contextFuncionarios: [],
     ChangePage: '',
     updateInquilino: () => { },
     updateVisitante: () => { },
+    updateEncomenda: () => { },
     deletedInquilinoDEFINITIVY: () => { },
     deletedInquilino: () => { },
+    deletedEncomenda: () => { },
     deletedVisits: () => { },
     createInquilino: () => { },
     createVisit: () => { },
+    createEncomenda: () => { },
     handleChangePage: () => { },
     children: null
 } as SupaContextType)
@@ -61,12 +52,9 @@ export const SupaContext = createContext({
 const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [inquilinos, setInquilinos] = useState<TypeInquilinos[]>([])
     const [visits, setVisits] = useState<TypeVisit[]>([])
-    const [changePage, setChangePage] = useState('Visitantes')
-
-    // const fetchInquilinos = async () => {
-    //     const data = await getInquilinos();
-    //     setInquilinos(data || []);
-    // }
+    const [encomendas, setEncomendas] = useState<TypeEncomendas[]>([])
+    const [funcinarios, setFuncionarios] = useState<TypeFuncionarios[]>([])
+    const [changePage, setChangePage] = useState('Encomendas')
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
         const { id, ...fieldsToUpdate } = inquilinoData;
@@ -96,12 +84,25 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
+    const updateEncomenda = async (encomendaData: TypeEncomendas) => {
+        const { id, ...fieldsToUpdate } = encomendaData;
+        const { data, error } = await supabase
+            .from('encomendas')
+            .update(fieldsToUpdate)
+            .eq('id', id);
+
+        if (error) {
+            toast.error("Ocorreu um erro ao tentar editar a encomenda.");
+        } else {
+            console.log("Encomenda editado com sucesso.");
+        }
+    };
 
     const deletedInquilinoDEFINITIVY = async (cpf: number) => {
         const { data, error } = await supabase
             .from('inquilinos')
-            .delete()  // Função delete não precisa de parâmetros extras
-            .eq('cpf', cpf);  // Condição para encontrar o inquilino
+            .delete()
+            .eq('cpf', cpf);
 
         if (error) {
             console.log("deletedInquilinoDEFINITIVY: Ocorreu um erro ao tentar deletar o inquilino." + error);
@@ -124,9 +125,22 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
+    const deletedEncomenda = async (id: number) => {
+        if (id) {
+            const { data, error } = await supabase
+                .from('encomendas')
+                .update({ 'deletedat': true })
+                .eq('id', id);
+            if (error) {
+                toast.error("Ocorreu um erro ao tentar deletar a encomenda.");
+            } else {
+                toast.success("Encomenda deletado.");
+            }
+        }
+    };
+
     const deletedVisits = async (id: number) => {
         try {
-            // Obtendo o registro da visita para pegar o valor atual de `fimvisita`
             const { data: visit, error: fetchError } = await supabase
                 .from('visitantes')
                 .select('fimvisita')
@@ -142,8 +156,8 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                     .from('visitantes')
                     .update({
                         deletado: true,
-                        deleted_date: visit.fimvisita, // Grava histórico da data original
-                        fimvisita: new Date().toISOString() // Atualiza com a data e hora atual
+                        deleted_date: visit.fimvisita,
+                        fimvisita: new Date().toISOString()
                     })
                     .eq('id', id);
 
@@ -159,8 +173,6 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             toast.error(`Ocorreu um erro ao tentar deletar a visita`);
         }
     };
-
-
 
     const createInquilino = async (inquilinoData: Omit<TypeInquilinos, 'id'>) => {
         const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento, status, comunicado_importante, bloco, created_at } = inquilinoData;
@@ -246,6 +258,36 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
+    const createEncomenda = async (encomendaData: Omit<TypeEncomendas, 'id'>) => {
+        const { receivedby, receivedto, datareceived, description, deletedat, acknowledgmentstatus } = encomendaData;
+
+        try {
+            const { data, error } = await supabase
+                .from('encomendas')
+                .insert([
+                    {
+                        receivedby,
+                        receivedto,
+                        datareceived,
+                        description,
+                        deletedat: deletedat || null,
+                        acknowledgmentstatus: acknowledgmentstatus || false
+                    }
+                ]);
+
+            if (error) {
+                console.error(error);
+                toast.error("Erro ao criar a encomenda.");
+            } else {
+                toast.success("Encomenda criada com sucesso.");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Erro ao criar a encomenda.");
+        }
+    };
+
+
     const handleChangePage = (change: string) => {
         setChangePage(change)
     }
@@ -271,12 +313,38 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             return { visitanteData };
         }
 
+        const getAllEncomendas = async () => {
+            let { data: encomendasData } = await supabase
+                .from('encomendas')
+                .select('*')
+                .order('id')
+                .returns<TypeEncomendas[]>()
+
+            return { encomendasData };
+        }
+
+        const getAllFuncionarios = async () => {
+            let { data: funcionarioData } = await supabase
+                .from('funcionarios')
+                .select('*')
+                .order('id')
+                .returns<TypeFuncionarios[]>()
+
+            return { funcionarioData };
+        }
+
         (async () => {
             const { inquilinoData } = await getAllInquilinos();
             setInquilinos(inquilinoData || []);
 
             const { visitanteData } = await getAllVisitantes();
             setVisits(visitanteData || [])
+
+            const { encomendasData } = await getAllEncomendas();
+            setEncomendas(encomendasData || [])
+
+            const { funcionarioData } = await getAllFuncionarios();
+            setFuncionarios(funcionarioData || [])
         })();
 
         const inquilinosChannel = supabase
@@ -311,14 +379,39 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             )
             .subscribe();
 
+        const encomendasChannel = supabase
+            .channel('encomendas-db-changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'encomendas',
+                },
+                (payload) => {
+                    console.log('Change received for encomendas:', payload);
+                    getAllEncomendas().then(({ encomendasData }) => setEncomendas(encomendasData || []));
+                }
+            )
+            .subscribe();
+
+
         return () => {
             inquilinosChannel.unsubscribe();
             visitantesChannel.unsubscribe();
+            encomendasChannel.unsubscribe();
         };
     }, []);
 
     return (
-        <SupaContext.Provider value={{ ChangePage: changePage, typeInquilinos: inquilinos, contextVisits: visits, updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, updateVisitante, handleChangePage, deletedVisits, createVisit }}>
+        <SupaContext.Provider value={{
+            contextEncomendas: encomendas,
+            contextFuncionarios: funcinarios,
+            ChangePage: changePage,
+            typeInquilinos: inquilinos,
+            contextVisits: visits,
+            updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, updateVisitante, handleChangePage, deletedVisits, createVisit, createEncomenda, deletedEncomenda, updateEncomenda
+        }}>
             <ToastProvider>
                 {children}
             </ToastProvider>

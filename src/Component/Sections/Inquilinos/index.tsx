@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
 import { toast } from "react-toastify";
-import { InputWrapper, StyledInput, ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, InputForm, DivLabel, FormContainer, InputText, InputCPF, StyledInputCPF, InputWrapperCPF, InputWrapperComunicadoImportante, StyledInputComunicadoImportante, InputComunicadoImportante, StyledInputQuantidadeCarros, InputWrapperQuantidadeCarros, InputModeloCarro, StyledInputModeloCarro, InputWrapperModeloCarro, InputPlacaCarro, StyledInputPlacaCarro, InputWrapperPlacaCarro, InputApartamento, StyledInputApartamento, InputWrapperApartamento, InputStatus, StyledInputStatus, InputWrapperStatus, InputBloco, StyledInputBloco, InputWrapperBloco, InputQuantidadeCarros, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input, ImageDiv } from "./styles";
-import { FiEdit } from "react-icons/fi";
+import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, DivLabel, FormContainer, InputStatus, InputWrapperStatus, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input, ImageDiv, H3, H3Pessoal, SeparationCarro, SeparationPessoal } from "./styles";
 
 import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../../Modal/modal";
@@ -10,9 +9,11 @@ import Tables from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
 import { TypeInquilinos } from "@/Types/types";
 import { IoPeopleSharp } from "react-icons/io5";
+import InputComponent from "@/Component/Input";
 
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')
+    const [possuiCar, setPossuiCar] = useState(false)
     const [title, setTitle] = useState('Cadastrar novo inquilino')
     const { updateInquilino, createInquilino, deletedInquilino } = useContext(SupaContext);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -95,7 +96,7 @@ export default function Inquilinos() {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
 
@@ -141,6 +142,20 @@ export default function Inquilinos() {
                     [name]: value
                 }));
             }
+        }
+    };
+
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        const { name, type } = e.target;
+        setPossuiCar(isChecked);
+
+        if (type === "checkbox") {
+            const { checked } = e.target as HTMLInputElement;
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: checked
+            }));
         }
     };
 
@@ -207,122 +222,84 @@ export default function Inquilinos() {
                     {selected === 'cadasterInquilino' && (
                         <Form onSubmit={handleCreate}>
                             <FormContainer>
-                                <h3>Dados pessoais</h3>
-                                <SeparationResidenc>
-                                    <DivLabel>
-                                        <Label>
-                                            <InputWrapper>
-                                                <StyledInput
-                                                    type=""
-                                                    placeholder="Nome completo"
-                                                    name="nome"
-                                                    value={formData.nome}
-                                                    onChange={handleChange}
-                                                    pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
-                                                    required
-                                                />
-                                                <InputText>* Nome</InputText>
-                                            </InputWrapper>
-                                        </Label>
-                                    </DivLabel>
-                                    <DivLabel>
-                                        <Label>
-                                            <InputWrapperCPF>
-                                                <StyledInputCPF
-                                                    type="text"
-                                                    name="cpf"
-                                                    value={formData.cpf}
-                                                    onChange={handleChange}
-                                                    required
-                                                    maxLength={12}
-                                                />
-                                                <InputCPF>* CPF</InputCPF>
-                                            </InputWrapperCPF>
-                                        </Label>
-                                    </DivLabel>
-                                </SeparationResidenc>
+                                <H3Pessoal>Dados pessoais</H3Pessoal>
+                                <SeparationPessoal>
+                                    <InputComponent
+                                        label="Nome completo"
+                                        name="nome"
+                                        value={formData.nome}
+                                        onChange={handleChange}
+                                        required
+
+                                    />
+                                    <InputComponent
+                                        label="CPF"
+                                        type="text"
+                                        name="cpf"
+                                        value={formData.cpf.toString()}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </SeparationPessoal>
                             </FormContainer>
                             <FormContainer>
                                 <DivLabel>
-                                    <h3>Possui carro?</h3>
                                     <LabelTemCarro $selectedCar={formData.tem_carro}
                                     >
-                                        <SpanTemCarro $selectedCar={formData.tem_carro}>Sim</SpanTemCarro>
+                                        <SpanTemCarro $selectedCar={formData.tem_carro}>Possui carro{possuiCar ? <span>!</span> : <span>?</span>}</SpanTemCarro>
                                         <InputFormCarro
                                             type="checkbox"
                                             name="tem_carro"
                                             checked={formData.tem_carro}
-                                            onChange={handleChange}
+                                            onChange={handleCheckboxChange}
                                         />
                                     </LabelTemCarro>
                                 </DivLabel>
-                                <SeparationResidenc>
+                                <SeparationCarro>
                                     <DivLabel>
-                                        <Label>
-                                            <InputWrapperQuantidadeCarros>
-                                                <StyledInputQuantidadeCarros
-                                                    type="number"
-                                                    name="quantidade_carros"
-                                                    value={formData.quantidade_carros}
-                                                    onChange={handleChange}
-                                                    disabled={!formData.tem_carro}
-                                                    $isDisabled={!formData.tem_carro}
-                                                />
-                                                <InputQuantidadeCarros $isDisabled={!formData.tem_carro}>Quantos</InputQuantidadeCarros>
-                                            </InputWrapperQuantidadeCarros>
-                                        </Label>
+                                        <InputComponent
+                                            label="Quantos"
+                                            type="number"
+                                            name="quantidade_carros"
+                                            value={formData.quantidade_carros.toString()}
+                                            onChange={handleChange}
+                                            disabled={!formData.tem_carro}
+                                        />
                                     </DivLabel>
                                     <DivLabel>
-                                        <Label>
-                                            <InputWrapperModeloCarro>
-                                                <StyledInputModeloCarro
-                                                    type="text"
-                                                    name="modelo_carro"
-                                                    value={formData.modelo_carro}
-                                                    onChange={handleChange}
-                                                    disabled={!formData.tem_carro}
-                                                    $isDisabled={!formData.tem_carro}
-                                                    maxLength={14}
-                                                />
-                                                <InputModeloCarro $isDisabled={!formData.tem_carro}>Modelo</InputModeloCarro>
-                                            </InputWrapperModeloCarro>
-                                        </Label>
+                                        <InputComponent
+                                            label="Modelo"
+                                            type="text"
+                                            name="modelo_carro"
+                                            value={formData.modelo_carro}
+                                            onChange={handleChange}
+                                            disabled={!formData.tem_carro}
+                                        />
                                     </DivLabel>
                                     <DivLabel>
-                                        <Label>
-                                            <InputWrapperPlacaCarro>
-                                                <StyledInputPlacaCarro
-                                                    type="text"
-                                                    name="placa_carro"
-                                                    value={formData.placa_carro}
-                                                    onChange={handleChange}
-                                                    disabled={!formData.tem_carro}
-                                                    $isDisabled={!formData.tem_carro}
-                                                    maxLength={7}
-                                                />
-                                                <InputPlacaCarro $isDisabled={!formData.tem_carro}>Placa</InputPlacaCarro>
-                                            </InputWrapperPlacaCarro>
-                                        </Label>
+                                        <InputComponent
+                                            label="Placa"
+                                            type="text"
+                                            name="placa_carro"
+                                            value={formData.placa_carro}
+                                            onChange={handleChange}
+                                            disabled={!formData.tem_carro}
+                                        />
                                     </DivLabel>
-                                </SeparationResidenc>
+                                </SeparationCarro>
                             </FormContainer>
                             <FormContainer>
-                                <h3>Da residencia</h3>
+                                <H3>Da residencia</H3>
                                 <SeparationResidenc>
                                     <DivLabel>
-                                        <Label>
-                                            <InputWrapperApartamento>
-                                                <StyledInputApartamento
-                                                    type="text"
-                                                    name="apartamento"
-                                                    value={formData.apartamento}
-                                                    onChange={handleChange}
-                                                    required
-                                                    maxLength={5}
-                                                />
-                                                <InputApartamento>* Apartamento</InputApartamento>
-                                            </InputWrapperApartamento>
-                                        </Label>
+                                        <InputComponent
+                                            type="text"
+                                            name="apartamento"
+                                            value={formData.apartamento}
+                                            label="* Apartamento"
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </DivLabel>
                                     <DivLabel>
                                         <Label>
@@ -342,33 +319,25 @@ export default function Inquilinos() {
                                         </Label>
                                     </DivLabel>
                                     <DivLabel>
-                                        <Label>
-                                            <InputWrapperBloco>
-                                                <StyledInputBloco
-                                                    type="text"
-                                                    name="bloco"
-                                                    value={formData.bloco}
-                                                    onChange={handleChange}
-                                                    maxLength={2}
-                                                    required
-                                                />
-                                                <InputBloco>* Bloco</InputBloco>
-                                            </InputWrapperBloco>
-                                        </Label>
+                                        <InputComponent
+                                            type="text"
+                                            name="bloco"
+                                            value={formData.bloco}
+                                            label="* Bloco"
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </DivLabel>
                                 </SeparationResidenc>
                                 <DivLabel>
-                                    <Label>
-                                        <InputWrapperComunicadoImportante>
-                                            <StyledInputComunicadoImportante
-                                                type="text"
-                                                name="comunicado_importante"
-                                                value={formData.comunicado_importante}
-                                                onChange={handleChange}
-                                            />
-                                            <InputComunicadoImportante>Observações</InputComunicadoImportante>
-                                        </InputWrapperComunicadoImportante>
-                                    </Label>
+                                    <InputComponent
+                                        type="textarea"
+                                        name="comunicado_importante"
+                                        value={formData.comunicado_importante}
+                                        label="* Observações"
+                                        onChange={handleChange}
+                                        height={100}
+                                    />
                                 </DivLabel>
                             </FormContainer>
                             <CreateInqui type="submit">Criar Inquilino</CreateInqui>

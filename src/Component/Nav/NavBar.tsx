@@ -1,4 +1,4 @@
-import { BiMenu} from 'react-icons/bi'
+import { BiMenu } from 'react-icons/bi'
 import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
 import { GrNotification, GrUser } from 'react-icons/gr'
 import { TiHome } from "react-icons/ti";
@@ -8,10 +8,12 @@ import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
 import { MdApartment, MdDeliveryDining, MdEmojiPeople, MdLocalShipping } from "react-icons/md";
+import logo from '../../Assets/iconLogo.png'
+import Image from 'next/image';
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
-    const { handleChangePage } = useContext(SupaContext);
+    const { ChangePage, handleChangePage } = useContext(SupaContext);
 
     const handleMenu = () => {
         setToggleMenu(!toggleMenu);
@@ -41,42 +43,42 @@ export default function NavBar() {
                 <MenuDiv>
                     <NavMenu>
                         <NavIconMenu>
-                            <MdApartment size={70} />
+                            <Image src={logo} width={80} height={0} alt='Logo'></Image>
                             <span>Condominium Management</span>
                         </NavIconMenu>
                     </NavMenu>
                     <MenuContainer>
                         <IconsContainer>
-                            <IconsMenu onClick={() => toggleChangePage('HomePage')}>
+                            <IconsMenu $isActive={ChangePage === 'HomePage'} onClick={() => toggleChangePage('HomePage')}>
                                 <TiHome size={30} />
                                 <span>Home</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('Inquilinos')}>
+                            <IconsMenu $isActive={ChangePage === 'Inquilinos'} onClick={() => toggleChangePage('Inquilinos')}>
                                 <IoPeopleSharp  size={24} />
                                 <span>Inquilinos</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('Visitantes')}>
+                            <IconsMenu $isActive={ChangePage === 'Visitantes'} onClick={() => toggleChangePage('Visitantes')}>
                                 <MdEmojiPeople size={24} />
                                 <span>Visitantes</span>
                             </IconsMenu>
-                            <IconsMenu onClick={() => toggleChangePage('Encomendas')}>
+                            <IconsMenu $isActive={ChangePage === 'Encomendas'} onClick={() => toggleChangePage('Encomendas')}>
                                 <MdLocalShipping  size={24} />
                                 <span>Encomendas</span>
                             </IconsMenu>
                         </IconsContainer>
                     </MenuContainer>
                     <CloseMenu onClick={handleMenu}>
-                        <IconsMenu>
+                        <IconsMenu $isActive={ChangePage === ''}>
                             <div>
                                 <IoClose size={28} />
                                 <span>Fechar</span>
                             </div>
                         </IconsMenu>
                     </CloseMenu>
-                </MenuDiv>
+                </MenuDiv >
                 :
-                <span></span>
-            }
+    <span></span>
+}
         </>
     )
 }
