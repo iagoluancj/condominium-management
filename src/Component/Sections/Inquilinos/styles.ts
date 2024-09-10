@@ -249,10 +249,11 @@ export const ButtonSave = styled(Button)`
 `
 
 export const Input = styled.input`
-  padding: 4px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+  height: 100%;
 `;
 
 export const InputWrapper = styled.div`

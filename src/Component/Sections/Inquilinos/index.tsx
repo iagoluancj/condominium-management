@@ -9,7 +9,7 @@ import Tables from "./table";
 import DeletedInquilinosTable from "./InquilinosDeletados";
 import { TypeInquilinos } from "@/Types/types";
 import { IoPeopleSharp } from "react-icons/io5";
-import InputComponent from "@/Component/Input";
+import InputComponent from "@/Component/Primitivy/Input";
 
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')

@@ -20,7 +20,7 @@ type SupaContextType = {
     createEncomenda: (encomendaData: Omit<TypeEncomendas, 'id'>) => void;
     deletedInquilinoDEFINITIVY: (cpf: number) => void
     deletedInquilino: (cpf: number) => void
-    deletedEncomenda: (id: number) => void
+    deletedEncomenda: (id: number, dateDeletedAt: string) => void
     deletedVisits: (cpf: number) => void
     handleChangePage: (change: string) => void
 }
@@ -125,16 +125,20 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
-    const deletedEncomenda = async (id: number) => {
+    const deletedEncomenda = async (id: number, dateDeletedAt: string) => {
         if (id) {
             const { data, error } = await supabase
                 .from('encomendas')
-                .update({ 'deletedat': true })
+                .update({
+                    deletedat: true,
+                    date_deleted_at: dateDeletedAt
+                })
                 .eq('id', id);
+
             if (error) {
                 toast.error("Ocorreu um erro ao tentar deletar a encomenda.");
             } else {
-                toast.success("Encomenda deletado.");
+                toast.success("Encomenda deletada.");
             }
         }
     };

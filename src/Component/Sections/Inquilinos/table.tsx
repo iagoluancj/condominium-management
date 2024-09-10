@@ -13,6 +13,9 @@ export default function Tables() {
     const [editMode, setEditMode] = useState<number | null>(null);
     const [filterTerm, setFilterTerm] = useState<string>("");
     const [filterByName, setFilterByName] = useState(false);
+    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const itemsPerPageOptions = [5, 10, 20];
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -32,25 +35,6 @@ export default function Tables() {
         created_at: ''
     });
 
-    // const getBlockColor = (colorByOrder: string) => {
-    //     switch (colorByOrder) {
-    //         case 'A':
-    //             return 'lightblue';
-    //         case 'B':
-    //             return 'lightgreen';
-    //         case 'C':
-    //             return 'lightcoral';
-    //         case 'D':
-    //             return 'violet';
-    //         case 'inquilino':
-    //             return 'red';
-    //         case 'proprietario':
-    //             return 'blue';
-    //         default:
-    //             return 'lightgray';
-    //     }
-    // };
-
     const sortedInquilinos = () => {
         if (sortField === 'bloco') {
             const groupedInquilinos: Record<string, TypeInquilinos[]> = typeInquilinos.reduce((acc, inquilino) => {
@@ -62,7 +46,6 @@ export default function Tables() {
                 return acc;
             }, {} as Record<string, TypeInquilinos[]>);
 
-            // Ordenação crescente dos blocos
             const sortedBlocks = Object.keys(groupedInquilinos).sort();
 
             return sortedBlocks.flatMap(block =>
@@ -70,7 +53,7 @@ export default function Tables() {
                     const aName = a['nome'];
                     const bName = b['nome'];
                     return typeof aName === 'string' && typeof bName === 'string'
-                        ? aName.localeCompare(bName) // Ordem crescente dos nomes
+                        ? aName.localeCompare(bName)
                         : 0;
                 })
             );
@@ -79,12 +62,11 @@ export default function Tables() {
                 const aValue = a[sortField];
                 const bValue = b[sortField];
                 return typeof aValue === 'string' && typeof bValue === 'string'
-                    ? aValue.localeCompare(bValue) // Ordem crescente
+                    ? aValue.localeCompare(bValue)
                     : 0;
             });
         }
     };
-
 
     const confirmSave = async () => {
         try {
@@ -94,7 +76,7 @@ export default function Tables() {
         } catch (error) {
             console.error("Erro ao editar o inquilino:", error);
         } finally {
-            setShowModal(false); // Fecha o modal após a confirmação
+            setShowModal(false);
         }
     };
 
@@ -138,10 +120,6 @@ export default function Tables() {
         });
     }
 
-    // const handleSave = async () => {
-    //     setShowModal(true);
-    // };
-
     const closeModal = () => {
         setShowModal(false);
     };
@@ -153,7 +131,6 @@ export default function Tables() {
             return 'Data não disponível';
         }
 
-        // Ajusta a data para o fuso horário local
         const day = String(date.getUTCDate()).padStart(2, '0');
         const month = String(date.getUTCMonth() + 1).padStart(2, '0');
         const year = date.getUTCFullYear();
@@ -161,19 +138,37 @@ export default function Tables() {
         return `${day}/${month}/${year}`;
     };
 
+    const totalPages = Math.ceil(filteredInquilinos().length / itemsPerPage);
 
-    const displayedInquilinosFindByName = filteredInquilinos();
-    const displayedInquilinos = sortedInquilinos();
+    const handleItemsPerPageChange = (newItemsPerPage: number) => {
+        setItemsPerPage(newItemsPerPage);
+        setCurrentPage(1);
+    };
+
+    const goToPreviousPage = () => {
+        setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+    };
+
+    const goToNextPage = () => {
+        setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
+    };
+
+    const paginatedInquilinos = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return filteredInquilinos().slice(startIndex, endIndex);
+    };
+
 
     return (
         <>
-            <div className="flex flex-row justify-evenly mt-10 gap-10 mb-5 w-[900px]">
+            <div className="flex flex-row justify-around mt-10 gap-10 mb-5">
                 <Input
                     type="text"
                     placeholder="Procure por nome ou CPF"
                     value={filterTerm}
                     onChange={(e) => setFilterTerm(e.target.value)}
-                    className="p-2 border border-gray-300 rounded"
+                    className="p-1 border border-gray-300 rounded"
                 />
                 <div className="flex space-x-2">
                     <button
@@ -217,7 +212,7 @@ export default function Tables() {
                         </tr>
                     </thead>
                     <tbody className="justify-center items-center">
-                        {(filterByName ? displayedInquilinos : displayedInquilinosFindByName)
+                        {paginatedInquilinos()
                             .filter((inquilino) => !inquilino.is_deleted)
                             .map((inquilino) => (
                                 <tr key={inquilino.id} className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl">
@@ -326,6 +321,7 @@ export default function Tables() {
                                                 >
                                                     <option value="inquilino"><strong>Inquilino</strong></option>
                                                     <option value="proprietario">Proprietário</option>
+                                                    <option value="morador">Morador</option>
                                                 </select>
                                                 <textarea
                                                     name="comunicado_importante"
@@ -368,12 +364,12 @@ export default function Tables() {
                                     <td className="px-4 py-4 flex flex-col w-[120px]">
                                         {editId === inquilino.id ? (
                                             <>
-                                                <ButtonSave className="mb-2" onClick={confirmSave}>Salvar</ButtonSave>
+                                                <ButtonSave className="" onClick={confirmSave}>Salvar</ButtonSave>
                                                 <ButtonDeleted onClick={() => setEditId(null)}>Cancelar</ButtonDeleted>
                                             </>
                                         ) : (
                                             <>
-                                                <Button className="mb-2" onClick={() => handleEditTable(inquilino)}>Editar</Button>
+                                                <Button className="" onClick={() => handleEditTable(inquilino)}>Editar</Button>
                                                 <ButtonDeleted onClick={handleDeleted(inquilino.cpf)}>Deletar</ButtonDeleted>
                                             </>
                                         )}
@@ -382,9 +378,41 @@ export default function Tables() {
                             ))}
                     </tbody>
                 </table>
+
+                <div className="mt-4 flex justify-between items-center p-4">
+                    <div className="flex items-center gap-4">
+                        <span>Itens por página:</span>
+                        <select
+                            value={itemsPerPage}
+                            onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+                            className="p-2 border border-gray-300 rounded"
+                        >
+                            {itemsPerPageOptions.map(option => (
+                                <option key={option} value={option}>{option}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <button
+                            onClick={goToPreviousPage}
+                            disabled={currentPage === 1}
+                            className="p-2 border rounded bg-blue-100 border-gray-300 text-gray-700"
+                        >
+                            Anterior
+                        </button>
+                        <span className="px-4">
+                            Página {currentPage} de {totalPages}
+                        </span>
+                        <button
+                            onClick={goToNextPage}
+                            disabled={currentPage === totalPages}
+                            className="p-2 border rounded bg-blue-100 border-gray-300 text-gray-700"
+                        >
+                            Próxima
+                        </button>
+                    </div>
+                </div>
             </div>
-
-
 
             <ConfirmModal
                 show={showModal}

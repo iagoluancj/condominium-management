@@ -1,51 +1,55 @@
 import React, { useContext } from "react";
 import { SupaContext } from "@/Context/context";
+import FilteredTable from "@/Component/Primitivy/Filter";
 
 export default function EncomendasDeletadas() {
     const { contextEncomendas } = useContext(SupaContext);
-    const encomendasEntregues = contextEncomendas.filter(encomenda => encomenda.deletedat === 'true');
+    const encomendasDeletadas = contextEncomendas.filter(encomenda => encomenda.date_deleted_at !== '');
+
+    const formatDateWithOffset = (dateString: string, offsetHours: number = 3): string => {
+        const date = new Date(dateString);
+
+        date.setHours(date.getHours() - offsetHours);
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    };
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Recebido Por
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Recebido Para
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Data Recebimento
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Descrição
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {encomendasEntregues.map((encomenda) => (
-                        <tr
-                            key={encomenda.id}
-                            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-                        >
-                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {encomenda.receivedby}
-                            </td>
-                            <td className="px-6 py-4">
-                                {encomenda.receivedto}
-                            </td>
-                            <td className="px-6 py-4">
-                                {encomenda.datareceived ? `${encomenda.datareceived.slice(8, 10)}-${encomenda.datareceived.slice(5, 7)}-${encomenda.datareceived.slice(0, 4)}` : ''}
-                            </td>
-                            <td className="px-6 py-4">
-                                {encomenda.description}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        <FilteredTable
+            data={encomendasDeletadas}
+            columns={[
+                { key: 'receivedby', label: 'Recebido Por' },
+                { key: 'receivedto', label: 'Recebido Para' },
+                { key: 'date_deleted_at', label: 'Data de Deleção' },
+                { key: 'description', label: 'Descrição' },
+            ]}
+            filterFields={['receivedby', 'receivedto']}
+            renderRow={(encomenda, index) => (
+                <tr
+                    key={encomenda.id}
+                    className="odd:bg-white even:bg-gray-50 border-b"
+                >
+                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        {encomenda.receivedby}
+                    </td>
+                    <td className="px-6 py-4 w-[150px]">
+                        {encomenda.receivedto}
+                    </td>
+                    <td className="px-6 py-4">
+                        {encomenda.date_deleted_at ? formatDateWithOffset(encomenda.date_deleted_at) : ''}
+                    </td>
+                    <td className="px-6 py-4">
+                        {encomenda.description}
+                    </td>
+                </tr>
+            )}
+        />
     );
 }

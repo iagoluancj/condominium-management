@@ -1,51 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
+import { Input } from "../Inquilinos/styles";
+import FilteredTable from "@/Component/Primitivy/Filter";
+
 
 export default function EncomendasEntregues() {
     const { contextEncomendas } = useContext(SupaContext);
     const encomendasEntregues = contextEncomendas.filter(encomenda => encomenda.acknowledgmentstatus === true);
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Recebido Por
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Recebido Para
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Data Recebimento
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Descrição
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {encomendasEntregues.map((encomenda) => (
-                        <tr
-                            key={encomenda.id}
-                            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-                        >
-                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {encomenda.receivedby}
-                            </td>
-                            <td className="px-6 py-4">
-                                {encomenda.receivedto}
-                            </td>
-                            <td className="px-6 py-4">
-                                {new Date(encomenda.datareceived).toLocaleString()}
-                            </td>
-                            <td className="px-6 py-4">
-                                {encomenda.description}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        <FilteredTable
+            data={encomendasEntregues}
+            columns={[
+                { key: 'receivedby', label: 'Recebido Por' },
+                { key: 'receivedto', label: 'Recebido Para' },
+                { key: 'datareceived', label: 'Data Recebimento' },
+                { key: 'description', label: 'Descrição' },
+            ]}
+            filterFields={['receivedby', 'receivedto']}
+            renderRow={(encomenda, index) => (
+                <tr
+                    key={index}
+                    className="odd:bg-white even:bg-gray-50 border-b"
+                >
+                    <td className="px-6 py-4">{encomenda.receivedby}</td>
+                    <td className="px-6 py-4">{encomenda.receivedto}</td>
+                    <td className="px-6 py-4">{new Date(encomenda.datareceived).toLocaleString()}</td>
+                    <td className="px-6 py-4">{encomenda.description}</td>
+                </tr>
+            )}
+        />
     );
 }

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { FormEncomenda, Paragraph, Span, Title } from './styles';
-import InputComponent from '@/Component/Input';
+import InputComponent from '@/Component/Primitivy/Input';
 import { MdOutlineLocalShipping } from 'react-icons/md';
 import { IoIosArrowForward } from 'react-icons/io';
 import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
@@ -127,6 +127,8 @@ export default function Encomendas() {
                 description: formData.description,
                 deletedat: null,
                 acknowledgmentstatus: false,
+                date_deleted_at: '', // verificar se isso aqui não vai bugar.
+                
             });
             setFormData({
                 receivedBy: '',

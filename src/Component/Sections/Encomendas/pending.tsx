@@ -5,12 +5,16 @@ import ConfirmModal from "@/Component/Modal/modal";
 import { TypeEncomendas } from "@/Types/types";
 import { toast } from "react-toastify";
 
+type SortField = 'receivedby' | 'receivedto' | 'datareceived';
+
 export default function TableEncomendas() {
     const { contextEncomendas, deletedEncomenda, updateEncomenda } = useContext(SupaContext)
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
+    const [filterTerm, setFilterTerm] = useState("");
+    const [sortField, setSortField] = useState<SortField>("datareceived");
     const [idToConfirm, setIdToConfirm] = useState<number | null>(null);
     const [idToDeleted, setIdToDeleted] = useState<number | null>(null);
     const [isTooLong, setIsTooLong] = useState(false);
@@ -23,12 +27,16 @@ export default function TableEncomendas() {
         description: '',
         deletedat: '',
         acknowledgmentstatus: false,
+        date_deleted_at: ''
     });
 
     const confirmDelete = async () => {
         if (idToDeleted !== null) {
+            const now = new Date();
+            const dateDeletedAt = now.toISOString().slice(0, 19).replace('T', ' '); // Formato YYYY-MM-DD HH:MM:SS
+
             try {
-                await deletedEncomenda(idToDeleted);
+                await deletedEncomenda(idToDeleted, dateDeletedAt);
             } finally {
                 setShowDeleteModal(false);
                 setIdToDeleted(null);
@@ -69,7 +77,8 @@ export default function TableEncomendas() {
             datareceived: encomenda.datareceived || "",
             description: encomenda.description || "",
             deletedat: encomenda.deletedat ?? "",
-            acknowledgmentstatus: encomenda.acknowledgmentstatus
+            acknowledgmentstatus: encomenda.acknowledgmentstatus,
+            date_deleted_at: ''
         });
     };
 
@@ -128,10 +137,66 @@ export default function TableEncomendas() {
         }
     };
 
+    const sortedEncomendas = () => {
+        return [...contextEncomendas].sort((a, b) => {
+            const aValue = a[sortField];
+            const bValue = b[sortField];
+
+            if (sortField === 'datareceived') {
+                return new Date(aValue).getTime() - new Date(bValue).getTime();
+            }
+
+            return typeof aValue === 'string' && typeof bValue === 'string'
+                ? aValue.localeCompare(bValue)
+                : 0;
+        });
+    };
+
+    const filteredEncomendas = () => {
+        const term = filterTerm.toLowerCase();
+        return sortedEncomendas().filter((encomenda) =>
+            !encomenda.acknowledgmentstatus &&
+            !encomenda.deletedat &&
+            (
+                encomenda.receivedby.toLowerCase().includes(term) ||
+                encomenda.receivedto.toLowerCase().includes(term)
+            )
+        );
+    };
+
+    const displayedEncomendas = filteredEncomendas();
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg mr-4">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div className="flex flex-row justify-evenly mt-10 gap-10 mb-5 w-full p-4">
+                <input
+                    type="text"
+                    placeholder="Procure por nomes..."
+                    value={filterTerm}
+                    onChange={(e) => setFilterTerm(e.target.value)}
+                    className="p-2 border border-gray-300 rounded bg-blue-50 w-[80%]"
+                />
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => setSortField('receivedby')}
+                        className={`p-2 rounded ${sortField === 'receivedby' ? 'bg-blue-500 text-white border-b-4 border-blue-500' : 'bg-blue-100 text-gray-700 border-b-2 border-gray-300'}`}
+                    >
+                        Recebido Por
+                    </button>
+                    <button
+                        onClick={() => setSortField('receivedto')}
+                        className={`p-2 border rounded ${sortField === 'receivedto' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                    >
+                        Recebido Para
+                    </button>
+                    <button
+                        onClick={() => setSortField('datareceived')}
+                        className={`p-2 border rounded ${sortField === 'datareceived' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                    >
+                        Data Recebimento
+                    </button>
+                </div>
+            </div>            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">Entregue</th>
@@ -143,9 +208,9 @@ export default function TableEncomendas() {
                     </tr>
                 </thead>
                 <tbody>
-                    {contextEncomendas
+                    {displayedEncomendas
                         .filter(encomenda => !encomenda.acknowledgmentstatus && !encomenda.deletedat)
-                        .map(encomenda => (
+                        .map((encomenda) => (
                             <tr key={encomenda.id} className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl">
                                 <td className="px-4 py-4 justify-start text-center">
                                     <ButtonSave onClick={() => handleConfirmClick(encomenda.id)}>Confirmar entrega</ButtonSave>
@@ -166,7 +231,7 @@ export default function TableEncomendas() {
                                         encomenda.description
                                     )}
                                 </td>
-                                <td className="px-4 py-4 justify-start text-center">
+                                <td className="px-4 py-4 flex flex-col justify-start text-center">
                                     {editId === encomenda.id ? (
                                         <>
                                             <ButtonSave onClick={confirmSave}>Salvar</ButtonSave>
@@ -197,6 +262,7 @@ export default function TableEncomendas() {
                 onConfirm={confirmDelete}
                 message="Realmente deseja deletar essa encomenda?"
             />
+
             <ConfirmModal
                 show={showConfirmModal}
                 onClose={() => setShowConfirmModal(false)}

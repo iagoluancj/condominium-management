@@ -2,7 +2,7 @@ import { CgInstagram, CgYoutube } from "react-icons/cg";
 import { FooterButton, FooterColumn, FooterContact, FooterCopyright, FooterInputGroup, FooterLogo, FooterSection, FooterSocial, FooterWrapper, IconSocial, P } from "./styles";
 import logo from './images/condominiumManagement.png'
 import Image from "next/image";
-import InputComponent from "../Input";
+import InputComponent from "../Primitivy/Input";
 import { ChangeEvent, useState } from "react";
 import { FiX } from "react-icons/fi";
 

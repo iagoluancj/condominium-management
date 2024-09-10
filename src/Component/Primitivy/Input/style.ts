@@ -15,7 +15,6 @@ export const InputTextLabel = styled.div<FocusedField>`
     font-family: outfit;
     font-weight: 400;
     color: var(--defaultText);
-    z-index: 5;
     transition: ease-in .2s;
 
     ${({ $focusField }) =>

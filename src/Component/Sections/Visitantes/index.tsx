@@ -2,7 +2,7 @@ import { SupaContext } from '@/Context/context';
 import { TypeInquilinos, TypeVisit } from '@/Types/types';
 import React, { ChangeEvent, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import InputComponent from '@/Component/Input';
+import InputComponent from '@/Component/Primitivy/Input';
 import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, Form, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
 import { IoIosArrowForward } from 'react-icons/io';
 import { IoPeopleSharp } from 'react-icons/io5';
@@ -86,8 +86,8 @@ export default function Visitantes() {
 
     const getCPFmoradores = (typeInquilinos: TypeInquilinos[]): string[] => {
         return typeInquilinos
-            .filter(inquilino => !inquilino.is_deleted) 
-            .map(inquilino => String(inquilino.cpf));   
+            .filter(inquilino => !inquilino.is_deleted)
+            .map(inquilino => String(inquilino.cpf));
     };
 
     const validCpfs = getCPFmoradores(typeInquilinos)

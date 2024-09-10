@@ -38,6 +38,7 @@ export type TypeEncomendas = {
     description: string;
     deletedat: string | null;
     acknowledgmentstatus: boolean;
+    date_deleted_at: string;
 };
 
 export type TypeFuncionarios = {
