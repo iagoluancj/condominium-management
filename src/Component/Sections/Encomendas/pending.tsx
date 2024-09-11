@@ -218,7 +218,7 @@ export default function TableEncomendas() {
                                 <td className="px-4 py-4">{encomenda.receivedby}</td>
                                 <td className="px-4 py-4">{encomenda.receivedto}</td>
                                 <td className="px-4 py-4">{new Date(encomenda.datareceived).toLocaleString()}</td>
-                                <td className="px-4 py-4 font-medium text-gray-900 break-words w-[14%]">
+                                <td className="px-4 py-4 font-medium break-words w-[14%]">
                                     {editId === encomenda.id ? (
                                         <Input
                                             type="text"

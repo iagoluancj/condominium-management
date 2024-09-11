@@ -35,12 +35,13 @@ export default function FooterCM() {
                     <p>Todos os direitos reservados.</p>
                 </FooterCopyright>
                 <FooterSocial>
-                    <IconSocial><CgInstagram size={30} /></IconSocial>
+                    <p>Developed by <strong><a href="https://iagoluancj.github.io/Portifolio-React/" target="_blank">Iago Jesus</a></strong></p>
+                    {/* <IconSocial><CgInstagram size={30} /></IconSocial>
                     <IconSocial><FiX size={30} /></IconSocial>
-                    <IconSocial><CgYoutube size={30} /></IconSocial>
+                    <IconSocial><CgYoutube size={30} /></IconSocial> */}
                 </FooterSocial>
             </FooterSection>
-            <FooterColumn>
+            {/* <FooterColumn>
                 <h3>Company</h3>
                 <p>About us</p>
                 <p>Blog</p>
@@ -94,7 +95,7 @@ export default function FooterCM() {
                     />
                 </FooterInputGroup>
                 <FooterButton>Enviar</FooterButton>
-            </FooterContact>
+            </FooterContact> */}
         </FooterWrapper>
     )
 }

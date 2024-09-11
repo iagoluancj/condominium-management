@@ -23,12 +23,10 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     margin-top: 15vh;
     margin-left: 10vh;
 
-
-
-    ${({ $isSelectedCurrent }) =>
-    $isSelectedCurrent &&
-    `  
-    `}
+    @media (max-width: 768px) {
+        flex-direction: column;
+        margin: 0rem 1rem;
+    }
 `
 
 export const ImageDiv = styled.img`

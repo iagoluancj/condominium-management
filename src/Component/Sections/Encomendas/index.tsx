@@ -15,7 +15,7 @@ import EncomendasDeletadas from './deleteds';
 
 export default function Encomendas() {
     const [selected, setSelected] = useState('receivedEncomenda')
-    const [title, setTitle] = useState('Cadastrar uma nova visita')
+    const [title, setTitle] = useState('Cadastrar uma nova encomenda')
     const { createEncomenda, contextFuncionarios, typeInquilinos } = useContext(SupaContext);
     const [isTooLong, setIsTooLong] = useState(false);
     const [formData, setFormData] = useState({

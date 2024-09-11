@@ -12,13 +12,14 @@ export const FooterWrapper = styled.div`
     background-color: #BAD3FF;
 
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 300;
 `;
 
 export const FooterSection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: .7rem;
 `;
 
@@ -38,6 +39,11 @@ export const FooterCopyright = styled.div`
 export const FooterSocial = styled.div`
     display: flex;
     gap: 1rem;
+
+    strong {
+        color: #FA5252;
+        font-weight: 700;
+    }
 `;
 
 export const FooterColumn = styled.div`

@@ -90,6 +90,7 @@ export default function VisitsTable() {
                     { key: 'localvisita', label: 'Local Visita' },
                     { key: 'fimvisita', label: 'Data e Hora Fim' },
                     { key: 'observacoes', label: 'Observações' },
+                    { key: 'observacoes', label: 'Ação' },
                 ]}
                 filterFields={['nomevisitante', 'cpfvisitante', 'localvisita']}
                 renderRow={(visit) => {
