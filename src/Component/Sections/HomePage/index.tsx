@@ -1,90 +1,175 @@
-import styled from 'styled-components';
-import teste from './images/developing.svg'
-import { DivContainer, Container, Content, Footer, FooterLink, FooterText, Header, ImageWrapper, Subtitle } from './styles';
-import page2 from './images/page2.svg'
+import {
+    Container,
+    Section,
+    Card,
+    IconWrapper,
+    Icon,
+    Title,
+    Description,
+    LeftColumn,
+    RightColumn,
+    ChartWrapper,
+    SectionTitle,
+    Chart,
+    CardSeparator,
+    InfoSection,
+    InfoTitle,
+    InfoDescription,
+    IconWrapperVisitante,
+    IconWrapperEncomenda,
+    CardEncomenda,
+    CardVisitante,
+    CardCreate,
+    IconWrapperCreate,
+    IconCreate,
+    ChartAdjunt,
+    ChartApartment,
+    ChartMoradores,
+    SectionOptions,
+    HeaderChartTitle,
+    Vector1,
+    Vector2,
+    Content,
+    Button,
+    Vector3,
+    CondoUpdatesContainer,
+    HeaderCondoUpdates,
+    ColorSpan,
+    ContainerSPAN,
+    ChartApartamentSeparator,
+    ColorSpanMeta,
+    ColorSpanTotal,
+    P
+} from './newStyled';
 
-import peoples from './images/peoples.svg'
-import hands from './images/hands.svg'
-import building from './images/building.svg'
-
-import members from './images/members.svg'
-import click from './images/click.svg'
-import hand from './images/hand.svg'
-import card from './images/card.svg'
-import { MdCardMembership } from 'react-icons/md';
+import { FaFileCirclePlus } from "react-icons/fa6";
+import { MdDashboard, MdEmojiPeople, MdLocalShipping } from 'react-icons/md';
 import { IoPeopleSharp } from 'react-icons/io5';
-import { FaPrayingHands } from 'react-icons/fa';
+import { MoradiaChart } from './moradiaChart';
+import PizzaChart from './Charts/pizzaChart';
+import PieChartComponent from './Charts/PieChart';
+import MoradoresPieChart from './Charts/BarChartComponent';
+import BarChartComponent from './Charts/BarChartComponent';
+import { BiBuilding, BiBuildings } from 'react-icons/bi';
+import CondominiumUpdates from './Charts/EventAgend/EventAgend';
 
-export const HomePage = () => (
-    <>
-        <Container>
-            {/* <div>
-                <h1>Manage your entire community in a single system</h1>
-                <p>Who is Nextcent suitable for?</p>
-            </div>
-            <div>
-                <div>
-                    <img src={peoples.src} alt="" />
-                    <h4>Membership Organisations</h4>
-                    <p>Our membership management software provides full automation of membership renewals and payments</p>
-                </div>
-                <div>
-                    <img src={hands.src} alt="" />
-                    <h4>National Associations</h4>
-                    <p>Our membership management software provides full automation of membership renewals and payments</p>
-                </div>
-                <div>
-                    <img src={building.src} alt="" />
-                    <h4>Clubs And Groups</h4>
-                    <p>Our membership management software provides full automation of membership renewals and payments</p>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src={page2.src} alt="" />
-                </div>
-                <div>
-                    <h3>The unseen of spending three years at Pixelgrade</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet justo ipsum. Sed accumsan quam vitae est varius fringilla. Pellentesque placerat vestibulum lorem sed porta. Nullam mattis tristique iaculis. Nullam pulvinar sit amet risus pretium auctor. Etiam quis massa pulvinar, aliquam quam vitae, tempus sem. Donec elementum pulvinar odio.</p>
-                    <button>Learn More</button>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h2>Helping a local <span>business reinvent itself</span></h2>
-                    <p>We reached here with our hard work and dedication</p>
-                </div>
-                <div>
-                    <div>
-                        <IoPeopleSharp />
-                        <div>
-                            <h3>2,245,341</h3>
-                            <p>Members</p>
-                        </div>
-                    </div>
-                    <div>
-                        <img src={click.src} alt="" />
-                        <div>
-                            <h3>828,867</h3>
-                            <p>Event Bookings</p>
-                        </div>
-                    </div>
-                    <div>
-                        <FaPrayingHands />
-                        <div>
-                            <h3>46,328</h3>
-                            <p>Clubs</p>
-                        </div>
-                    </div>
-                    <div>
-                        <img src={card.src} alt="" />
-                        <div>
-                            <h3>1,926,436</h3>
-                            <p>Payments</p>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-        </Container>
-    </>
-);
+export const HomePage = () => {
+
+    return (
+        <>
+            <Container>
+                <h4> <span>Dashboard</span><MdDashboard /></h4>
+                <SectionOptions>
+                    <Card>
+                        <IconWrapper>
+                            <Icon><IoPeopleSharp size={24} /></Icon>
+                        </IconWrapper>
+                        <CardSeparator>
+                            <Title>MORADORES</Title>
+                            <Description>6 novos nos últimos 3 meses.</Description>
+                        </CardSeparator>
+                    </Card>
+                    <CardVisitante>
+                        <IconWrapperVisitante>
+                            <Icon><MdEmojiPeople size={24} /></Icon>
+                        </IconWrapperVisitante>
+                        <CardSeparator>
+                            <Title>VISITAS</Title>
+                            <Description>15 agendadas para essa semana.</Description>
+                        </CardSeparator>
+                    </CardVisitante>
+                    <CardEncomenda>
+                        <IconWrapperEncomenda>
+                            <Icon><MdLocalShipping size={24} /></Icon>
+                        </IconWrapperEncomenda>
+                        <CardSeparator>
+                            <Title>ENCOMENDAS</Title>
+                            <Description>112 recebidas este mês.</Description>
+                        </CardSeparator>
+                    </CardEncomenda>
+                    <CardCreate>
+                        <IconWrapperCreate>
+                            <IconCreate><BiBuildings size={24} /> </IconCreate>
+                        </IconWrapperCreate>
+                        <CardSeparator>
+                            <Title>APARTAMENTOS</Title>
+                            <Description>50 de 100 disponiveis.</Description>
+                        </CardSeparator>
+                    </CardCreate>
+                </SectionOptions>
+
+                <Section>
+                    <LeftColumn>
+                        <ChartWrapper>
+                            <HeaderChartTitle>
+                                <SectionTitle>Tempo de moradia</SectionTitle>
+                                <p>Confira abaixo o tempo de residencia dos moradores atuais.</p>
+                            </HeaderChartTitle>
+                            <Chart>
+                                <MoradiaChart />
+                            </Chart>
+                        </ChartWrapper>
+                        <ChartWrapper>
+                            <HeaderChartTitle>
+                                <SectionTitle>Apartamentos ocupados</SectionTitle>
+                                <p>Confira algumas informações uteis sobre os apartamentos.</p>
+                            </HeaderChartTitle>
+                            <ChartApartment>
+                                <ContainerSPAN>
+                                    <p><ColorSpan></ColorSpan><span>Atual (82%)</span></p>
+                                    <p><ColorSpanMeta></ColorSpanMeta><span>Meta (92%)</span></p>
+                                    <p><ColorSpanTotal></ColorSpanTotal><span>Máximo</span></p>
+                                </ContainerSPAN>
+                                <ChartApartamentSeparator>
+                                    <p>
+                                        Distribuição de Ocupação
+                                    </p>
+                                    <p> dos Apartamentos</p>
+                                    <PieChartComponent />
+                                </ChartApartamentSeparator>
+                                <ChartApartamentSeparator>
+                                    <P>Moradores por apartamento</P>
+                                    <BarChartComponent />
+                                </ChartApartamentSeparator>
+                            </ChartApartment>
+                        </ChartWrapper>
+
+                        <ChartWrapper>
+                            <HeaderChartTitle>
+                                <SectionTitle>Relação de moradores</SectionTitle>
+                                <p>Distribuição de moradores, inquilinos e proprietários em relação às residências.</p>
+                            </HeaderChartTitle>
+                            <ChartApartment>
+                                <PizzaChart />
+                            </ChartApartment>
+                        </ChartWrapper>
+                        <ChartAdjunt>
+                        </ChartAdjunt>
+                    </LeftColumn>
+
+                    <RightColumn>
+                        <InfoSection>
+                            <Vector1 />
+                            <Vector2 />
+                            <Vector3 />
+                            <Content>
+                                <InfoTitle>Algo interessante aqui que não sei o que ainda</InfoTitle>
+                                <InfoDescription>Etiam facilisis ligula nec velit posuere egestas. Nunc dictum</InfoDescription>
+                            </Content>
+                            <Button>Try Free</Button>
+                        </InfoSection>
+                        <CondoUpdatesContainer>
+                            <HeaderCondoUpdates>
+                                <SectionTitle>Acompanhe o dia de hoje</SectionTitle>
+                                <p>Veja as atualizações em tempo real sobre hoje.</p>
+                            </HeaderCondoUpdates>
+                            <div>
+                                <CondominiumUpdates />
+                            </div>
+                        </CondoUpdatesContainer>
+                    </RightColumn>
+                </Section>
+            </Container>
+        </>
+    )
+};

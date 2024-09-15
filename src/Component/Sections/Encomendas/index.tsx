@@ -15,7 +15,7 @@ import EncomendasDeletadas from './deleteds';
 
 export default function Encomendas() {
     const [selected, setSelected] = useState('receivedEncomenda')
-    const [title, setTitle] = useState('Cadastrar uma nova encomenda')
+    const [title, setTitle] = useState('Registrar recebimento de encomenda')
     const { createEncomenda, contextFuncionarios, typeInquilinos } = useContext(SupaContext);
     const [isTooLong, setIsTooLong] = useState(false);
     const [formData, setFormData] = useState({
@@ -146,7 +146,7 @@ export default function Encomendas() {
         let newTitle = '';
         switch (inquilino) {
             case 'receivedEncomenda':
-                newTitle = 'Registrar recebimento de nova de encomenda';
+                newTitle = 'Registrar recebimento de encomenda';
                 break;
             case 'pendingEncomend':
                 newTitle = 'Encomendas aguardando retirada ';

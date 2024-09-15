@@ -1,4 +1,4 @@
-import { BiMenu } from 'react-icons/bi'
+import { BiBuildings, BiMenu } from 'react-icons/bi'
 import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
 import { GrNotification, GrUser } from 'react-icons/gr'
 import { TiHome } from "react-icons/ti";
@@ -7,7 +7,7 @@ import { CgDarkMode } from "react-icons/cg";
 import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
-import { MdApartment, MdDeliveryDining, MdEmojiPeople, MdLocalShipping } from "react-icons/md";
+import { MdApartment, MdDashboard, MdDeliveryDining, MdEmojiPeople, MdLocalShipping } from "react-icons/md";
 import logo from '../../Assets/iconLogo.png'
 import Image from 'next/image';
 
@@ -50,11 +50,11 @@ export default function NavBar() {
                     <MenuContainer>
                         <IconsContainer>
                             <IconsMenu $isActive={ChangePage === 'HomePage'} onClick={() => toggleChangePage('HomePage')}>
-                                <TiHome size={30} />
-                                <span>Home</span>
+                                <MdDashboard size={30} />
+                                <span>Dashboard</span>
                             </IconsMenu>
                             <IconsMenu $isActive={ChangePage === 'Inquilinos'} onClick={() => toggleChangePage('Inquilinos')}>
-                                <IoPeopleSharp  size={24} />
+                                <IoPeopleSharp size={24} />
                                 <span>Inquilinos</span>
                             </IconsMenu>
                             <IconsMenu $isActive={ChangePage === 'Visitantes'} onClick={() => toggleChangePage('Visitantes')}>
@@ -62,8 +62,12 @@ export default function NavBar() {
                                 <span>Visitantes</span>
                             </IconsMenu>
                             <IconsMenu $isActive={ChangePage === 'Encomendas'} onClick={() => toggleChangePage('Encomendas')}>
-                                <MdLocalShipping  size={24} />
+                                <MdLocalShipping size={24} />
                                 <span>Encomendas</span>
+                            </IconsMenu>
+                            <IconsMenu $isActive={ChangePage === 'Apartamentos'} onClick={() => toggleChangePage('Apartamentos')}>
+                                <BiBuildings size={24} />
+                                <span>Apartamentos</span>
                             </IconsMenu>
                         </IconsContainer>
                     </MenuContainer>
@@ -77,8 +81,8 @@ export default function NavBar() {
                     </CloseMenu>
                 </MenuDiv >
                 :
-    <span></span>
-}
+                <span></span>
+            }
         </>
     )
 }

@@ -15,7 +15,7 @@ export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')
     const [possuiCar, setPossuiCar] = useState(false)
     const [title, setTitle] = useState('Cadastrar novo inquilino')
-    const { updateInquilino, createInquilino, deletedInquilino } = useContext(SupaContext);
+    const { updateInquilino, createInquilino, deletedInquilino, typeInquilinos } = useContext(SupaContext);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -161,6 +161,7 @@ export default function Inquilinos() {
 
 
     const alterSelected = (inquilino: string) => {
+        console.log(typeInquilinos)
         let newTitle = '';
         switch (inquilino) {
             case 'cadasterInquilino':

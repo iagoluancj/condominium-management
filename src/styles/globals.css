@@ -11,6 +11,8 @@
     --backgroundColor: #00003E;
     --defaultText: #808080;
     --focusText: #1D77FF;
+    --padraoShadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    --padraoRadius: 10px
 }
 
 
