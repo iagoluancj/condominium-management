@@ -3,7 +3,7 @@ import { SupaContext } from "@/Context/context";
 import PaginatedFilteredTable from '@/Component/Primitivy/PaginatedTable';
 
 export default function DeletedVisits() {
-    const { contextVisits, typeInquilinos } = useContext(SupaContext);
+    const { contextVisits, typeInquilinos, contextApartamentos, contextBlocos } = useContext(SupaContext);
     const hoje = new Date();
 
     const visitasPassadas = contextVisits.filter(visit => {
@@ -40,7 +40,23 @@ export default function DeletedVisits() {
                             {inquilinoAprovador ? inquilinoAprovador.nome : "Não encontrado"}
                         </td>
                         <td className="px-6 py-4">
-                            {visit.localvisita}
+                            {
+                                (() => {
+                                    const currentApartamento = contextApartamentos.find(
+                                        apartamento => apartamento.id.toString() === visit.localvisita.toString()
+                                    );
+                                    const apartamentoName = currentApartamento ? currentApartamento.apartamento : 'Apartamento e ';
+
+                                    const blocoId = currentApartamento ? currentApartamento.bloco_id : null;
+
+                                    const currentBloco = contextBlocos.find(
+                                        bloco => bloco.id.toString() === blocoId?.toString()
+                                    );
+                                    const blocoName = currentBloco ? currentBloco.bloco : 'bloco não encontrado';
+
+                                    return `${apartamentoName} - ${blocoName}`;
+                                })()
+                            }
                         </td>
                         <td className="px-6 py-4">
                             {visit.fimvisita ? `${visit.fimvisita.slice(8, 10)}-${visit.fimvisita.slice(5, 7)}-${visit.fimvisita.slice(0, 4)}` : ''} / <strong>{visit.horariofim}</strong>

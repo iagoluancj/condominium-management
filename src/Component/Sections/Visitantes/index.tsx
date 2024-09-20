@@ -3,16 +3,16 @@ import { TypeInquilinos, TypeVisit } from '@/Types/types';
 import React, { ChangeEvent, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import InputComponent from '@/Component/Primitivy/Input';
-import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, Form, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
+import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, DivLabel, Form, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
 import { IoIosArrowForward } from 'react-icons/io';
 import { IoPeopleSharp } from 'react-icons/io5';
-import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, InputVisit, LabelVisit, SpanVisit } from './styles';
+import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, InputStatus, InputVisit, InputWrapperStatus, Label, LabelVisit, SpanVisit, StyledSelectStatus } from './styles';
 import DeletedVisits from './deletedVisits';
 import CurrentVisits from './currentVisits';
 import { MdEmojiPeople } from 'react-icons/md';
 
 export default function Visitantes() {
-    const { createVisit, typeInquilinos } = useContext(SupaContext);
+    const { createVisit, typeInquilinos, contextApartamentos, contextBlocos } = useContext(SupaContext);
     const [selected, setSelected] = useState('cadasterVisit')
     const [visitPerHour, setVisitPerHour] = useState(false)
     const [title, setTitle] = useState('Cadastrar uma nova visita')
@@ -28,11 +28,13 @@ export default function Visitantes() {
         cpfvisitante: "",
         observacoes: "",
         created_at: "",
-        deleted_at: ""
+        deleted_at: "",
+        tipo_visita: ""
     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
+        let updatedValue = value;
 
         if (name === 'cpfvisitante' || name === 'cpfinquilinopermissao') {
             if (!/^\d*$/.test(value)) {
@@ -66,9 +68,35 @@ export default function Visitantes() {
             return;
         }
 
+        if (name === 'localvisita') {
+            const selectedAp = validAp.find(ap => ap.label === value);
+
+            if (selectedAp) {
+                setFormData(prevState => ({
+                    ...prevState,
+                    [name]: selectedAp.label,
+                    localvisitaId: selectedAp.id
+                }));
+                return;
+            }
+        }
+
+        if (name === 'localvisita') {
+            const selectedAp = validAp.find(ap => ap.label === value);
+
+            if (selectedAp) {
+                setFormData(prevState => ({
+                    ...prevState,
+                    [name]: selectedAp.label,
+                    localvisitaId: selectedAp.id
+                }));
+                return;
+            }
+        }
+
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: updatedValue,
         }));
     };
 
@@ -92,6 +120,18 @@ export default function Visitantes() {
 
     const validCpfs = getCPFmoradores(typeInquilinos)
 
+    const getValidAp = (contextApartamentos: { id: string; apartamento: string; bloco_id: string; }[], contextBlocos: { id: string; bloco: string; }[]): { id: string; label: string; }[] => {
+        return contextApartamentos.map(apartamento => {
+            const bloco = contextBlocos.find(bloco => bloco.id === apartamento.bloco_id);
+            return {
+                id: apartamento.id,
+                label: `${apartamento.apartamento} - ${bloco?.bloco || 'Bloco desconhecido'}`
+            };
+        });
+    };
+
+    const validAp = getValidAp(contextApartamentos, contextBlocos);
+
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -105,20 +145,32 @@ export default function Visitantes() {
             return;
         }
 
-        if (formData.localvisita = '') {
+        if (!formData.localvisitaId || formData.localvisitaId === '') {
             toast.error('Preencha o local da visita.');
             return;
         }
 
-        const currentDate = new Date().toISOString();
+        const getBrazilDate = () => {
+            const brazilTimeOffset = -3;
+            const now = new Date();
+            now.setHours(now.getUTCHours() + brazilTimeOffset);
+            return now.toISOString().split('T')[0];
+        };
 
+        const currentDate = new Date().toISOString();
         const fimVisita = formData.fimvisita && formData.fimvisita !== "0"
             ? formData.fimvisita
-            : new Date().toISOString().slice(0, 10);
+            : new Date().toISOString();
+
+        const dataVisita = (formData.horarioinicio && (formData.datavisita === '' || formData.datavisita === '0'))
+            ? getBrazilDate()  // Define data atual
+            : formData.datavisita;  // Mantém o valor existente
 
         try {
             await createVisit({
                 ...formData,
+                localvisita: formData.localvisitaId,
+                datavisita: dataVisita,
                 created_at: currentDate,
                 fimvisita: fimVisita,
                 deleted_at: ""
@@ -135,7 +187,8 @@ export default function Visitantes() {
                 cpfvisitante: "",
                 observacoes: "",
                 created_at: "",
-                deleted_at: ""
+                deleted_at: "",
+                tipo_visita: ""
             });
             console.log("Visita criada com sucesso!");
         } catch (error) {
@@ -278,6 +331,7 @@ export default function Visitantes() {
                                 name="localvisita"
                                 value={formData.localvisita}
                                 onChange={handleChange}
+                                suggestions={validAp.map(ap => ap.label)}
                                 required
                             />
                             <InputComponent
@@ -288,6 +342,24 @@ export default function Visitantes() {
                                 suggestions={validCpfs}
                                 required
                             />
+                            <DivLabel>
+                                <Label>
+                                    <InputWrapperStatus>
+                                        <InputStatus>* Tipo da visita</InputStatus>
+                                        <StyledSelectStatus
+                                            name="tipo_visita"
+                                            value={formData.tipo_visita}
+                                            onChange={handleChange}
+                                            required
+                                        >
+                                            <option value="familiar">Familiar</option>
+                                            <option value="amigo">Amigo</option>
+                                            <option value="manutencao">Manutenção</option>
+                                            <option value="naoInformado">Não informado</option>
+                                        </StyledSelectStatus>
+                                    </InputWrapperStatus>
+                                </Label>
+                            </DivLabel>
                         </ContainerForm>
                         <InputComponent
                             label="Observações Adicionais"

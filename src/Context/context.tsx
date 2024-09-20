@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { createContext } from "react";
 import ToastProvider from "@/lib/ToastProvider";
 import { toast } from "react-toastify";
-import { TypeEncomendas, TypeFuncionarios, TypeInquilinos, TypeVisit, } from "@/Types/types";
+import { TypeApartamento, TypeBloco, TypeEncomendas, TypeFuncionarios, TypeInquilinos, TypeVisit, } from "@/Types/types";
 
 type SupaContextType = {
     typeInquilinos: TypeInquilinos[]
     contextVisits: TypeVisit[]
+    contextApartamentos: TypeApartamento[],
+    contextBlocos: TypeBloco[],
     contextFuncionarios: TypeFuncionarios[]
     contextEncomendas: TypeEncomendas[]
     ChangePage: string,
@@ -32,6 +34,8 @@ type SupaProviderProps = {
 export const SupaContext = createContext({
     typeInquilinos: [],
     contextVisits: [],
+    contextApartamentos: [],
+    contextBlocos: [],
     contextEncomendas: [],
     contextFuncionarios: [],
     ChangePage: '',
@@ -54,6 +58,8 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [visits, setVisits] = useState<TypeVisit[]>([])
     const [encomendas, setEncomendas] = useState<TypeEncomendas[]>([])
     const [funcinarios, setFuncionarios] = useState<TypeFuncionarios[]>([])
+    const [apartamentos, setApartamentos] = useState<TypeApartamento[]>([])
+    const [blocos, setBlocos] = useState<TypeBloco[]>([])
     const [changePage, setChangePage] = useState('HomePage')
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
@@ -179,7 +185,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     };
 
     const createInquilino = async (inquilinoData: Omit<TypeInquilinos, 'id'>) => {
-        const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento, status, comunicado_importante, bloco, created_at } = inquilinoData;
+        const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento_id, status, comunicado_importante, bloco, created_at } = inquilinoData;
 
         try {
             const { data, error } = await supabase
@@ -192,7 +198,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                         quantidade_carros,
                         modelo_carro,
                         placa_carro,
-                        apartamento,
+                        apartamento_id,
                         status,
                         comunicado_importante,
                         is_deleted: false,
@@ -228,7 +234,8 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             cpfvisitante,
             observacoes,
             created_at,
-            deleted_at
+            deleted_at,
+            tipo_visita
         } = visitData;
 
         try {
@@ -246,7 +253,8 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                         cpfvisitante,
                         observacoes,
                         created_at,
-                        deleted_at
+                        deleted_at,
+                        tipo_visita
                     }
                 ]);
 
@@ -317,6 +325,26 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             return { visitanteData };
         }
 
+        const getAllApartamentos = async () => {
+            let { data: apartamentoData } = await supabase
+                .from('apartamentos')
+                .select('*')
+                .order('id')
+                .returns<TypeApartamento[]>()
+
+            return { apartamentoData };
+        }
+
+        const getAllBlocos = async () => {
+            let { data: blocoData } = await supabase
+                .from('blocos')
+                .select('*')
+                .order('id')
+                .returns<TypeBloco[]>()
+
+            return { blocoData };
+        }
+
         const getAllEncomendas = async () => {
             let { data: encomendasData } = await supabase
                 .from('encomendas')
@@ -349,6 +377,12 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
 
             const { funcionarioData } = await getAllFuncionarios();
             setFuncionarios(funcionarioData || [])
+
+            const { apartamentoData } = await getAllApartamentos();
+            setApartamentos(apartamentoData || []);
+
+            const { blocoData } = await getAllBlocos();
+            setBlocos(blocoData || []);
         })();
 
         const inquilinosChannel = supabase
@@ -411,6 +445,8 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         <SupaContext.Provider value={{
             contextEncomendas: encomendas,
             contextFuncionarios: funcinarios,
+            contextApartamentos: apartamentos,
+            contextBlocos: blocos,
             ChangePage: changePage,
             typeInquilinos: inquilinos,
             contextVisits: visits,

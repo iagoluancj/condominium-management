@@ -15,7 +15,7 @@ export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')
     const [possuiCar, setPossuiCar] = useState(false)
     const [title, setTitle] = useState('Cadastrar novo inquilino')
-    const { updateInquilino, createInquilino, deletedInquilino, typeInquilinos } = useContext(SupaContext);
+    const { updateInquilino, createInquilino, deletedInquilino, typeInquilinos, contextApartamentos, contextBlocos } = useContext(SupaContext);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -28,7 +28,7 @@ export default function Inquilinos() {
         quantidade_carros: 0,
         modelo_carro: "",
         placa_carro: "",
-        apartamento: "",
+        apartamento_id: "",
         status: "inquilino",
         comunicado_importante: "",
         is_deleted: false,
@@ -46,7 +46,7 @@ export default function Inquilinos() {
         } catch (error) {
             console.error("Erro ao editar o inquilino:", error);
         } finally {
-            setShowModal(false); // Fecha o modal após a confirmação
+            setShowModal(false); 
         }
     };
 
@@ -61,44 +61,10 @@ export default function Inquilinos() {
         }
     };
 
-    const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        if (!formData.nome || !formData.cpf) {
-            toast.error('Preencha os campos obrigatórios.');
-            return;
-        }
-
-        const currentDate = new Date().toISOString();
-
-        try {
-            await createInquilino({
-                ...formData,
-                created_at: currentDate
-            });
-            setFormData({
-                id: 0,
-                nome: "",
-                cpf: 0,
-                tem_carro: false,
-                quantidade_carros: 0,
-                modelo_carro: "",
-                placa_carro: "",
-                apartamento: "",
-                status: "inquilino",
-                comunicado_importante: "",
-                is_deleted: false,
-                bloco: '',
-                created_at: ''
-            });
-        } catch (error) {
-            console.log(error)
-        }
-    };
-
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
+        let updatedValue = value;
 
         if (type === "checkbox") {
             const { checked } = e.target as HTMLInputElement;
@@ -136,14 +102,65 @@ export default function Inquilinos() {
                     }));
                 } else {
                 }
+
             } else {
+                if (name === 'apartamento_id') {
+                    const selectedAp = validAp.find(ap => ap.label === value);
+
+                    if (selectedAp) {
+                        setFormData(prevState => ({
+                            ...prevState,
+                            [name]: selectedAp.label,
+                            localvisitaId: selectedAp.id
+                        }));
+                        return;
+                    }
+                }
+
                 setFormData(prevData => ({
                     ...prevData,
-                    [name]: value
+                    [name]: updatedValue,
                 }));
             }
         }
     };
+
+    const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (!formData.nome || !formData.cpf) {
+            toast.error('Preencha os campos obrigatórios.');
+            return;
+        }
+
+        const currentDate = new Date().toISOString();
+
+        try {
+            await createInquilino({
+                ...formData,
+                apartamento_id: formData.localvisitaId || 'deu ruim',
+                created_at: currentDate
+            });
+            setFormData({
+                id: 0,
+                nome: "",
+                cpf: 0,
+                tem_carro: false,
+                quantidade_carros: 0,
+                modelo_carro: "",
+                placa_carro: "",
+                apartamento_id: "",
+                status: "inquilino",
+                comunicado_importante: "",
+                is_deleted: false,
+                bloco: '',
+                created_at: ''
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const isChecked = e.target.checked;
@@ -158,7 +175,6 @@ export default function Inquilinos() {
             }));
         }
     };
-
 
     const alterSelected = (inquilino: string) => {
         console.log(typeInquilinos)
@@ -180,6 +196,18 @@ export default function Inquilinos() {
         setTitle(newTitle)
         setSelected(inquilino);
     };
+
+    const getValidAp = (contextApartamentos: { id: string; apartamento: string; bloco_id: string; }[], contextBlocos: { id: string; bloco: string; }[]): { id: string; label: string; }[] => {
+        return contextApartamentos.map(apartamento => {
+            const bloco = contextBlocos.find(bloco => bloco.id === apartamento.bloco_id);
+            return {
+                id: apartamento.id,
+                label: `${apartamento.apartamento} - ${bloco?.bloco || 'Bloco desconhecido'}` 
+            };
+        });
+    };
+
+    const validAp = getValidAp(contextApartamentos, contextBlocos);
 
     return (
         <InquilinoSection $isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
@@ -292,16 +320,14 @@ export default function Inquilinos() {
                             <FormContainer>
                                 <H3>Da residencia</H3>
                                 <SeparationResidenc>
-                                    <DivLabel>
-                                        <InputComponent
-                                            type="text"
-                                            name="apartamento"
-                                            value={formData.apartamento}
-                                            label="* Apartamento"
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </DivLabel>
+                                    <InputComponent
+                                        name="apartamento_id"
+                                        value={formData.apartamento_id}
+                                        label="* Apartamento"
+                                        onChange={handleChange}
+                                        suggestions={validAp.map(ap => ap.label)}
+                                        required
+                                    />
                                     <DivLabel>
                                         <Label>
                                             <InputWrapperStatus>
@@ -318,16 +344,6 @@ export default function Inquilinos() {
                                                 </StyledSelectStatus>
                                             </InputWrapperStatus>
                                         </Label>
-                                    </DivLabel>
-                                    <DivLabel>
-                                        <InputComponent
-                                            type="text"
-                                            name="bloco"
-                                            value={formData.bloco}
-                                            label="* Bloco"
-                                            onChange={handleChange}
-                                            required
-                                        />
                                     </DivLabel>
                                 </SeparationResidenc>
                                 <DivLabel>

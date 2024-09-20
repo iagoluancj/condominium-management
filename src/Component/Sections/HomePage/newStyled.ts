@@ -339,6 +339,36 @@ export const ColorSpanTotal = styled(ColorSpan)`
     background-color: #E9F3FF;
 `;
 
+export const SectionClassifyColor = styled.div`
+margin-top: .5rem;
+display: flex;
+gap: 1rem;
+width: 100%;
+align-items: center;
+justify-content: center;
+text-align: center;
+margin-bottom: -.2rem;
+`
+export const SpanClassifyColor = styled.span`
+    background-color: red;
+    width: 150px;
+    font-weight: 400;
+    font-size: 12px;
+    border-radius: 100px 100px 0px 0px;
+    color: var(--brancoPastelFont);
+`
+
+export const SpanClassifyColorInquilino = styled(SpanClassifyColor)`
+    background-color: #FFBF08;
+`
+export const SpanClassifyColorEncomenda = styled(SpanClassifyColor)`
+    background-color: #3F24F7;
+`
+export const SpanClassifyColorVisita = styled(SpanClassifyColor)`
+    background-color: #048A42;
+`
+
+
 export {
     Container,
     Section,

@@ -140,7 +140,6 @@ export const Label = styled.label`
 `
 
 export const DivLabel = styled.div`
-
 `
 export const InputFormCarro = styled.input`
   transition: ease-in .2s;
@@ -274,7 +273,7 @@ export const StyledInput = styled.input`
 
 export const InputStatus = styled.div`
   position: absolute;
-  width: 35%;
+  width: 25%;
   top: 0;
   left: 0;
   right: 0;
@@ -292,12 +291,12 @@ export const InputWrapperStatus = styled(InputWrapper)`
 
 export const StyledSelectStatus = styled.select`
   padding: 0.5rem;
-  width: 200px;
+  width: 300px;
   height: 45px;
   margin-top: .0rem;
   font-size: 1rem;
   border: 2px solid #007bff;
-  border-radius: 4px;
+  border-radius: 10px;
 `;
 
 export const CreateInqui = styled.button`

@@ -39,18 +39,20 @@ import {
     ChartApartamentSeparator,
     ColorSpanMeta,
     ColorSpanTotal,
-    P
+    P,
+    SectionClassifyColor,
+    SpanClassifyColorInquilino,
+    SpanClassifyColorEncomenda,
+    SpanClassifyColorVisita
 } from './newStyled';
 
-import { FaFileCirclePlus } from "react-icons/fa6";
 import { MdDashboard, MdEmojiPeople, MdLocalShipping } from 'react-icons/md';
 import { IoPeopleSharp } from 'react-icons/io5';
 import { MoradiaChart } from './moradiaChart';
 import PizzaChart from './Charts/pizzaChart';
 import PieChartComponent from './Charts/PieChart';
-import MoradoresPieChart from './Charts/BarChartComponent';
 import BarChartComponent from './Charts/BarChartComponent';
-import { BiBuilding, BiBuildings } from 'react-icons/bi';
+import { BiBuildings } from 'react-icons/bi';
 import CondominiumUpdates from './Charts/EventAgend/EventAgend';
 
 export const HomePage = () => {
@@ -156,12 +158,17 @@ export const HomePage = () => {
                                 <InfoTitle>Algo interessante aqui que não sei o que ainda</InfoTitle>
                                 <InfoDescription>Etiam facilisis ligula nec velit posuere egestas. Nunc dictum</InfoDescription>
                             </Content>
-                            <Button>Try Free</Button>
+                            <Button>GoGoGo</Button>
                         </InfoSection>
                         <CondoUpdatesContainer>
                             <HeaderCondoUpdates>
                                 <SectionTitle>Acompanhe o dia de hoje</SectionTitle>
                                 <p>Veja as atualizações em tempo real sobre hoje.</p>
+                                <SectionClassifyColor>
+                                    <SpanClassifyColorInquilino>Novo inquilino</SpanClassifyColorInquilino>
+                                    <SpanClassifyColorEncomenda>Nova encomenda</SpanClassifyColorEncomenda>
+                                    <SpanClassifyColorVisita>Nova visita</SpanClassifyColorVisita>
+                                </SectionClassifyColor>
                             </HeaderCondoUpdates>
                             <div>
                                 <CondominiumUpdates />

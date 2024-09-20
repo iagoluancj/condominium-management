@@ -8,7 +8,7 @@ type SortField = keyof TypeInquilinos;
 
 export default function Tables() {
     const [sortField, setSortField] = useState<SortField>('nome');
-    const { typeInquilinos, updateInquilino, deletedInquilino } = useContext(SupaContext);
+    const { typeInquilinos, updateInquilino, deletedInquilino, contextApartamentos, contextBlocos } = useContext(SupaContext);
     const [editId, setEditId] = useState<number | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [filterTerm, setFilterTerm] = useState<string>("");
@@ -16,6 +16,7 @@ export default function Tables() {
     const [itemsPerPage, setItemsPerPage] = useState<number>(10);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPageOptions = [5, 10, 20];
+    const [possuiCar, setPossuiCar] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [cpfToDelete, setCpfToDelete] = useState<number | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -27,7 +28,7 @@ export default function Tables() {
         quantidade_carros: 0,
         modelo_carro: "",
         placa_carro: "",
-        apartamento: "",
+        apartamento_id: "",
         status: "inquilino",
         comunicado_importante: "",
         is_deleted: false,
@@ -105,6 +106,20 @@ export default function Tables() {
             ...prevFormData,
             [name]: value,
         }));
+    };
+
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        const { name, type } = e.target;
+        setPossuiCar(isChecked);
+
+        if (type === "checkbox") {
+            const { checked } = e.target as HTMLInputElement;
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: checked
+            }));
+        }
     };
 
     const handleDeleted = (cpf: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -243,7 +258,7 @@ export default function Tables() {
                                                 type="checkbox"
                                                 name="tem_carro"
                                                 checked={formData.tem_carro}
-                                                onChange={handleChange}
+                                                onChange={handleCheckboxChange}
                                             />
                                         ) : inquilino.tem_carro ? "Sim" : "Não"}
                                     </td>
@@ -257,6 +272,7 @@ export default function Tables() {
                                                         name="quantidade_carros"
                                                         value={formData.quantidade_carros}
                                                         onChange={handleChange}
+                                                        disabled={!possuiCar}
                                                     />
                                                 </span>
                                                 <span>
@@ -266,6 +282,7 @@ export default function Tables() {
                                                         name="modelo_carro"
                                                         value={formData.modelo_carro}
                                                         onChange={handleChange}
+                                                        disabled={!possuiCar}
                                                     />
                                                 </span>
                                                 <span>
@@ -275,6 +292,7 @@ export default function Tables() {
                                                         name="placa_carro"
                                                         value={formData.placa_carro}
                                                         onChange={handleChange}
+                                                        disabled={!possuiCar}
                                                     />
                                                 </span>
                                             </div>
@@ -286,29 +304,51 @@ export default function Tables() {
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-4 py-4 ">
+                                    <td className="px-4 py-4">
                                         {editId === inquilino.id ? (
                                             <div>
                                                 <span>
                                                     Apartamento:
                                                     <Input
                                                         type="text"
-                                                        name="apartamento"
-                                                        value={formData.apartamento}
+                                                        name="apartamento_id"
+                                                        value={(() => {
+                                                            const currentApartamento = contextApartamentos.find(
+                                                                apartamento => apartamento.id.toString() === formData.apartamento_id.toString()
+                                                            );
+                                                            const apartamentoName = currentApartamento ? currentApartamento.apartamento : 'Apartamento não encontrado';
+
+                                                            const blocoId = currentApartamento ? currentApartamento.bloco_id : null;
+
+                                                            const currentBloco = contextBlocos.find(
+                                                                bloco => bloco.id.toString() === blocoId?.toString()
+                                                            );
+                                                            const blocoName = currentBloco ? currentBloco.bloco : 'Bloco não encontrado';
+
+                                                            return `${apartamentoName} - ${blocoName}`;
+                                                        })()}
                                                         onChange={handleChange}
-                                                    />
-                                                </span>
-                                                <span>
-                                                    Bloco:
-                                                    <Input
-                                                        type="text"
-                                                        name="bloco"
-                                                        value={formData.bloco}
-                                                        onChange={handleChange}
+                                                        disabled
                                                     />
                                                 </span>
                                             </div>
-                                        ) : `${inquilino.apartamento} - ${inquilino.bloco}`}
+                                        ) : (
+                                            (() => {
+                                                const currentApartamento = contextApartamentos.find(
+                                                    apartamento => apartamento.id.toString() === inquilino.apartamento_id.toString()
+                                                );
+                                                const apartamentoName = currentApartamento ? currentApartamento.apartamento : 'Apartamento não encontrado';
+
+                                                const blocoId = currentApartamento ? currentApartamento.bloco_id : null;
+
+                                                const currentBloco = contextBlocos.find(
+                                                    bloco => bloco.id.toString() === blocoId?.toString()
+                                                );
+                                                const blocoName = currentBloco ? currentBloco.bloco : 'Bloco não encontrado';
+
+                                                return `${apartamentoName} - ${blocoName}`;
+                                            })()
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 ">
                                         {editId === inquilino.id ? (

@@ -95,3 +95,39 @@ export const InputVisit = styled.input`
   padding: 0rem;
   transition: ease-in .2s;
 `
+export const DivLabel = styled.div`
+`
+export const Label = styled.label`
+`
+export const InputWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const InputWrapperStatus = styled(InputWrapper)`
+`;
+
+export const InputStatus = styled.div`
+  position: absolute;
+  width: 57%;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #007bff; 
+  pointer-events: none; 
+  z-index: 5;
+  transform: translateY(-50%);
+  padding: 0; 
+  background-color: white; 
+`;
+
+export const StyledSelectStatus = styled.select`
+  padding: 0.5rem;
+  width: 200px;
+  height: 43px;
+  margin-top: .0rem;
+  font-size: 1rem;
+  border: 1px solid #007bff;
+  border-radius: 10px;
+`;

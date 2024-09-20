@@ -216,7 +216,7 @@ export default function TableEncomendas() {
                                     <ButtonSave onClick={() => handleConfirmClick(encomenda.id)}>Confirmar entrega</ButtonSave>
                                 </td>
                                 <td className="px-4 py-4">{encomenda.receivedby}</td>
-                                <td className="px-4 py-4">{encomenda.receivedto}</td>
+                                <td className="px-4 py-4"> {encomenda.receivedto.split(' - ')[1]}</td>
                                 <td className="px-4 py-4">{new Date(encomenda.datareceived).toLocaleString()}</td>
                                 <td className="px-4 py-4 font-medium break-words w-[14%]">
                                     {editId === encomenda.id ? (

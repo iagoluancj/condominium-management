@@ -7,12 +7,13 @@ export type TypeInquilinos = {
     quantidade_carros: number;
     modelo_carro: string;
     placa_carro: string;
-    apartamento: string;
+    apartamento_id: string;
     status: string;
     comunicado_importante: string;
     is_deleted: boolean;
     bloco: string
     created_at: string;
+    localvisitaId?: string;
 };
 
 export type TypeVisit = {
@@ -28,6 +29,8 @@ export type TypeVisit = {
     observacoes: string;
     created_at: string;
     deleted_at: string;
+    tipo_visita: string;
+    localvisitaId?: string;
 };
 
 export type TypeEncomendas = {
@@ -46,3 +49,14 @@ export type TypeFuncionarios = {
     nome: string;
     cpf: string;
 };
+
+export type TypeApartamento = {
+    id: string;          
+    bloco_id: string;   
+    apartamento: string;
+}
+
+export type TypeBloco = {
+    id: string;     
+    bloco: string;
+}
