@@ -213,8 +213,8 @@ export default function Tables() {
                 </div>
             </div>
             <div className="relative  shadow-md sm:rounded-lg justify-center items-center">
-                <table className=" text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center" >
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 justify-center items-center">
+                <table className=" text-sm text-left rtl:text-right text-gray-500  justify-center items-center" >
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50   justify-center items-center">
                         <tr className="justify-center items-center">
                             <th scope="col" className="px-4 py-3 w-24">Nome</th>
                             <th scope="col" className="px-4 py-3 w-32">CPF</th>
@@ -230,8 +230,8 @@ export default function Tables() {
                         {paginatedInquilinos()
                             .filter((inquilino) => !inquilino.is_deleted)
                             .map((inquilino) => (
-                                <tr key={inquilino.id} className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl">
-                                    <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-[3%]">
+                                <tr key={inquilino.id} className="odd:bg-blue-100  even:bg-gray-50  border-b  drop-shadow-xl">
+                                    <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap  w-[3%]">
                                         {editId === inquilino.id ? (
                                             <Input
                                                 type="text"

@@ -352,8 +352,9 @@ export default function Visitantes() {
                                             onChange={handleChange}
                                             required
                                         >
-                                            <option value="familiar">Familiar</option>
+                                            <option value=""></option>
                                             <option value="amigo">Amigo</option>
+                                            <option value="familiar">Familiar</option>
                                             <option value="manutencao">Manutenção</option>
                                             <option value="naoInformado">Não informado</option>
                                         </StyledSelectStatus>

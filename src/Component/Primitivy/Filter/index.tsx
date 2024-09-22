@@ -76,14 +76,14 @@ export default function FilteredTable<T extends { [key: string]: any }>({
                     onChange={(e) => setFilterTerm(e.target.value)}
                     className="p-2 border border-gray-300 rounded bg-blue-50 w-[80%]"
                 />
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 text-center">
                     {columns
                         .filter(({ key }) => key !== 'description')
                         .map(({ key, label }) => (
                             <button
                                 key={String(key)}
                                 onClick={() => setSortField(key)}
-                                className={`p-2 border rounded ${sortField === key ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'
+                                className={`p-2 border rounded ${sortField === key ? 'bg-blue-500 text-white font-medium' : 'bg-blue-100 border-gray-300 text-gray-700'
                                     }`}
                             >
                                 {label}

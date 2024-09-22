@@ -7,13 +7,14 @@ import { CgDarkMode } from "react-icons/cg";
 import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
-import { MdApartment, MdDashboard, MdDeliveryDining, MdEmojiPeople, MdLocalShipping } from "react-icons/md";
+import { MdDarkMode, MdDashboard, MdEmojiPeople, MdLightMode, MdLocalShipping } from "react-icons/md";
 import logo from '../../Assets/iconLogo.png'
 import Image from 'next/image';
+import DarkModeToggle from './ToggleMode';
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
-    const { ChangePage, handleChangePage } = useContext(SupaContext);
+    const { ChangePage, handleChangePage, handleChangeTheme, ChangeTheme } = useContext(SupaContext);
 
     const handleMenu = () => {
         setToggleMenu(!toggleMenu);
@@ -23,6 +24,18 @@ export default function NavBar() {
         handleChangePage(page)
     };
 
+    const toggleChangeTheme = (theme: boolean) => {
+        handleChangeTheme(theme);
+    };
+
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        const { name, type } = e.target;
+
+        if (type === "checkbox") {
+            const { checked } = e.target as HTMLInputElement;
+        }
+    };
 
     return (
         <>
@@ -32,15 +45,21 @@ export default function NavBar() {
                         <BiMenu size={30} />
                     </Icons>
                     <IconsRight>
-                        <IconDarkOrLight><CgDarkMode size={40} /></IconDarkOrLight>
-                        <Icons><GrNotification size={25} /></Icons>
+                        <IconDarkOrLight>
+                            {/* <MdDarkMode size={40} onClick={() => toggleChangeTheme(false)} />
+                            <MdLightMode size={40} onClick={() => toggleChangeTheme(true)} /> */}
+                            <DarkModeToggle />
+                        </IconDarkOrLight>
+                        <Icons>
+                            <GrNotification size={25} />
+                        </Icons>
                         <Icons><GrUser size={25} /></Icons>
                     </IconsRight>
                 </NavContainer>
             </Navigation>
 
             {toggleMenu ?
-                <MenuDiv>
+                <MenuDiv $changeTheme={ChangeTheme}>
                     <NavMenu>
                         <NavIconMenu>
                             <Image src={logo} width={80} height={0} alt='Logo'></Image>

@@ -6,7 +6,6 @@ const Container = styled.div`
     max-width: 1100px;
     gap: 1rem;
     margin-top: 15vh;
-    background-color: #fff;
 
     h4 {
       font-size: 32px;
@@ -27,7 +26,7 @@ const Section = styled.div`
 `;
 
 export const SectionOptions = styled(Section)`
-    box-shadow: 0px 0px 10px .1px rgba(0, 0, 0, 0.1);
+    box-shadow: ${(props) => props.theme.cardShadow};
     border-radius: 5px;
 
     padding: .5rem;
@@ -48,7 +47,7 @@ const Card = styled.div`
     transition: .2s ease-in-out;
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.01);
         transition: .2s ease-in-out;
     }
 `;
@@ -69,6 +68,7 @@ export const CardCreate = styled(Card)`
 export const CardSeparator = styled.div`
     display: flex;
     flex-direction: column;
+    
 `;
 
 const IconWrapper = styled.div`
@@ -109,15 +109,13 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-    color: var(--defaultText);
     max-width: 200px;
 `;
 
 const LeftColumn = styled.div`
     display: flex;
     flex-direction: column;
-    gap: .5rem;
-
+    gap: 1rem;
 `;
 
 const RightColumn = styled.div`
@@ -130,6 +128,7 @@ const RightColumn = styled.div`
 const ChartWrapper = styled.div`
     box-shadow: 0px 0px 10px .1px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    background: ${(props) => props.theme.background};
 `;
 
 export const HeaderChartTitle = styled.div`
@@ -138,7 +137,7 @@ export const HeaderChartTitle = styled.div`
     padding-left: .7rem;
 
     p {
-        color: var(--defaultText);
+        color: ${(props) => props.theme.secondary};
         font-size: 12px;
     }
 `;
@@ -170,6 +169,7 @@ export const ChartApartment = styled.div`
     width: 100%;
     height: 282px;
     padding: .4rem;
+    color: ${(props) => props.theme.secondary};
 `;
 
 export const ChartMoradores = styled.div`
@@ -181,7 +181,6 @@ const InfoSection = styled.div`
     flex-direction: row;
     justify-content: space-evenly;
 
-    height: 150px;
     border-radius: 10px;
 
     background-color: #1D77FF;
@@ -281,6 +280,7 @@ margin-top: 5rem;
 export const CondoUpdatesContainer = styled.div`
     box-shadow: var(--padraoShadow);
     border-radius: var(--padraoRadius);
+    background: ${(props) => props.theme.background};
     font-weight: 600;
     width: 100%;
     font-size: 18px;
@@ -299,6 +299,10 @@ export const HeaderCondoUpdates = styled.div`
     padding-bottom: .2rem;
     padding-top: .4rem;
     border-bottom: 1px solid #80808050;
+
+    p {
+        color: ${(props) => props.theme.secondary};
+    }
 `;
 
 export const UpdatesSection = styled.div``;
@@ -336,7 +340,7 @@ export const ColorSpanMeta = styled(ColorSpan)`
 `;
 
 export const ColorSpanTotal = styled(ColorSpan)`
-    background-color: #E9F3FF;
+    background-color: #7594ba;
 `;
 
 export const SectionClassifyColor = styled.div`
@@ -359,7 +363,7 @@ export const SpanClassifyColor = styled.span`
 `
 
 export const SpanClassifyColorInquilino = styled(SpanClassifyColor)`
-    background-color: #FFBF08;
+    background-color: #dea50a;
 `
 export const SpanClassifyColorEncomenda = styled(SpanClassifyColor)`
     background-color: #3F24F7;

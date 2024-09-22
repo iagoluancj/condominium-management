@@ -73,6 +73,7 @@ export const SpanVisit = styled.div<VisitPerHour>`
   margin-top: -1.2rem;
   padding: 0rem .6rem;
   background-color: #fff;
+  background-color: ${(props) => props.theme.background};
   transition: ease-in .2s;
 
   font-family: outfit;
@@ -120,6 +121,7 @@ export const InputStatus = styled.div`
   transform: translateY(-50%);
   padding: 0; 
   background-color: white; 
+  background-color: ${(props) => props.theme.background};
 `;
 
 export const StyledSelectStatus = styled.select`
@@ -128,6 +130,7 @@ export const StyledSelectStatus = styled.select`
   height: 43px;
   margin-top: .0rem;
   font-size: 1rem;
-  border: 1px solid #007bff;
+  border: 2px solid #007bff;
   border-radius: 10px;
+  background-color: ${(props) => props.theme.background};
 `;

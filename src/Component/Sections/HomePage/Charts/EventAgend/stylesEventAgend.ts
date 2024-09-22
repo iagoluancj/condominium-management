@@ -63,9 +63,10 @@ export const TimeSlot = styled.div<TimeSlotProps>`
   margin: 5px 0;
   font-weight: 400;
   font-size: 12px;
+  color: ${(props) => props.theme.secondary};
   padding: .5rem 0rem;
   box-shadow: ${({ hasShadow }) =>
-    hasShadow ? '8px 5px 10px .1px rgba(0, 0, 0, 0.1)' : 'none'};
+    hasShadow ? '2px 5px 10px .1px rgba(0, 0, 0, 0.1)' : 'none'};
 
   border-radius: 5px;
 `;
@@ -99,6 +100,4 @@ export const EventCard = styled.div<EventCardProps>`
   padding: 10px;
   color: white;
   font-size: 12px;
-  /* box-shadow: ${({ position }) =>
-    position ? '2px 5px 10px .1px rgba(0, 0, 0, 0.1)' : 'none'}; */
   `;

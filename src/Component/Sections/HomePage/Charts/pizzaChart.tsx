@@ -3,7 +3,7 @@ import { TypeInquilinos } from '@/Types/types';
 import React, { useState, useContext } from 'react';
 import { PieChart, Pie, ResponsiveContainer, Sector, Cell } from 'recharts';
 
-const COLORS = ['#ffbb0094', '#B99634', '#FFBF08'];
+const COLORS = ['#755706', '#B99634', '#ffbb00'];
 
 const getInquilinoStats = (inquilinos: TypeInquilinos[]) => {
     const stats = {

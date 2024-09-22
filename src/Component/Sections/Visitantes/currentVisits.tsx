@@ -100,16 +100,16 @@ export default function VisitsTable() {
                     return (
                         <tr
                             key={visit.id}
-                            className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl"
+                            className="odd:bg-blue-100 even:bg-gray-50  border-b  drop-shadow-xl"
                         >
-                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {editId === visit.id ? (
                                     <input
                                         type="text"
                                         name="nomevisitante"
                                         value={formData.nomevisitante}
                                         onChange={handleChange}
-                                        className="p-1 w-[200px]"
+                                        className="p-1 w-[200px] rounded-lg	shadow-xl"
                                     />
                                 ) : (
                                     visit.nomevisitante
@@ -123,7 +123,7 @@ export default function VisitsTable() {
                                         value={formData.cpfvisitante}
                                         onChange={handleChange}
                                         disabled
-                                        className="p-1 w-[100px]"
+                                        className="p-1 w-[100px] rounded-lg	shadow-sm"
                                     />
                                 ) : (
                                     visit.cpfvisitante
@@ -137,7 +137,7 @@ export default function VisitsTable() {
                                         value={inquilinoAprovador ? inquilinoAprovador.nome : ''}
                                         onChange={handleChange}
                                         disabled
-                                        className="p-1 w-[70px]"
+                                        className="p-1 w-[70px] rounded-lg	shadow-sm"
                                     />
                                 ) : (
                                     inquilinoAprovador ? inquilinoAprovador.nome : 'Não encontrado'
@@ -164,7 +164,7 @@ export default function VisitsTable() {
                                         })()}
                                         onChange={handleChange}
                                         disabled
-                                        className="p-1 w-[50px]"
+                                        className="p-1 w-[50px] rounded-lg	shadow-sm"
                                     />
                                 ) : (
                                     (() => {
@@ -194,7 +194,7 @@ export default function VisitsTable() {
                                                 name="fimvisita"
                                                 value={formData.fimvisita}
                                                 onChange={handleChange}
-                                                className="w-[140px]"
+                                                className="w-[140px] rounded-lg	shadow-xl"
                                             />
                                         </div>
                                         <div>
@@ -204,7 +204,7 @@ export default function VisitsTable() {
                                                 name="horariofim"
                                                 value={formData.horariofim}
                                                 onChange={handleChange}
-                                                className="w-[150px] pl-2"
+                                                className="w-[150px] pl-2 rounded-lg shadow-xl"
                                             />
                                         </div>
                                     </div>
@@ -221,7 +221,7 @@ export default function VisitsTable() {
                                         name="observacoes"
                                         value={formData.observacoes}
                                         onChange={handleChange}
-                                        className="p-1 w-[150px] rounded-md"
+                                        className="p-1 w-[150px] rounded-lg	shadow-xl"
                                     />
                                 ) : (
                                     visit.observacoes

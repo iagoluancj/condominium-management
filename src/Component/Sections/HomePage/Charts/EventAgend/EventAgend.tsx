@@ -47,7 +47,7 @@ const convertInquilinoToEvent = (inquilino: TypeInquilinos): Event => {
         title: `${nome}`,
         startTime,
         position: 'start', 
-        color: '#FFBF08'
+        color: '#dea50a'
     };
 };
 

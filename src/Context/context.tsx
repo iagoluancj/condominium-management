@@ -14,6 +14,7 @@ type SupaContextType = {
     contextFuncionarios: TypeFuncionarios[]
     contextEncomendas: TypeEncomendas[]
     ChangePage: string,
+    ChangeTheme: boolean,
     updateInquilino: (inquilinoData: TypeInquilinos) => void;
     updateVisitante: (visitanteData: TypeVisit) => void;
     updateEncomenda: (encomendaData: TypeEncomendas) => void;
@@ -25,6 +26,7 @@ type SupaContextType = {
     deletedEncomenda: (id: number, dateDeletedAt: string) => void
     deletedVisits: (cpf: number) => void
     handleChangePage: (change: string) => void
+    handleChangeTheme: (theme: boolean) => void
 }
 
 type SupaProviderProps = {
@@ -39,6 +41,7 @@ export const SupaContext = createContext({
     contextEncomendas: [],
     contextFuncionarios: [],
     ChangePage: '',
+    ChangeTheme: false,
     updateInquilino: () => { },
     updateVisitante: () => { },
     updateEncomenda: () => { },
@@ -50,6 +53,7 @@ export const SupaContext = createContext({
     createVisit: () => { },
     createEncomenda: () => { },
     handleChangePage: () => { },
+    handleChangeTheme: () => { },
     children: null
 } as SupaContextType)
 
@@ -61,6 +65,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [apartamentos, setApartamentos] = useState<TypeApartamento[]>([])
     const [blocos, setBlocos] = useState<TypeBloco[]>([])
     const [changePage, setChangePage] = useState('HomePage')
+    const [changeTheme, setChangeTheme] = useState(false)
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
         const { id, ...fieldsToUpdate } = inquilinoData;
@@ -304,6 +309,14 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         setChangePage(change)
     }
 
+    const handleChangeTheme = (theme: boolean) => {
+        if (!theme) {
+            setChangeTheme(true);
+        } else {
+            setChangeTheme(false);
+        }
+    };
+
     useEffect(() => {
         const getAllInquilinos = async () => {
             let { data: inquilinoData } = await supabase
@@ -446,11 +459,12 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             contextEncomendas: encomendas,
             contextFuncionarios: funcinarios,
             contextApartamentos: apartamentos,
+            ChangeTheme: changeTheme,
             contextBlocos: blocos,
             ChangePage: changePage,
             typeInquilinos: inquilinos,
             contextVisits: visits,
-            updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, updateVisitante, handleChangePage, deletedVisits, createVisit, createEncomenda, deletedEncomenda, updateEncomenda
+            updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, updateVisitante, handleChangePage, handleChangeTheme, deletedVisits, createVisit, createEncomenda, deletedEncomenda, updateEncomenda
         }}>
             <ToastProvider>
                 {children}

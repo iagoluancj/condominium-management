@@ -83,7 +83,7 @@ export default function PaginatedFilteredTable<T extends { [key: string]: any }>
                             <button
                                 key={String(key)}
                                 onClick={() => setSortField(key)}
-                                className={`p-2 border rounded ${sortField === key ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'
+                                className={`p-1 border rounded text-center ${sortField === key ? 'bg-blue-500 text-white font-medium' : 'bg-blue-100 border-gray-300 text-gray-700'
                                     }`}
                             >
                                 {label}
@@ -91,8 +91,8 @@ export default function PaginatedFilteredTable<T extends { [key: string]: any }>
                         ))}
                 </div>
             </div>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                     <tr>
                         {columns.map(({ key, label }) => (
                             <th key={String(key)} className="px-6 py-3">

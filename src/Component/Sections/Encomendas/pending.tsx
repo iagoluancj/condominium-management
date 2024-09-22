@@ -176,28 +176,28 @@ export default function TableEncomendas() {
                     onChange={(e) => setFilterTerm(e.target.value)}
                     className="p-2 border border-gray-300 rounded bg-blue-50 w-[80%]"
                 />
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 text-center">
                     <button
                         onClick={() => setSortField('receivedby')}
-                        className={`p-2 rounded ${sortField === 'receivedby' ? 'bg-blue-500 text-white border-b-4 border-blue-500' : 'bg-blue-100 text-gray-700 border-b-2 border-gray-300'}`}
+                        className={`p-2 rounded ${sortField === 'receivedby' ? 'bg-blue-500 text-white border-b-4 border-blue-500 font-medium' : 'bg-blue-100 text-gray-700 border-b-2 border-gray-300'}`}
                     >
                         Recebido Por
                     </button>
                     <button
                         onClick={() => setSortField('receivedto')}
-                        className={`p-2 border rounded ${sortField === 'receivedto' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                        className={`p-2 border rounded ${sortField === 'receivedto' ? 'bg-blue-500 text-white font-medium ' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
                     >
                         Recebido Para
                     </button>
                     <button
                         onClick={() => setSortField('datareceived')}
-                        className={`p-2 border rounded ${sortField === 'datareceived' ? 'bg-blue-500 text-white' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
+                        className={`p-2 border rounded ${sortField === 'datareceived' ? 'bg-blue-500 text-white font-medium' : 'bg-blue-100 border-gray-300 text-gray-700'}`}
                     >
                         Data Recebimento
                     </button>
                 </div>
-            </div>            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            </div>            <table className="w-full text-sm text-left rtl:text-right text-gray-500  ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50  0">
                     <tr>
                         <th scope="col" className="px-6 py-3">Entregue</th>
                         <th scope="col" className="px-6 py-3">Recebida por: </th>
@@ -211,7 +211,7 @@ export default function TableEncomendas() {
                     {displayedEncomendas
                         .filter(encomenda => !encomenda.acknowledgmentstatus && !encomenda.deletedat)
                         .map((encomenda) => (
-                            <tr key={encomenda.id} className="odd:bg-blue-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 drop-shadow-xl">
+                            <tr key={encomenda.id} className="odd:bg-blue-100  even:bg-gray-50 border-b drop-shadow-xl">
                                 <td className="px-4 py-4 justify-start text-center">
                                     <ButtonSave onClick={() => handleConfirmClick(encomenda.id)}>Confirmar entrega</ButtonSave>
                                 </td>

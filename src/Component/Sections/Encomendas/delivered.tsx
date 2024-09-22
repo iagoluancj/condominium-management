@@ -21,7 +21,7 @@ export default function EncomendasEntregues() {
             renderRow={(encomenda, index) => (
                 <tr
                     key={index}
-                    className="odd:bg-white even:bg-gray-50 border-b"
+                    className="odd:bg-white even:bg-blue-100 border-b"
                 >
                     <td className="px-6 py-4">{encomenda.receivedby}</td>
                     <td className="px-6 py-4">{encomenda.receivedto}</td>

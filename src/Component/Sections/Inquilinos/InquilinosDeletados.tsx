@@ -19,7 +19,7 @@ export default function DeletedInquilinosTable() {
             renderRow={(inquilino, index) => (
                 <tr
                     key={inquilino.id}
-                    className="odd:bg-white even:bg-gray-50 border-b"
+                    className="odd:bg-white even:bg-blue-100 border-b"
                 >
                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {inquilino.nome}

@@ -27,6 +27,7 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
         flex-direction: column;
         margin: 0rem 1rem;
     }
+    color: ${(props) => props.theme.secondary};
 `
 
 export const ImageDiv = styled.img`
@@ -41,6 +42,10 @@ export const ActionsInquilinoRegister = styled.div`
 display: flex;
 flex-direction: column;
 margin-bottom: 2rem;
+padding: 2rem;
+border-radius: 15px;
+background-color: ${(props) => props.theme.background};
+color: var(--defaultText);
 `
 
 export const OptionsActionInquilos = styled.div`
@@ -87,6 +92,7 @@ export const HeaderInquilinos = styled.div`
 export const TitleHeader = styled.div`
     font-weight: 700;
     font-size: 32px;
+    color: ${(props) => props.theme.secondary};
 `
 
 export const BrevelyDescription = styled.div`
@@ -154,6 +160,7 @@ export const SpanTemCarro = styled.div<selectCar>`
   padding: 0rem .6rem;
   background-color: #fff;
   transition: ease-in .2s;
+  background-color: ${(props) => props.theme.background};
 
   font-family: outfit;
   font-weight: 400;
@@ -183,8 +190,8 @@ export const LabelTemCarro = styled(Label) <selectCar>`
   margin: 1rem 0rem .8rem 0rem;
   border-radius: 5px;
   transition: ease-in .2s;
+  margin-bottom: 1.3rem;
 
-  background-color: transparent;
   border: 2px solid var(--defaultText); 
 
   margin-top: 2rem;
@@ -278,12 +285,13 @@ export const InputStatus = styled.div`
   left: 0;
   right: 0;
   text-align: center;
+  border-radius: 15px;
   color: #007bff; 
   pointer-events: none; 
   z-index: 5;
   transform: translateY(-50%);
   padding: 0; 
-  background-color: white; 
+    background-color: ${(props) => props.theme.background};
 `;
 
 export const InputWrapperStatus = styled(InputWrapper)`
@@ -297,6 +305,8 @@ export const StyledSelectStatus = styled.select`
   font-size: 1rem;
   border: 2px solid #007bff;
   border-radius: 10px;
+  background-color: ${(props) => props.theme.background};
+  
 `;
 
 export const CreateInqui = styled.button`
@@ -335,5 +345,5 @@ export const H3 = styled.h3`
 `
 
 export const H3Pessoal = styled.h3`
-  margin-bottom: .6rem;
+  margin-bottom: .8rem;
 `

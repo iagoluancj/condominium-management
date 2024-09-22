@@ -19,25 +19,27 @@ export const MoradiaChart = () => {
         };
 
         typeInquilinos.forEach((inquilino) => {
-            const dataInicio = new Date(inquilino.created_at);
-            const diffInMonths =
-                (now.getFullYear() - dataInicio.getFullYear()) * 12 +
-                (now.getMonth() - dataInicio.getMonth());
+            if (!inquilino.is_deleted) {
+                const dataInicio = new Date(inquilino.created_at);
+                const diffInMonths =
+                    (now.getFullYear() - dataInicio.getFullYear()) * 12 +
+                    (now.getMonth() - dataInicio.getMonth());
 
-            if (diffInMonths <= 1) {
-                categories['1 mês'] += 1;
-            } else if (diffInMonths <= 3) {
-                categories['3 meses'] += 1;
-            } else if (diffInMonths <= 6) {
-                categories['6 meses'] += 1;
-            } else if (diffInMonths <= 12) {
-                categories['1 ano'] += 1;
-            } else if (diffInMonths <= 24) {
-                categories['2 anos'] += 1;
-            } else if (diffInMonths <= 36) {
-                categories['3 anos'] += 1;
-            } else {
-                categories['5 anos+'] += 1;
+                if (diffInMonths <= 1) {
+                    categories['1 mês'] += 1;
+                } else if (diffInMonths <= 3) {
+                    categories['3 meses'] += 1;
+                } else if (diffInMonths <= 6) {
+                    categories['6 meses'] += 1;
+                } else if (diffInMonths <= 12) {
+                    categories['1 ano'] += 1;
+                } else if (diffInMonths <= 24) {
+                    categories['2 anos'] += 1;
+                } else if (diffInMonths <= 36) {
+                    categories['3 anos'] += 1;
+                } else {
+                    categories['5 anos+'] += 1;
+                }
             }
         });
 
@@ -53,7 +55,7 @@ export const MoradiaChart = () => {
         <LineChart width={600} height={300} data={data}>
             <XAxis dataKey="name" />
             <YAxis />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+            <CartesianGrid stroke="#f2b017" strokeDasharray="5 5" />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="Moradores" stroke="#FF8C00" />

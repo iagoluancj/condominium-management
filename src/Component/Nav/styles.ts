@@ -1,7 +1,11 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 interface SelectedOption {
     $isActive: boolean;
+}
+
+interface ChangeTheme {
+    $changeTheme: boolean;
 }
 
 export const Navigation = styled.nav`
@@ -11,9 +15,10 @@ export const Navigation = styled.nav`
     color: var(--brancoPastelFont);
     display: flex;
     align-items: center;
+    border-radius: 0 0 50px 50px;
 
-    position: absolute;
-    z-index: 5;
+    position: fixed;
+    z-index: 15;
     margin-top: 0vh;
 
     transition: ease-in .1s;
@@ -48,29 +53,21 @@ export const Icons = styled.button`
 
 export const IconDarkOrLight = styled(Icons)`
         transition: .2 ease-in-out;
-
-    :hover { 
-        color: #000;
-        background-color: white;
-        border-radius: 50%;
-        transform: scale(1.1);
-        transition: .2 ease-in-out;
-    }
 `
 
-export const MenuDiv = styled.div`
+export const MenuDiv = styled.div<ChangeTheme>`
     width: 13rem;
     box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.1);
-    z-index: 6;
-    background-color: var(--brancoPastelFont);
+    z-index: 16;
     position: absolute;
     border-radius: 0rem 0rem 15px 0rem;
-
     display: flex;
     flex-direction: column;
     margin-right: 10rem;
-
+    position: fixed;
     transition: ease-in .1s;
+
+    background-color: ${(props) => props.$changeTheme ? '#fff' : '#333'};
 `
 
 export const NavMenu = styled.div`
@@ -92,8 +89,9 @@ export const NavIconMenu = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0rem .3rem;
-    padding: .8rem 0rem;
     gap: .5rem;
+    border-radius: 25px 0px;
+    width: 100%;
     background: #ffffff59;
 
     transition: ease-in .1s;
@@ -162,7 +160,6 @@ export const IconsMenu = styled.button<SelectedOption>`
 export const CloseMenu = styled.button`
     height: 3rem;
     margin-top: 1rem;
-    color: var(--focusText);
     text-align: center;
     padding: 1rem 0rem; 
     padding-left: 5rem;

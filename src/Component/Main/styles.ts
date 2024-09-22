@@ -7,8 +7,8 @@ export const MainContainer = styled.main`
   align-items: center;
   height: 100%;
   width: 100%;
-
-  margin-bottom: 4rem;
+  background: ${(props) => props.theme.mainBackground};
+  padding-bottom: 4rem;
 `;
 
 export const MainContainerDiv = styled.div`

@@ -7,7 +7,7 @@
 :root {
     font-family: outfit;
     font-weight: 400;
-    --brancoPastelFont: rgb(245, 245, 245);
+    --brancoPastelFont: #F5F5F5;
     --backgroundColor: #00003E;
     --defaultText: #808080;
     --focusText: #1D77FF;
