@@ -9,6 +9,7 @@ import Moradores from "../Sections/Moradores";
 import Encomendas from "../Sections/Encomendas";
 import { HomePage } from "../Sections/HomePage";
 import { ThemeProvider } from "styled-components";
+import Apartamentos from "../Sections/Apartamentos";
 
 
 export default function MainInquilinos() {
@@ -20,8 +21,11 @@ export default function MainInquilinos() {
         cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.1)",
         background: "#fafcff",
         form: "#fff",
+        table: "#c8ddfd",
         border: "#CCC",
         secondary: "#222",
+        Footer: '#ff0000'
+
     };
 
     const darkTheme = {
@@ -30,8 +34,10 @@ export default function MainInquilinos() {
         form: "#fff",
         cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.0)",
         mainBackground: "#171717",
+        table: "#444",
         border: "#444",
         secondary: "#F7F7F7",
+        Footer: '#ff00ff'
     };
 
 
@@ -47,8 +53,8 @@ export default function MainInquilinos() {
                                 return <Inquilinos />;
                             case 'Visitantes':
                                 return <Visitantes />;
-                            case 'Moradores':
-                                return <Moradores />;
+                            case 'Apartamentos':
+                                return <Apartamentos />;
                             case 'Encomendas':
                                 return <Encomendas />;
                             default:

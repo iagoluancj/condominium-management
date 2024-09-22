@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
 import ConfirmModal from "../../Modal/modal";
-import { Button, ButtonDeleted, ButtonSave, Input } from "./styles";
+import { Button, ButtonDeleted, ButtonSave, Input, SpanContext } from "./styles";
 import { TypeInquilinos } from "@/Types/types";
 
 type SortField = keyof TypeInquilinos;
@@ -176,7 +176,7 @@ export default function Tables() {
 
 
     return (
-        <>
+        <SpanContext>
             <div className="flex flex-row justify-around mt-10 gap-10 mb-5">
                 <Input
                     type="text"
@@ -401,7 +401,7 @@ export default function Tables() {
                                         </td>
                                         :
                                         ''}
-                                    <td className="px-4 py-4 flex flex-col w-[120px]">
+                                    <td className="px-4 py-4 flex flex-col w-[120px] h-[100%]">
                                         {editId === inquilino.id ? (
                                             <>
                                                 <ButtonSave className="" onClick={confirmSave}>Salvar</ButtonSave>
@@ -467,6 +467,6 @@ export default function Tables() {
                 onConfirm={confirmDelete}
                 message="Realmente deseja deletar este inquilino?"
             />
-        </>
+        </SpanContext>
     );
 }

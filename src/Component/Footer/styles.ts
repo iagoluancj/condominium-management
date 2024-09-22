@@ -7,8 +7,6 @@ export const FooterWrapper = styled.div`
     align-items: center;
     gap: 2rem;
     padding: .7rem 10rem;
-    /* bottom: 0;
-    left: 0; */
     background-color: #BAD3FF60;
 
     font-size: 16px;

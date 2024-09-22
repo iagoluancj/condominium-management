@@ -215,7 +215,7 @@ export const Vector1 = styled.div`
     right: -15px;
     width: 100px;
     height: 100px;
-    background-color: #8E7FFE; /* cor do vetor 1 */
+    background-color: #8E7FFE;
     transform: rotate(45deg);
     border-radius: 10px;
     opacity: 0.7;
@@ -227,7 +227,7 @@ export const Vector2 = styled.div`
     right: -40px;
     width: 120px;
     height: 120px;
-    background-color: #3F24F7; /* cor do vetor 2 */
+    background-color: #3F24F7; 
     transform: rotate(45deg);
     border-radius: 6px;
     opacity: 0.5;

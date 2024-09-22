@@ -65,7 +65,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [apartamentos, setApartamentos] = useState<TypeApartamento[]>([])
     const [blocos, setBlocos] = useState<TypeBloco[]>([])
     const [changePage, setChangePage] = useState('HomePage')
-    const [changeTheme, setChangeTheme] = useState(false)
+    const [changeTheme, setChangeTheme] = useState(true)
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
         const { id, ...fieldsToUpdate } = inquilinoData;

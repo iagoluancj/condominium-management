@@ -24,19 +24,6 @@ export default function NavBar() {
         handleChangePage(page)
     };
 
-    const toggleChangeTheme = (theme: boolean) => {
-        handleChangeTheme(theme);
-    };
-
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const isChecked = e.target.checked;
-        const { name, type } = e.target;
-
-        if (type === "checkbox") {
-            const { checked } = e.target as HTMLInputElement;
-        }
-    };
-
     return (
         <>
             <Navigation>

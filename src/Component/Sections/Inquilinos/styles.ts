@@ -347,3 +347,41 @@ export const H3 = styled.h3`
 export const H3Pessoal = styled.h3`
   margin-bottom: .8rem;
 `
+
+export const SpanContext = styled.span`
+  tr {
+    color: ${(props) => props.theme.secondary};
+    background-color: ${(props) => props.theme.table};
+
+   input {
+    color: ${(props) => props.theme.secondary};
+    background-color: ${(props) => props.theme.table};
+   }
+  
+   textarea, select {
+    background-color: ${(props) => props.theme.table};
+   }   
+   
+   &:nth-child(even) { 
+      background-color: ${(props) => props.theme.table};
+      color: ${(props) => props.theme.teste};
+    }
+
+    &:nth-child(even) {
+
+      td {
+      background-color: ${(props) => props.theme.table};
+      color: ${(props) => props.theme.secondary};
+    }
+    }
+    &:nth-last-child(even) {
+      background-color: ${(props) => props.theme.mainBackground};
+      color: ${(props) => props.theme.secondary};
+
+      td {
+      background-color: ${(props) => props.theme.mainBackground};
+      color: ${(props) => props.theme.secondary};
+    }
+    }
+  }
+`

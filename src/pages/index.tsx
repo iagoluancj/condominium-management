@@ -16,9 +16,9 @@ export default function Home() {
         <title>Condominium Management</title>
       </Head>
       <SupaProvider>
-          <NavBar></NavBar>
-          <MainInquilinos></MainInquilinos>
-          <FooterCM></FooterCM>
+        <NavBar></NavBar>
+        <MainInquilinos></MainInquilinos>
+        <FooterCM></FooterCM>
       </SupaProvider>
     </>
   );

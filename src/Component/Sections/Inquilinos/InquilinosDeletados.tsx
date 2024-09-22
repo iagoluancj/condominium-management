@@ -17,6 +17,7 @@ export default function DeletedInquilinosTable() {
             ]}
             filterFields={['nome', 'cpf']}  // Campos pelos quais será feita a filtragem
             renderRow={(inquilino, index) => (
+            
                 <tr
                     key={inquilino.id}
                     className="odd:bg-white even:bg-blue-100 border-b"
