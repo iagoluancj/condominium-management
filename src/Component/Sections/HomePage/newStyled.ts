@@ -198,7 +198,7 @@ const InfoSection = styled.div`
 `;
 
 const InfoTitle = styled.h2`
-    max-width: 260px;
+    max-width: 280px;
 `;
 
 const InfoDescription = styled.p`

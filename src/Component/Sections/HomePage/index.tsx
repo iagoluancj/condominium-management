@@ -59,7 +59,7 @@ import { SupaContext } from '@/Context/context';
 import { TypeApartamento } from '@/Types/types';
 
 export const HomePage = () => {
-    const { typeInquilinos, contextEncomendas, contextVisits, contextApartamentos } = useContext(SupaContext)
+    const { typeInquilinos, contextEncomendas, contextVisits, contextApartamentos, handleChangePage } = useContext(SupaContext)
     const [newResidents, setNewResidents] = useState(0);
     const [visitsThisWeek, setVisitsThisWeek] = useState(0);
     const [deliveriesThisMonth, setDeliveriesThisMonth] = useState(0);
@@ -121,7 +121,7 @@ export const HomePage = () => {
     const calculatePieData = (contextApartamentos: any[], typeInquilinos: any[]) => {
         const totalApartamentos = contextApartamentos.length;
         const ocupados = typeInquilinos.filter(inquilino => !inquilino.is_deleted).length;
-        const metaAno = Math.ceil(totalApartamentos * 0.92); 
+        const metaAno = Math.ceil(totalApartamentos * 0.92);
         const disponivel = totalApartamentos - ocupados - (metaAno - ocupados);
 
         return {
@@ -131,6 +131,10 @@ export const HomePage = () => {
         };
     };
     const { ocupados, metaAno, disponivel } = calculatePieData(contextApartamentos, typeInquilinos);
+
+    const toggleChangePage = (page: string) => {
+        handleChangePage(page)
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -247,10 +251,10 @@ export const HomePage = () => {
                             <Vector2 />
                             <Vector3 />
                             <Content>
-                                <InfoTitle>Algo interessante aqui que não sei o que ainda</InfoTitle>
-                                <InfoDescription>Etiam facilisis ligula nec velit posuere egestas. Nunc dictum</InfoDescription>
+                                <InfoTitle>Acompanhe oque há de novo:</InfoTitle>
+                                <InfoDescription>Nesta última atualização, tivemos o dashboard criado, este que vós usais, e iniciado a concepção da tela de apartamentos.</InfoDescription>
                             </Content>
-                            <Button>GoGoGo</Button>
+                            <Button onClick={() => toggleChangePage('Apartamentos')}>Ver</Button>
                         </InfoSection>
                         <CondoUpdatesContainer>
                             <HeaderCondoUpdates>

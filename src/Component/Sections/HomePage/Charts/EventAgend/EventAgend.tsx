@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import { Container, EventCard, EventContainer, Time, TimeSlot } from './stylesEventAgend';
 import { SupaContext } from '@/Context/context';
-import { TypeEncomendas, TypeInquilinos, TypeVisit } from '@/Types/types';
+import { TypeApartamento, TypeBloco, TypeEncomendas, TypeInquilinos, TypeVisit } from '@/Types/types';
 
 interface Event {
     title: string;
     startTime: string;
     endTime?: string;
-    position: 'start' | 'middle' | 'end'; 
+    position: 'start' | 'middle' | 'end';
     color: string;
+    apartamento_id: string;
 }
 
 const timeSlots = [
@@ -18,45 +19,70 @@ const timeSlots = [
     "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"
 ];
 
-const convertVisitToEvent = (visit: TypeVisit): Event => {
-    const { nomevisitante, horarioinicio, horariofim, id } = visit;
-    return {
-        title: `${nomevisitante}`,
-        startTime: horarioinicio,
-        endTime: horariofim,
-        position: 'start', 
-        color: '#048A42'
-    };
-};
-
-const convertPackageToEvent = (encomenda: TypeEncomendas): Event => {
-    const { receivedto, datareceived, id } = encomenda;
-    const startTime = datareceived.split('T')[1].substring(0, 5); 
-    return {
-        title: `${receivedto.split(' - ')[1]}`,
-        startTime,
-        position: 'start', 
-        color: '#3F24F7'
-    };
-};
-
-const convertInquilinoToEvent = (inquilino: TypeInquilinos): Event => {
-    const { nome, created_at } = inquilino;
-    const startTime = new Date(created_at).toISOString().split('T')[1].substring(0, 5); 
-    return {
-        title: `${nome}`,
-        startTime,
-        position: 'start', 
-        color: '#dea50a'
-    };
-};
-
-
 const getTodayInBrasilia = () => {
     const now = new Date();
     const offset = -3 * 60;
     now.setMinutes(now.getMinutes() + offset);
     return now.toISOString().split('T')[0];
+};
+
+const convertVisitToEvent = (visit: TypeVisit, inquilinos: TypeInquilinos[], apartamentos: TypeApartamento[], blocos: TypeBloco[]): Event => {
+    const { nomevisitante, horarioinicio, horariofim, id, cpfinquilinopermissao } = visit;
+
+    const inquilino = inquilinos.find(inquilino => String(inquilino.cpf) === cpfinquilinopermissao);
+    const apartamentoId = inquilino ? inquilino.apartamento_id : 'Apartament not found';
+
+    const apto = apartamentos.find(apto => String(apto.id) === apartamentoId);
+    const bloco = apto ? blocos.find(b => b.id === apto.bloco_id) : null;
+    const blocoNome = bloco ? bloco.bloco : 'Bloco não encontrado';
+
+    return {
+        title: `${nomevisitante}`,
+        startTime: horarioinicio,
+        endTime: horariofim,
+        position: 'start',
+        color: '#048A42',
+        apartamento_id: apto ? `${apto.apartamento} - ${blocoNome}` : 'Ap ou bloco não encontrado',
+    };
+};
+
+const convertPackageToEvent = (encomenda: TypeEncomendas, inquilinos: TypeInquilinos[], apartamentos: TypeApartamento[], blocos: TypeBloco[]): Event => {
+    const { receivedto, datareceived, id } = encomenda;
+    const startTime = datareceived.split('T')[1].substring(0, 5);
+    const title = receivedto.includes(' - ') ? receivedto.split(' - ')[1] : receivedto;
+
+    const cpf = receivedto.includes(' - ') ? receivedto.split(' - ')[0] : null;
+    const inquilino = inquilinos.find(inquilino => String(inquilino.cpf) === cpf);
+    const apartamentoId = inquilino ? inquilino.apartamento_id : 'Apartament not found';
+
+    const apto = apartamentos.find(apto => String(apto.id) === apartamentoId);
+    const bloco = apto ? blocos.find(b => b.id === apto.bloco_id) : null;
+    const blocoNome = bloco ? bloco.bloco : 'Bloco não encontrado';
+
+    return {
+        title: title,
+        startTime,
+        position: 'start',
+        color: '#3F24F7',
+        apartamento_id: apto ? `${apto.apartamento} - ${blocoNome}` : 'Ap ou bloco não encontrado',
+    };
+};
+
+const convertInquilinoToEvent = (inquilinos: TypeInquilinos, apartamentos: TypeApartamento[], blocos: TypeBloco[]): Event => {
+    const { nome, created_at, apartamento_id } = inquilinos;
+    const startTime = new Date(created_at).toISOString().split('T')[1].substring(0, 5);
+
+    const apto = apartamentos.find(apto => String(apto.id) === apartamento_id);
+    const bloco = apto ? blocos.find(b => b.id === apto.bloco_id) : null;
+    const blocoNome = bloco ? bloco.bloco : 'Bloco não encontrado';
+
+    return {
+        title: `${nome}`,
+        startTime,
+        position: 'start',
+        color: '#dea50a',
+        apartamento_id: apto ? `${apto.apartamento} - ${blocoNome}` : 'Ap ou bloco não encontrado',
+    };
 };
 
 const timeToMinutes = (time: string) => {
@@ -65,7 +91,7 @@ const timeToMinutes = (time: string) => {
 };
 
 const TimeLine = () => {
-    const { contextVisits, contextEncomendas, typeInquilinos } = useContext(SupaContext);
+    const { contextVisits, contextEncomendas, typeInquilinos, contextApartamentos, contextBlocos } = useContext(SupaContext);
 
     const today = getTodayInBrasilia();
 
@@ -76,18 +102,25 @@ const TimeLine = () => {
         return inquilinoDate === today;
     });
 
-    const visitEvents = todayVisits.map(convertVisitToEvent);
-    const encomendaEvents = todayEncomendas.map(convertPackageToEvent);
-    const inquilinoEvents = todayInquilinos.map(convertInquilinoToEvent);
+    const visitEvents = todayVisits.map(visit =>
+        convertVisitToEvent(visit, typeInquilinos, contextApartamentos, contextBlocos)
+    ); 
+    const encomendaEvents = todayEncomendas.map(encomenda =>
+        convertPackageToEvent(encomenda, typeInquilinos, contextApartamentos, contextBlocos)
+    ); 
+    // const inquilinoEvents = todayInquilinos.map(convertInquilinoToEvent);
+    const inquilinoEvents = todayInquilinos.map(inquilino =>
+        convertInquilinoToEvent(inquilino, contextApartamentos, contextBlocos)
+    ); 
 
     const events: Event[] = [...visitEvents, ...encomendaEvents, ...inquilinoEvents];
 
-    const sortedEvents = events.sort((a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime));
+    // const sortedEvents = events.sort((a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime));
 
-    const topThreeEvents = sortedEvents.slice(0, 3).map((event, idx) => ({
-        ...event,
-        position: idx === 0 ? 'start' : idx === 1 ? 'middle' : 'end'
-    }));
+    // const topThreeEvents = sortedEvents.slice(0, 3).map((event, idx) => ({
+    //     ...event,
+    //     position: idx === 0 ? 'start' : idx === 1 ? 'middle' : 'end'
+    // }));
 
     return (
         <Container>
@@ -112,7 +145,7 @@ const TimeLine = () => {
                             const eventStartMinutes = timeToMinutes(event.startTime);
                             return eventStartMinutes >= slotStart && eventStartMinutes < slotEnd;
                         })
-                        .slice(0, 3); 
+                        .slice(0, 3);
 
                     const hasShadow = slotEvents.length > 0;
 
@@ -128,8 +161,8 @@ const TimeLine = () => {
                                     >
                                         <h2>{event.title}</h2>
                                         <div>
-                                            <span>{event.startTime} e {event.endTime || '-'}</span>
-                                            <span> / 103 - B</span>
+                                            <span>{event.startTime} {event.endTime ? `- ${event.endTime}` : ''}</span>
+                                            <span> / {event.apartamento_id}</span>
                                         </div>
                                     </EventCard>
                                 ))}

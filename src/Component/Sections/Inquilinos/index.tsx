@@ -46,7 +46,7 @@ export default function Inquilinos() {
         } catch (error) {
             console.error("Erro ao editar o inquilino:", error);
         } finally {
-            setShowModal(false); 
+            setShowModal(false);
         }
     };
 
@@ -133,13 +133,15 @@ export default function Inquilinos() {
             return;
         }
 
-        const currentDate = new Date().toISOString();
-
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() - 3); 
+        
+        const currentDateISO = currentDate.toISOString();
         try {
             await createInquilino({
                 ...formData,
                 apartamento_id: formData.localvisitaId || 'deu ruim',
-                created_at: currentDate
+                created_at: currentDateISO
             });
             setFormData({
                 id: 0,
@@ -202,7 +204,7 @@ export default function Inquilinos() {
             const bloco = contextBlocos.find(bloco => bloco.id === apartamento.bloco_id);
             return {
                 id: apartamento.id,
-                label: `${apartamento.apartamento} - ${bloco?.bloco || 'Bloco desconhecido'}` 
+                label: `${apartamento.apartamento} - ${bloco?.bloco || 'Bloco desconhecido'}`
             };
         });
     };
