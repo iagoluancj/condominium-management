@@ -1,6 +1,6 @@
 export async function validateToken(token: string) {
     try {
-        const response = await fetch(`http://localhost:3001/validar-token?token=${token}`);
+        const response = await fetch(`https://condominium-management.vercel.app/validar-token?token=${token}`);
         const data = await response.json();
         
         if (response.ok && !data.error) {
