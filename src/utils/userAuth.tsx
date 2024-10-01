@@ -25,7 +25,7 @@ function userAuth(Component: any) {
             } else if (router.isReady && token) {
                 router.push('/login');
             }
-        }, [token, router.isReady]); 
+        }, [token, router.isReady, router]); 
 
         if (loading) {
             return  <ValidandoToken message={'Validando token...'}/>;
