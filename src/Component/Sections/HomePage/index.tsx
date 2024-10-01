@@ -65,59 +65,6 @@ export const HomePage = () => {
     const [deliveriesThisMonth, setDeliveriesThisMonth] = useState(0);
     const [apartmentAvailable, setApartmentAvailable] = useState(0);
 
-    const getNewResidentsLastThreeMonths = async () => {
-        const today = new Date();
-        const threeMonthsAgo = new Date();
-        threeMonthsAgo.setMonth(today.getMonth() - 3);
-
-        const newResidents = typeInquilinos.filter((resident) => {
-            const createdAt = new Date(resident.created_at);
-            return createdAt >= threeMonthsAgo && createdAt <= today && !resident.is_deleted;
-        });
-
-        return newResidents.length;
-    };
-
-    const getVisitsThisWeek = async () => {
-        const today = new Date();
-        const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-        const endOfWeek = new Date(today.setDate(today.getDate() + 6));
-
-
-        const visitsThisWeek = contextVisits.filter((visit) => {
-            const visitDate = new Date(visit.datavisita);
-            return visitDate >= startOfWeek && visitDate <= endOfWeek && !visit.deleted_at;
-        });
-
-        return visitsThisWeek.length;
-    };
-
-    const getDeliveriesThisMonth = async () => {
-        const today = new Date();
-        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-        const deliveriesThisMonth = contextEncomendas.filter((delivery) => {
-            const receivedDate = new Date(delivery.datareceived);
-            return receivedDate >= startOfMonth && receivedDate <= endOfMonth && !delivery.deletedat;
-        });
-
-        return deliveriesThisMonth.length;
-    };
-
-    const getApartmentAvailability = async () => {
-        const ocupados = typeInquilinos
-            .filter(inquilino => inquilino.status === 'proprietario' || inquilino.status === 'inquilino')
-            .map(inquilino => inquilino.apartamento_id);
-
-        const apartamentosDisponiveis = contextApartamentos.filter(apartamento => !ocupados.includes(apartamento.id.toString()));
-
-        return {
-            avaliable: apartamentosDisponiveis.length,
-            total: contextApartamentos.length
-        };
-    };
-
     const calculatePieData = (contextApartamentos: any[], typeInquilinos: any[]) => {
         const totalApartamentos = contextApartamentos.length;
         const ocupados = typeInquilinos.filter(inquilino => !inquilino.is_deleted).length;
@@ -137,6 +84,59 @@ export const HomePage = () => {
     };
 
     useEffect(() => {
+        const getNewResidentsLastThreeMonths = async () => {
+            const today = new Date();
+            const threeMonthsAgo = new Date();
+            threeMonthsAgo.setMonth(today.getMonth() - 3);
+
+            const newResidents = typeInquilinos.filter((resident) => {
+                const createdAt = new Date(resident.created_at);
+                return createdAt >= threeMonthsAgo && createdAt <= today && !resident.is_deleted;
+            });
+
+            return newResidents.length;
+        };
+
+        const getVisitsThisWeek = async () => {
+            const today = new Date();
+            const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+            const endOfWeek = new Date(today.setDate(today.getDate() + 6));
+
+
+            const visitsThisWeek = contextVisits.filter((visit) => {
+                const visitDate = new Date(visit.datavisita);
+                return visitDate >= startOfWeek && visitDate <= endOfWeek && !visit.deleted_at;
+            });
+
+            return visitsThisWeek.length;
+        };
+
+        const getDeliveriesThisMonth = async () => {
+            const today = new Date();
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+            const deliveriesThisMonth = contextEncomendas.filter((delivery) => {
+                const receivedDate = new Date(delivery.datareceived);
+                return receivedDate >= startOfMonth && receivedDate <= endOfMonth && !delivery.deletedat;
+            });
+
+            return deliveriesThisMonth.length;
+        };
+
+        const getApartmentAvailability = async () => {
+            const ocupados = typeInquilinos
+                .filter(inquilino => inquilino.status === 'proprietario' || inquilino.status === 'inquilino')
+                .map(inquilino => inquilino.apartamento_id);
+
+            const apartamentosDisponiveis = contextApartamentos.filter(apartamento => !ocupados.includes(apartamento.id.toString()));
+
+            return {
+                avaliable: apartamentosDisponiveis.length,
+                total: contextApartamentos.length
+            };
+        };
+
         const fetchData = async () => {
             const residentsCount = await getNewResidentsLastThreeMonths();
             const visitsCount = await getVisitsThisWeek();
@@ -150,7 +150,7 @@ export const HomePage = () => {
         };
 
         fetchData();
-    }, [getNewResidentsLastThreeMonths, getVisitsThisWeek, getDeliveriesThisMonth, getApartmentAvailability]);
+    }, [contextApartamentos, contextEncomendas, contextVisits, typeInquilinos]);
 
 
     return (
