@@ -48,6 +48,7 @@ export type TypeFuncionarios = {
     id: number;
     nome: string;
     cpf: string;
+    email: string;
 };
 
 export type TypeApartamento = {

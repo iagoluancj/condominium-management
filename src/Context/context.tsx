@@ -446,11 +446,28 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             )
             .subscribe();
 
+        const funcionariosChannel = supabase
+            .channel('funcionarios-db-changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'funcionarios',
+                },
+                (payload) => {
+                    console.log('Change received for funcionarios:', payload);
+                    getAllFuncionarios().then(({ funcionarioData }) => setFuncionarios(funcionarioData || []));
+                }
+            )
+            .subscribe();
+
 
         return () => {
             inquilinosChannel.unsubscribe();
             visitantesChannel.unsubscribe();
             encomendasChannel.unsubscribe();
+            funcionariosChannel.unsubscribe();
         };
     }, []);
 

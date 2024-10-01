@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/pages/api/auth/.OLD[...nextauth].ts", "src/pages/OldLogin/page.OLD"  ],
   "exclude": [
     "node_modules"
   ]

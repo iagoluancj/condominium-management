@@ -1,10 +1,6 @@
 import Head from "next/head";
-
-import SupaProvider, { SupaContext } from "../Context/context";
-
-import { MainInquilinos, NavBar } from "@/Component";
 import logo from '../Assets/iconLogo.png'
-import FooterCM from "@/Component/Footer";
+import InitialPage from "@/Component/InitialPage";
 
 export default function Home() {
 
@@ -15,11 +11,9 @@ export default function Home() {
 
         <title>Condominium Management</title>
       </Head>
-      <SupaProvider>
-        <NavBar></NavBar>
-        <MainInquilinos></MainInquilinos>
-        <FooterCM></FooterCM>
-      </SupaProvider>
+      <>
+        <InitialPage />
+      </>
     </>
   );
 }

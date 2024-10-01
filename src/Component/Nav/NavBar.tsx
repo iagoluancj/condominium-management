@@ -1,9 +1,6 @@
-import { BiBuildings, BiMenu } from 'react-icons/bi'
+import { BiBuildings, BiLogOut, BiMenu } from 'react-icons/bi'
 import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
-import { GrNotification, GrUser } from 'react-icons/gr'
-import { TiHome } from "react-icons/ti";
-import { FaEdit } from "react-icons/fa";
-import { CgDarkMode } from "react-icons/cg";
+import { GrLogout, GrNotification, GrUser } from 'react-icons/gr'
 import { useContext, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
@@ -11,10 +8,12 @@ import { MdDarkMode, MdDashboard, MdEmojiPeople, MdLightMode, MdLocalShipping } 
 import logo from '../../Assets/iconLogo.png'
 import Image from 'next/image';
 import DarkModeToggle from './ToggleMode';
+import { useRouter } from 'next/router';
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
     const { ChangePage, handleChangePage, handleChangeTheme, ChangeTheme } = useContext(SupaContext);
+    const router = useRouter();
 
     const handleMenu = () => {
         setToggleMenu(!toggleMenu);
@@ -24,6 +23,10 @@ export default function NavBar() {
         handleChangePage(page)
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('authToken'); 
+        router.push('/Login'); 
+    };
     return (
         <>
             <Navigation>
@@ -33,14 +36,12 @@ export default function NavBar() {
                     </Icons>
                     <IconsRight>
                         <IconDarkOrLight>
-                            {/* <MdDarkMode size={40} onClick={() => toggleChangeTheme(false)} />
-                            <MdLightMode size={40} onClick={() => toggleChangeTheme(true)} /> */}
                             <DarkModeToggle />
                         </IconDarkOrLight>
                         <Icons>
                             <GrNotification size={25} />
                         </Icons>
-                        <Icons><GrUser size={25} /></Icons>
+                        <Icons><GrLogout onClick={handleLogout} size={25} /></Icons>
                     </IconsRight>
                 </NavContainer>
             </Navigation>
