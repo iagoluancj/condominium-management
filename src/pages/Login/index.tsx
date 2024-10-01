@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { ErrorMessage, Form, Label, LoginContainer } from './styles';
+import { ErrorMessage, Form, Label, LoginContainer } from '../../styles/loginStyles';
 import { Button } from '@/Component/Sections/Inquilinos/styles';
 import InputComponent from '@/Component/Primitivy/Input';
 import { useRouter } from 'next/router';
