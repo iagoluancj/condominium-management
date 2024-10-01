@@ -70,7 +70,7 @@ function ValidarToken() {
                 setLoading(false);
             }
         }
-    }, [token]);
+    }, [token, router]);
 
     if (loading) {
         return <ValidandoToken message={message}/>
