@@ -150,7 +150,7 @@ export const HomePage = () => {
         };
 
         fetchData();
-    }, [contextEncomendas, contextVisits, typeInquilinos, contextApartamentos]);
+    }, [getNewResidentsLastThreeMonths, getVisitsThisWeek, getDeliveriesThisMonth, getApartmentAvailability]);
 
 
     return (
