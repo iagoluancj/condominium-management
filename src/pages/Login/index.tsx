@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { BackgroundCircles, DivLogin, ErrorMessage, ForgotPassword, Form, FormContainer, HeaderForm, ImageContainer, InputField, Label, LoginContainer, Logo, LogoContainer, PageWrapper, SendEmailContainer, SeparatorLogin, SubmitButton, Subtitle, Title, TitleContainer } from '../../styles/loginStyles';
-import { Button, ButtonBack } from '@/Component/Sections/Inquilinos/styles';
+import { Button } from '@/Component/Sections/Inquilinos/styles';
 import InputComponent from '@/Component/Primitivy/Input';
 import { useRouter } from 'next/router';
 import imageLogin from '../../Assets/predio.jpg'
@@ -18,12 +18,10 @@ const LoginPage: React.FC = () => {
 
     const router = useRouter();
 
-    const toHomePage = () => {
-        router.push('/');
-    };
-
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setLoading(true);
+        setIsDisabled(true);
         try {
             setMessage('Email enviado com sucesso.')
             setTypeMessage(true)
@@ -42,12 +40,13 @@ const LoginPage: React.FC = () => {
             setMessage('Erro interno. Tente novamente ou contacte o suporte.');
             console.log('Erro ao se conectar com o servidor.')
             setTypeMessage(false)
+        } finally {
+            setLoading(false);
+            setTimeout(() => {
+                setMessage('');
+                setIsDisabled(false)
+            }, 5000);
         }
-
-        setTimeout(() => {
-            setMessage('');
-            setIsDisabled(false)
-        }, 5000);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -68,44 +67,6 @@ const LoginPage: React.FC = () => {
 
     return (
         <>
-            {/* <LoginContainer>
-                <FormContainer>
-                    {typeMessage ? <Form>
-                        <SendEmailContainer>
-                            <span>
-                                <p>Email enviado</p>
-                                <p>Verifique sua caixa de email</p>
-                            </span>
-                            {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
-                            <Button disabled={isDisabled} onClick={backToLogin}>Enviar email novamente</Button>
-                        </SendEmailContainer>
-                    </Form> :
-                        <Form onSubmit={handleSubmit}>
-                            <HeaderForm>
-                                <p>Gerencie o seu condomínio</p>
-                                <h2>Faça login abaixo</h2>
-                            </HeaderForm>
-                            <div>
-                                <InputComponent
-                                    label="E-mail"
-                                    type="text"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <div>
-                                    <Button type="submit">Enviar link de acesso</Button>
-                                </div>
-                            </div>
-                            <ButtonBack onClick={toHomePage}>Voltar à página inicial</ButtonBack>
-                        </Form>
-                    }
-                </FormContainer>
-                <ImageContainer>
-                    <Image alt='Prédio' src={imageLogin}></Image>
-                </ImageContainer>
-            </LoginContainer> */}
             {typeMessage ?
                 <PageWrapper>
                     <Form>
