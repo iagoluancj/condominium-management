@@ -12,16 +12,38 @@ const LoginPage: React.FC = () => {
     const [typeMessage, setTypeMessage] = useState(false)
     const [isDisabled, setIsDisabled] = useState(true)
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({ email: ''});
+    const [email, setEmail] = useState('');
     const [formData, setFormData] = useState({
         email: '',
     });
 
     const router = useRouter();
 
+    const validateEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+            return 'Email é obrigatório.';
+        } else if (!emailRegex.test(email)) {
+            return 'Email inválido.';
+        } else {
+            return '';
+        }
+    };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
         setIsDisabled(true);
+        const emailError = validateEmail(formData.email);
+
+        if (emailError) {
+            setErrors({ email: emailError});
+            setLoading(false);
+            setMessage('Email inválido.')
+            return;
+        }
+
         try {
             setMessage('Email enviado com sucesso.')
             setTypeMessage(true)
@@ -49,8 +71,14 @@ const LoginPage: React.FC = () => {
         }
     };
 
+    const handleEmailChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setEmail(event.target.value);
+        setErrors({ ...errors, email: '' });
+    };
+
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
+        setErrors({ ...errors, email: '' });
         setFormData({
             ...formData,
             [name]: value,
