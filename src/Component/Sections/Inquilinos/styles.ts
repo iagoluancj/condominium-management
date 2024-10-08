@@ -234,7 +234,25 @@ export const Button = styled.button`
     color: var(--defaultText);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
+
+  &:disabled {
+    color: var(--defaultText);
+    background-color: #00000050;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 0px 0px rgb(0, 0, 0, 0);
+  }
 `;
+
+export const ButtonBack = styled(Button)`
+    background-color: transparent;
+    border: 1px solid var(--focusText);
+    color: var(--defaultText);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    color: 1px solid var(--focusText);
+  } 
+`
 
 export const ButtonDeleted = styled(Button)`
   background-color: #ff6666;

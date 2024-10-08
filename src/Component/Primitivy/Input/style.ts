@@ -35,6 +35,7 @@ export const InputInput = styled.input`
     border-radius: 10px;
     width: 100%;
     padding-left: 0.5rem;
+    text-align: start !important;
 
     background-color: ${({ disabled }) => (disabled ? "#f5f5f5" : "#fff")}; 
     border: ${({ disabled }) => (disabled ? "2px solid var(--defaultText)" : "2px solid var(--focusText)")};  

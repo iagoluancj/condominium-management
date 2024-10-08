@@ -15,6 +15,9 @@
     --padraoRadius: 10px
 }
 
+input {
+    all: unset;
+}
 
 input {
     border: none;

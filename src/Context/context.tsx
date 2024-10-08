@@ -304,7 +304,6 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
-
     const handleChangePage = (change: string) => {
         setChangePage(change)
     }

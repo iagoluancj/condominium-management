@@ -261,7 +261,6 @@ export default function Inquilinos() {
                                         value={formData.nome}
                                         onChange={handleChange}
                                         required
-
                                     />
                                     <InputComponent
                                         label="CPF"
