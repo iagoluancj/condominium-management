@@ -1,24 +1,23 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { BackgroundCircles, DivLogin, ErrorMessage, ForgotPassword, Form, FormContainer, HeaderForm, ImageContainer, InputField, Label, LoginContainer, Logo, LogoContainer, PageWrapper, SendEmailContainer, SeparatorLogin, SubmitButton, Subtitle, Title, TitleContainer } from '../../styles/loginStyles';
 import { Button } from '@/Component/Sections/Inquilinos/styles';
-import InputComponent from '@/Component/Primitivy/Input';
-import { useRouter } from 'next/router';
+import logo from '../../Assets/iconLogo.png'
 import imageLogin from '../../Assets/predio.jpg'
 import Image from 'next/image';
+import { SupaContext } from '@/Context/context';
+import { supabase } from '@/services/supabase';
 
 
 const LoginPage: React.FC = () => {
+    const { contextFuncionarios } = useContext(SupaContext)
     const [message, setMessage] = useState<string>('');
     const [typeMessage, setTypeMessage] = useState(false)
     const [isDisabled, setIsDisabled] = useState(true)
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState({ email: ''});
-    const [email, setEmail] = useState('');
+    const [errors, setErrors] = useState({ email: '' });
     const [formData, setFormData] = useState({
         email: '',
     });
-
-    const router = useRouter();
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,8 +36,38 @@ const LoginPage: React.FC = () => {
         setIsDisabled(true);
         const emailError = validateEmail(formData.email);
 
+        async function fetchFuncionarios() {
+            const { data, error } = await supabase
+                .from('funcionarios')
+                .select('*');
+
+            if (error) {
+                console.error('Erro ao buscar funcionários:', error);
+                return [];
+            }
+
+            return data;
+        }
+
+        const funcionarios = await fetchFuncionarios();
+
+        const user = funcionarios.find(
+            (funcionario) => funcionario.email === formData.email
+        );
+
+        if (!user) {
+            setMessage('Email não encontrado na lista de funcionários.');
+            setTypeMessage(false);
+            setLoading(false);
+            setTimeout(() => {
+                setMessage('');
+                setIsDisabled(false)
+            }, 5000);
+            return;
+        }
+
         if (emailError) {
-            setErrors({ email: emailError});
+            setErrors({ email: emailError });
             setLoading(false);
             setMessage('Email inválido.')
             return;
@@ -71,11 +100,6 @@ const LoginPage: React.FC = () => {
         }
     };
 
-    const handleEmailChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setEmail(event.target.value);
-        setErrors({ ...errors, email: '' });
-    };
-
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setErrors({ ...errors, email: '' });
@@ -99,11 +123,15 @@ const LoginPage: React.FC = () => {
                 <PageWrapper>
                     <Form>
                         <LoginContainer>
+                            <TitleContainer>
+                                <Logo>
+                                    <Image alt='Logo' src={logo} />
+                                    <span>Condominium Management</span>
+                                </Logo>
+                                <Title>Email enviado</Title>
+                                <Subtitle>Verifique sua caixa de email</Subtitle>
+                            </TitleContainer>
                             <SendEmailContainer>
-                                <span>
-                                    <p>Email enviado</p>
-                                    <p>Verifique sua caixa de email</p>
-                                </span>
                                 {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
                                 <Button disabled={isDisabled} onClick={backToLogin}>Enviar email novamente</Button>
                             </SendEmailContainer>
@@ -116,14 +144,17 @@ const LoginPage: React.FC = () => {
                         <BackgroundCircles />
                         <LoginContainer>
                             <TitleContainer>
-                                <Logo>Condominium Management</Logo>
+                                <Logo>
+                                    <Image alt='Logo' src={logo} />
+                                    <span>Condominium Management</span>
+                                </Logo>
                                 <Title>Bem-vindo(a)</Title>
                                 <Subtitle>Acesse seu painel</Subtitle>
                             </TitleContainer>
 
                             <Form onSubmit={handleSubmit}>
-                                <InputComponent
-                                    label="E-mail"
+                                <input
+                                    placeholder="E-mail"
                                     type="text"
                                     name="email"
                                     value={formData.email}
@@ -131,8 +162,8 @@ const LoginPage: React.FC = () => {
                                     required
                                 />
                                 {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
-                                <SubmitButton type="submit" disabled={false}>
-                                    {loading ? "Enviando..." : "Enviar"}
+                                <SubmitButton type="submit" disabled={loading}>
+                                    {loading ? "Enviando token..." : "Enviar token"}
                                 </SubmitButton>
                             </Form>
 

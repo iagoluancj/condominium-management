@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 interface ColorMessage {
-    $typeMessage: boolean;
+  $typeMessage: boolean;
 }
 
 export const Label = styled.label`
@@ -40,8 +40,8 @@ export const ErrorMessage = styled.div<ColorMessage>`
 
     
     ${({ $typeMessage }) =>
-        $typeMessage &&
-        `
+    $typeMessage &&
+    `
         color: green;
     `}
 `;
@@ -113,7 +113,7 @@ export const PageWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  background-color: #1D77FF;
+  background-color: #4c80cf;
   position: relative;
   overflow: hidden;
 `;
@@ -167,12 +167,22 @@ export const TitleContainer = styled.div`
   
 `;
 
-export const Logo = styled.h1`
-  font-size: 2.5rem;
+export const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: start;
+  gap: .5rem;
+  font-size: 20px;
   font-weight: 600;
-  color: var(--primaryColor);
+  color: var(--defaultText);
   margin-bottom: 1rem;
-  font-family: 'Poppins', sans-serif;
+  span {
+    width: 130px;
+  }
+  img {
+    max-width: 100px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -194,6 +204,14 @@ export const Form = styled.form`
   align-items: center;
   text-align: center;
   gap: 1.5rem;
+
+  input {
+    border: 2px solid var(--focusText);  
+    padding: .5rem .5rem;
+    border-radius: 10px;
+    width: 100%;
+    text-align: start;
+  }
 `;
 
 export const InputField = styled.input`

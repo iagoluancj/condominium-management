@@ -373,7 +373,6 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                 .select('*')
                 .order('id')
                 .returns<TypeFuncionarios[]>()
-
             return { funcionarioData };
         }
 
