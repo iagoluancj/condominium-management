@@ -92,7 +92,7 @@ export const NavIconMenu = styled.div`
     gap: .5rem;
     border-radius: 25px 0px;
     width: 100%;
-    background: #ffffff59;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
 
     transition: ease-in .1s;
 `
