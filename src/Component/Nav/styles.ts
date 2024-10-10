@@ -10,7 +10,7 @@ interface ChangeTheme {
 
 export const Navigation = styled.nav`
     width: 100%;
-    background-color: var(--focusText);
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
     height: 5rem;
     color: var(--brancoPastelFont);
     display: flex;

@@ -23,7 +23,7 @@ function userAuth(Component: any) {
                     })
                     .finally(() => setLoading(false));
             } else if (router.isReady && token) {
-                router.push('/login');
+                router.push('/Login');
             }
         }, [token, router.isReady, router]); 
 

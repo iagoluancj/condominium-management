@@ -1,15 +1,15 @@
 import { ChangeEvent, useContext, useState } from 'react';
 import { BackgroundCircles, DivLogin, ErrorMessage, ForgotPassword, Form, FormContainer, HeaderForm, ImageContainer, InputField, Label, LoginContainer, Logo, LogoContainer, PageWrapper, SendEmailContainer, SeparatorLogin, SubmitButton, Subtitle, Title, TitleContainer } from '../../styles/loginStyles';
 import { Button } from '@/Component/Sections/Inquilinos/styles';
-import logo from '../../Assets/iconLogo.png'
+import logo from '../../Component/Footer/images/condominiumManagement.png'
+import FavIcon from '../../Assets/iconLogo.png'
 import imageLogin from '../../Assets/predio.jpg'
 import Image from 'next/image';
-import { SupaContext } from '@/Context/context';
 import { supabase } from '@/services/supabase';
+import Head from 'next/head';
 
 
 const LoginPage: React.FC = () => {
-    const { contextFuncionarios } = useContext(SupaContext)
     const [message, setMessage] = useState<string>('');
     const [typeMessage, setTypeMessage] = useState(false)
     const [isDisabled, setIsDisabled] = useState(true)
@@ -119,14 +119,18 @@ const LoginPage: React.FC = () => {
 
     return (
         <>
+            <Head>
+                <link rel="icon" href={FavIcon.src} type="image/x-icon" />
+
+                <title>Login - Condominium Management</title>
+            </Head>
             {typeMessage ?
                 <PageWrapper>
                     <Form>
                         <LoginContainer>
                             <TitleContainer>
                                 <Logo>
-                                    <Image alt='Logo' src={logo} />
-                                    <span>Condominium Management</span>
+                                    <Image alt='Logo' src={logo}/>
                                 </Logo>
                                 <Title>Email enviado</Title>
                                 <Subtitle>Verifique sua caixa de email</Subtitle>
@@ -145,8 +149,7 @@ const LoginPage: React.FC = () => {
                         <LoginContainer>
                             <TitleContainer>
                                 <Logo>
-                                    <Image alt='Logo' src={logo} />
-                                    <span>Condominium Management</span>
+                                    <Image alt='Logo' src={logo}/>
                                 </Logo>
                                 <Title>Bem-vindo(a)</Title>
                                 <Subtitle>Acesse seu painel</Subtitle>

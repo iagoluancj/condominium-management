@@ -113,9 +113,14 @@ export const PageWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  background-color: #4c80cf;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   position: relative;
   overflow: hidden;
+
+  img {
+    width: auto;
+    height: auto;
+  }
 `;
 
 export const BackgroundCircles = styled.div`
@@ -133,6 +138,9 @@ export const SeparatorLogin = styled.div`
   align-items: center;
   
   width: 100%;
+  @media (max-width: 420px) {
+    padding: 0rem 1rem;
+  }
 `
 
 export const LoginContainer = styled.div`
@@ -172,16 +180,13 @@ export const Logo = styled.div`
   justify-content: center;
   align-items: center;
   text-align: start;
-  gap: .5rem;
   font-size: 20px;
   font-weight: 600;
   color: var(--defaultText);
   margin-bottom: 1rem;
-  span {
-    width: 130px;
-  }
+
   img {
-    max-width: 100px;
+    max-width: 200px;
   }
 `;
 
@@ -241,19 +246,19 @@ export const SubmitButton = styled.button`
   width: 100%;
   justify-content: center;
   border-radius: 8px;
-  background-color: var(--focusText);
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: white;
   border: 1px solid transparent;
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  border: none;
-  transition: background-color 0.3s ease;
+  transition: 0.3s ease;
 
   &:hover {
-    background-color: var(--Variate1Color);
+    background: linear-gradient(135deg, #00000000, #00000000);
     border: 1px solid var(--focusText);
     color: var(--focusText);
+    transition: 0.3s ease;
   }
 `;
 
@@ -275,4 +280,8 @@ export const DivLogin = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;

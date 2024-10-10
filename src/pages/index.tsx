@@ -9,7 +9,7 @@ export default function Home() {
       <Head>
         <link rel="icon" href={logo.src} type="image/x-icon" />
 
-        <title>Condominium Management</title>
+        <title>Home - Condominium Management</title>
       </Head>
       <>
         <InitialPage />

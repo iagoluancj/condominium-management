@@ -18,7 +18,7 @@ const Paginas: React.FC = () => {
         <Head>
             <link rel="icon" href={logo.src} type="image/x-icon" />
 
-            <title>Condominium Management</title>
+            <title>Funções - Condominium Management</title>
         </Head>
         <SupaProvider>
             <NavBar></NavBar>

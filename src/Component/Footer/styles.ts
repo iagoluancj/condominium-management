@@ -7,15 +7,14 @@ export const FooterWrapper = styled.div`
     align-items: center;
     gap: 2rem;
     padding: .7rem 10rem;
-    background-color: #BAD3FF60;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
 
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 400;
 `;
 
 export const FooterSection = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
     text-align: center;
     gap: .7rem;
@@ -32,12 +31,11 @@ export const FooterLogo = styled.div`
 `;
 
 export const FooterCopyright = styled.div`
-`;
-
-export const FooterSocial = styled.div`
     display: flex;
-    gap: 1rem;
-
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     strong {
         color: #FA5252;
         font-weight: 700;

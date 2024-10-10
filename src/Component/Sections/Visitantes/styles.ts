@@ -15,10 +15,16 @@ export const ButtonCreateVisit = styled.button`
   border-radius: 10px;
   text-align: center;
 
-
-  :hover {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: 1px solid #00000000;
+  transition: ease-in .2s;
+  
+  &:hover {
     cursor: pointer;
+    background: linear-gradient(135deg, #00c6ff00, #0072ff00);
+    color: var(--focusText);
     transition: ease-in .2s;
+    border: 1px solid var(--focusText);
   }
 `
 
