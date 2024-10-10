@@ -355,6 +355,7 @@ export const SeparationResidenc = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
 `
 
 export const SeparationCarro = styled(SeparationResidenc)`
@@ -362,7 +363,7 @@ export const SeparationCarro = styled(SeparationResidenc)`
 `
 
 export const SeparationPessoal = styled(SeparationResidenc)`
-    gap: 1rem;
+    gap: 20px;
 `
 export const H3 = styled.h3`
   margin-bottom: -.7rem;

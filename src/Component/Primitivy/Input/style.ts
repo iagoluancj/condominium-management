@@ -33,7 +33,6 @@ export const InputInput = styled.input`
     transition: ease-in 0.1s;
     padding: 0.5rem 0rem;
     border-radius: 10px;
-    width: 100%;
     padding-left: 0.5rem;
     text-align: start !important;
 

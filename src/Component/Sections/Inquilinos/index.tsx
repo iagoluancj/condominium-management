@@ -134,8 +134,8 @@ export default function Inquilinos() {
         }
 
         const currentDate = new Date();
-        currentDate.setHours(currentDate.getHours() - 3); 
-        
+        currentDate.setHours(currentDate.getHours() - 3);
+
         const currentDateISO = currentDate.toISOString();
         try {
             await createInquilino({
