@@ -9,7 +9,7 @@ export const MoradiaChart = () => {
 
     const updateChartSize = () => {
         const newWidth = Math.min(window.innerWidth * 0.8, 600);
-        const newHeight = Math.min(window.innerHeight * 0.4, 300); 
+        const newHeight = Math.min(window.innerHeight * 0.4, 300);
         setChartSize({ width: newWidth, height: newHeight });
     };
 

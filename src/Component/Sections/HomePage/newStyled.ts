@@ -15,7 +15,6 @@ const Container = styled.div`
       align-items: center;
       gap: 1rem;
     }
-
 `;
 
 const Section = styled.div`
@@ -115,6 +114,7 @@ const Description = styled.p`
 const LeftColumn = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 `;
 
@@ -134,12 +134,14 @@ const ChartWrapper = styled.div`
 export const ChartWrapperTwoCharts = styled(ChartWrapper)`
     box-shadow: 0px 0px 10px .1px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    width: 100%;
     background: ${(props) => props.theme.background};
 `;
 
 export const ChartWrapperPizza = styled(ChartWrapper)`
     box-shadow: 0px 0px 10px .1px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    width: 100%;
     background: ${(props) => props.theme.background};
 `;
 
@@ -448,8 +450,22 @@ export const GlobalStyles = styled.div`
     }
 
     @media (max-width: 992px) {
-        ${Content} {
-        }
+
+    }
+
+    @media (max-width: 800px) {
+        ${ChartWrapperTwoCharts} {
+            width: 90%;
+            padding: 2rem;
+        } 
+        ${ChartWrapper} {
+            width: 80%;
+            padding: 2rem;
+        } 
+        ${ChartWrapperPizza} {
+            width: 80%;
+            padding: 2rem;
+        } 
     }
 
     @media (max-width: 768px) {
@@ -457,9 +473,8 @@ export const GlobalStyles = styled.div`
             width: 50%;
             justify-content: center;
         }  
-        ${ChartWrapperPizza} {
-            width: 70%;
-            padding: 2rem;
+        ${ChartWrapperTwoCharts} {
+            height: 620px;
         } 
         ${LeftColumn} {
             width: 100%;
@@ -468,9 +483,6 @@ export const GlobalStyles = styled.div`
         ${RightColumn} {
             width: 70%;
             padding: 2rem;
-        } 
-        ${ChartWrapperTwoCharts} {
-            margin-bottom: 16rem;
         } 
         ${ChartApartment} {
            display: flex;

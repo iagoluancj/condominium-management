@@ -5,6 +5,7 @@ export const FooterWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 100%;
     gap: 2rem;
     padding: .7rem 10rem;
     background: linear-gradient(135deg, #00c6ff, #0072ff);
@@ -17,6 +18,7 @@ export const FooterSection = styled.div`
     display: flex;
     align-items: center;
     text-align: center;
+    width: 100%;
     gap: .7rem;
 `;
 

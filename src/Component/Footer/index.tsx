@@ -34,9 +34,8 @@ export default function FooterCM() {
                     <span>© 2024 Condominium Management.</span>
                     <span>Todos os direitos reservados.</span>
                     <a href="https://iagoluancj.github.io/Portifolio-React/" target="_blank"><span>Developed by <strong>Iago Jesus</strong></span></a>
-            </FooterCopyright>
-
-        </FooterSection>
+                </FooterCopyright>
+            </FooterSection>
         </FooterWrapper >
     )
 }

@@ -6,6 +6,7 @@ import Head from "next/head";
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import userAuth from "@/utils/userAuth";
+import { StylesPage } from "@/styles/pageStyles";
 
 const Paginas: React.FC = () => {
     const router = useRouter();
@@ -21,14 +22,16 @@ const Paginas: React.FC = () => {
             <title>Funções - Condominium Management</title>
         </Head>
         <SupaProvider>
-            <NavBar></NavBar>
-            <MainInquilinos></MainInquilinos>
-            <FooterCM></FooterCM>
+            <StylesPage>
+                <NavBar></NavBar>
+                <MainInquilinos></MainInquilinos>
+                <FooterCM></FooterCM>
+            </StylesPage>
         </SupaProvider>
     </>
 };
 
-export default Paginas;
-// export default userAuth(Paginas);
+// export default Paginas;
+export default userAuth(Paginas);
 
 

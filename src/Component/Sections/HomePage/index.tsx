@@ -212,6 +212,7 @@ export const HomePage = () => {
                                     <MoradiaChart />
                                 </Chart>
                             </ChartWrapper>
+
                             <ChartWrapperTwoCharts>
                                 <HeaderChartTitle>
                                     <SectionTitle>Apartamentos ocupados</SectionTitle>
@@ -248,8 +249,10 @@ export const HomePage = () => {
                                     <PizzaChart />
                                 </ChartApartment>
                             </ChartWrapperPizza>
-                            <ChartAdjunt>
-                            </ChartAdjunt>
+
+                            {/* <ChartAdjunt>
+                                
+                            </ChartAdjunt> */}
                         </LeftColumn>
 
                         <RightColumn>
