@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { InquilinoSection } from "../Inquilinos/styles";
 
 interface VisitPerHour {
   $visitHour: boolean;
@@ -141,22 +142,71 @@ export const StyledSelectStatus = styled.select`
   background-color: ${(props) => props.theme.background};
 `;
 
+export const InquilinoVisit = styled(InquilinoSection)`
+`;
+
+
 export const GlobalStylesVisits = styled.div`
-    width: 100%;
+  @media (max-width: 1200px) {
+    ${InquilinoVisit} {
+      flex-direction: column;
+    }
+    ${StyledSelectStatus} {
+      width: 95%;
+    }
+    ${InputStatus} {
+      width: 52% !important;
+    }
+}
 
-    @media (max-width: 1200px) {
+@media (max-width: 854px) {
+  ${ContainerForm} {
+      flex-direction: column;
     }
 
-
-    @media (max-width: 854px) {
-        ${ContainerForm} {
-            flex-direction: column;
-        }
+    ${DivLabel} {
+        width: 100%;
     }
-    @media (max-width: 720px) {
-      }
+    ${StyledSelectStatus} {
+      width: 100%;
+    }
 
-      @media (max-width: 426px) {
+    ${InputStatus} {
+      width: 32% !important;
+    }
+}
+@media (max-width: 720px) {
+  ${InquilinoVisit} {
+      width: 500px;
+    }
+  ${DivLabel} {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    ${StyledSelectStatus} {
+      width: 100%;
+    }
+    ${InputStatus} {
+      width: 40% !important;
+    }
+    ${InputWrapperStatus} {
+      padding: 0;
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+  }
 
-      }
+  @media (max-width: 558px) {
+    ${InquilinoVisit} {
+      width: 400px;
+    }
+  }
+
+  @media (max-width: 462px) {
+
+  }
   `
+export const GlobalStyles = styled.div`
+
+`

@@ -2,7 +2,7 @@
 import { useContext } from "react";
 
 import { SupaContext } from "@/Context/context";
-import { MainContainer, MainContainerDiv } from "./styles";
+import { GlobalStyles, MainContainer, MainContainerDiv } from "./styles";
 import Inquilinos from "../Sections/Inquilinos";
 import Visitantes from "../Sections/Visitantes";
 import Moradores from "../Sections/Moradores";
@@ -10,6 +10,7 @@ import Encomendas from "../Sections/Encomendas";
 import { HomePage } from "../Sections/HomePage";
 import { ThemeProvider } from "styled-components";
 import Apartamentos from "../Sections/Apartamentos";
+import FooterCM from "../Footer";
 
 
 export default function MainInquilinos() {
@@ -43,26 +44,29 @@ export default function MainInquilinos() {
 
     return (
         <ThemeProvider theme={ChangeTheme ? lightTheme : darkTheme}>
-            <MainContainer>
-                <MainContainerDiv>
-                    {(() => {
-                        switch (ChangePage) {
-                            case 'HomePage':
-                                return <HomePage />;
-                            case 'Inquilinos':
-                                return <Inquilinos />;
-                            case 'Visitantes':
-                                return <Visitantes />;
-                            case 'Apartamentos':
-                                return <Apartamentos />;
-                            case 'Encomendas':
-                                return <Encomendas />;
-                            default:
-                                return null; // ou qualquer outro componente de fallback
-                        }
-                    })()}
-                </MainContainerDiv>
-            </MainContainer>
+            <GlobalStyles>
+                <MainContainer>
+                    <MainContainerDiv>
+                        {(() => {
+                            switch (ChangePage) {
+                                case 'HomePage':
+                                    return <HomePage />;
+                                case 'Inquilinos':
+                                    return <Inquilinos />;
+                                case 'Visitantes':
+                                    return <Visitantes />;
+                                case 'Apartamentos':
+                                    return <Apartamentos />;
+                                case 'Encomendas':
+                                    return <Encomendas />;
+                                default:
+                                    return null; // ou qualquer outro componente de fallback
+                            }
+                        })()}
+                    </MainContainerDiv>
+                    <FooterCM></FooterCM>
+                </MainContainer>
+            </GlobalStyles>
         </ThemeProvider>
 
     )

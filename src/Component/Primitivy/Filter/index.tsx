@@ -107,7 +107,7 @@ export default function FilteredTable<T extends { [key: string]: any }>({
                         {currentItems.map((item, index) => renderRow(item, index))}
                     </tbody>
                 </table>
-                <div className="mt-4 flex justify-between items-center p-4">
+                <div className="mt-4 flex justify-between items-center p-4 gap-10">
                     <div className="flex items-center gap-4">
                         <span>Itens por página:</span>
                         <select

@@ -6,7 +6,7 @@ import InputComponent from '@/Component/Primitivy/Input';
 import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, DivLabel, Form, GlobalStyles, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
 import { IoIosArrowForward } from 'react-icons/io';
 import { IoPeopleSharp } from 'react-icons/io5';
-import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, GlobalStylesVisits, InputStatus, InputVisit, InputWrapperStatus, Label, LabelVisit, SpanVisit, StyledSelectStatus } from './styles';
+import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, GlobalStylesVisits, InputStatus, InputVisit, InputWrapperStatus, InquilinoVisit, Label, LabelVisit, SpanVisit, StyledSelectStatus } from './styles';
 import DeletedVisits from './deletedVisits';
 import CurrentVisits from './currentVisits';
 import { MdEmojiPeople } from 'react-icons/md';
@@ -218,7 +218,7 @@ export default function Visitantes() {
     return (
         <GlobalStyles>
             <GlobalStylesVisits>
-                <InquilinoSection $isSelectedCurrent={selected === 'currentVisit' ? true : false}>
+                <InquilinoVisit $isSelectedCurrent={selected === 'currentVisit' ? true : false}>
                     <ActionsInquilino>
                         <IconInquilino>
                             <h2>Gerenciamento de visita
@@ -382,7 +382,7 @@ export default function Visitantes() {
                             <DeletedVisits />
                         )}
                     </ActionsInquilinoRegister>
-                </InquilinoSection>
+                </InquilinoVisit>
             </GlobalStylesVisits>
         </GlobalStyles>
     );

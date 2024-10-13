@@ -76,7 +76,7 @@ export default function PaginatedFilteredTable<T extends { [key: string]: any }>
                         placeholder="Pesquisar por nome ou CPF..."
                         value={filterTerm}
                         onChange={(e) => setFilterTerm(e.target.value)}
-                        className="p-2 border border-gray-300 rounded bg-blue-50 w-[80%]"
+                        className="p-2 border border-gray-300 rounded bg-blue-50 w-100"
                     />
                     <div className="flex space-x-2">
                         {columns
@@ -107,7 +107,7 @@ export default function PaginatedFilteredTable<T extends { [key: string]: any }>
                         {currentItems.map((item, index) => renderRow(item, index))}
                     </tbody>
                 </table>
-                <div className="mt-4 flex justify-between items-center p-4">
+                <div className="mt-4 flex justify-between items-center p-4 gap-10">
                     <div className="flex items-center gap-4">
                         <span>Itens por página:</span>
                         <select

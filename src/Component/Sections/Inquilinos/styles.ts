@@ -20,7 +20,7 @@ interface PropsSelectedCurrent {
 export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     display: flex;
     gap: 2rem;
-    margin-top: 15vh;
+    margin-top: 20vh;
     margin-left: 10vh;
 
     color: ${(props) => props.theme.secondary};
@@ -270,7 +270,6 @@ export const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%;
   height: 100%;
 `;
 
@@ -369,7 +368,10 @@ export const H3Pessoal = styled.h3`
   margin-bottom: .8rem;
 `
 
-export const SpanContext = styled.span`
+export const SpanContext = styled.div`
+  overflow-x: auto; /* Define rolagem horizontal */
+  white-space: nowrap; /* Impede a quebra de linha dos elementos internos */
+  
   tr {
     color: ${(props) => props.theme.secondary};
     background-color: ${(props) => props.theme.table};
@@ -408,17 +410,37 @@ export const SpanContext = styled.span`
 `
 
 export const GlobalStyles = styled.div`
-    width: 100%;
 
     @media (max-width: 1200px) {
         ${InquilinoSection} {
           flex-direction: column;
+          padding-right: 2rem;
+          width: 800px;
+        }
+        ${ActionsInquilino} {
+          width: 100%;
+        }
+        ${OptionsActionInquilos} {
+          width: 100%;
+        }
+        ${ActionsInquilinoRegister} {
+          width: 100%;
+          div {
+            width: 100%;
+          }
+        }
+        ${StyledSelectStatus} {
+          width: 95%;
+        }
+        ${InputStatus} {
+          width: 25% !important;
         }
     }
 
     @media (max-width: 854px) {
         ${InquilinoSection} {
           padding-right: 2rem;
+          width: 600px;
         }
         ${SeparationPessoal} {
             flex-direction: column;
@@ -429,10 +451,13 @@ export const GlobalStyles = styled.div`
         ${DivLabel} {
             width: 100%;
         }
+        ${StyledSelectStatus} {
+          width: 90%;
+        }
     }
     @media (max-width: 720px) {
       ${InquilinoSection} {
-          padding-right: .5rem;
+          padding-right: 2rem;
         }
       ${SeparationResidenc} {
           margin-top: 1rem;
@@ -444,13 +469,18 @@ export const GlobalStyles = styled.div`
           margin: 0;
         }
         ${StyledSelectStatus} {
+          width: 100%;
+        }
+        ${InputWrapperStatus} {
+          padding: 0;
+          margin: 0;
+          margin-bottom: 1rem;
         }
       }
 
       @media (max-width: 426px) {
         ${InquilinoSection} {
-          width: 100%;
-          padding-right: .5rem;
+          padding-right: 2rem;
         }
 
         ${IconInquilino} {

@@ -25,13 +25,12 @@ const Paginas: React.FC = () => {
             <StylesPage>
                 <NavBar></NavBar>
                 <MainInquilinos></MainInquilinos>
-                <FooterCM></FooterCM>
             </StylesPage>
         </SupaProvider>
     </>
 };
 
-// export default Paginas;
-export default userAuth(Paginas);
+export default Paginas;
+// export default userAuth(Paginas);
 
 

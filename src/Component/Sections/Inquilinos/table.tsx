@@ -183,8 +183,8 @@ export default function Tables() {
                     placeholder="Procure por nome ou CPF"
                     value={filterTerm}
                     onChange={(e) => setFilterTerm(e.target.value)}
-                    className="p-1 border border-gray-300 rounded"
-                />
+                    className="p-2 border border-gray-300 rounded bg-blue-50 w-100"
+                    />
                 <div className="flex space-x-2">
                     <button
                         onClick={() => setSortField('nome')}
@@ -419,7 +419,7 @@ export default function Tables() {
                     </tbody>
                 </table>
 
-                <div className="mt-4 flex justify-between items-center p-4">
+                <div className="mt-4 w-[100%] flex gap-10 justify-between items-center p-4">
                     <div className="flex items-center gap-4">
                         <span>Itens por página:</span>
                         <select

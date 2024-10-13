@@ -249,10 +249,6 @@ export const HomePage = () => {
                                     <PizzaChart />
                                 </ChartApartment>
                             </ChartWrapperPizza>
-
-                            {/* <ChartAdjunt>
-                                
-                            </ChartAdjunt> */}
                         </LeftColumn>
 
                         <RightColumn>
@@ -281,7 +277,7 @@ export const HomePage = () => {
                                 </div>
                             </CondoUpdatesContainer>
                         </RightColumn>
-                    </Section>
+                    </Section> 
                 </Container>
             </GlobalStyles>
         </>
