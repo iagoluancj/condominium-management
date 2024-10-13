@@ -23,10 +23,6 @@ export const InquilinoSection = styled.section<PropsSelectedCurrent>`
     margin-top: 15vh;
     margin-left: 10vh;
 
-    @media (max-width: 768px) {
-        flex-direction: column;
-        margin: 0rem 1rem;
-    }
     color: ${(props) => props.theme.secondary};
 `
 
@@ -410,3 +406,58 @@ export const SpanContext = styled.span`
     }
   }
 `
+
+export const GlobalStyles = styled.div`
+    width: 100%;
+
+    @media (max-width: 1200px) {
+        ${InquilinoSection} {
+          flex-direction: column;
+        }
+    }
+
+    @media (max-width: 854px) {
+        ${InquilinoSection} {
+          padding-right: 2rem;
+        }
+        ${SeparationPessoal} {
+            flex-direction: column;
+        }
+        ${SeparationCarro} {
+            flex-direction: column;
+        }
+        ${DivLabel} {
+            width: 100%;
+        }
+    }
+    @media (max-width: 720px) {
+      ${InquilinoSection} {
+          padding-right: .5rem;
+        }
+      ${SeparationResidenc} {
+          margin-top: 1rem;
+          flex-direction: column;
+        }
+      ${DivLabel} {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+        }
+        ${StyledSelectStatus} {
+        }
+      }
+
+      @media (max-width: 426px) {
+        ${InquilinoSection} {
+          width: 100%;
+          padding-right: .5rem;
+        }
+
+        ${IconInquilino} {
+         margin: 0;
+         padding: 0;
+         padding-bottom: 1rem;
+        }
+
+      }
+  `

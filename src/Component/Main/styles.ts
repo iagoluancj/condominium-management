@@ -11,5 +11,6 @@ export const MainContainer = styled.main`
   padding-bottom: 4rem;
 `;
 
-export const MainContainerDiv = styled.div`
+export const MainContainerDiv = styled.div` 
+
 `

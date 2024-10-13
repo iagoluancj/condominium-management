@@ -3,10 +3,10 @@ import { TypeInquilinos, TypeVisit } from '@/Types/types';
 import React, { ChangeEvent, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import InputComponent from '@/Component/Primitivy/Input';
-import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, DivLabel, Form, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
+import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, DivLabel, Form, GlobalStyles, H3, H3Pessoal, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
 import { IoIosArrowForward } from 'react-icons/io';
 import { IoPeopleSharp } from 'react-icons/io5';
-import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, InputStatus, InputVisit, InputWrapperStatus, Label, LabelVisit, SpanVisit, StyledSelectStatus } from './styles';
+import { ButtonCreateVisit, ContainerForm, ContainerFormStyles, GlobalStylesVisits, InputStatus, InputVisit, InputWrapperStatus, Label, LabelVisit, SpanVisit, StyledSelectStatus } from './styles';
 import DeletedVisits from './deletedVisits';
 import CurrentVisits from './currentVisits';
 import { MdEmojiPeople } from 'react-icons/md';
@@ -216,170 +216,174 @@ export default function Visitantes() {
     };
 
     return (
-        <InquilinoSection $isSelectedCurrent={selected === 'currentVisit' ? true : false}>
-            <ActionsInquilino>
-                <IconInquilino>
-                    <h2>Gerenciamento de visita
-                    </h2>
-                    <MdEmojiPeople size={18} />
-                </IconInquilino>
-                <OptionsActionInquilos>
-                    <OptionAction onClick={() => alterSelected('cadasterVisit')} $isSelected={selected === 'cadasterVisit'}>
-                        <span>
-                            Cadastro de visitantes
-                        </span>
-                        <IoIosArrowForward />
-                    </OptionAction>
-                    <OptionAction onClick={() => alterSelected('currentVisit')} $isSelected={selected === 'currentVisit'}>
-                        <span>
-                            Visitas em andamento
-                        </span>
-                        <IoIosArrowForward />
-                    </OptionAction>
-                    <OptionAction onClick={() => alterSelected('finalizedVisit')} $isSelected={selected === 'finalizedVisit'}>
-                        <span>
-                            Visitas finalizadas
-                        </span>
-                        <IoIosArrowForward />
-                    </OptionAction>
-                </OptionsActionInquilos>
-            </ActionsInquilino>
-            <ActionsInquilinoRegister>
-                <HeaderInquilinos>
-                    <TitleHeader>{title}</TitleHeader>
-                    <BrevelyDescription>
-                        <span>
-                            Gerencie visitas de forma eficiente: cadastre, visualize, edite e acesse registros com facilidade.
-                        </span>
-                    </BrevelyDescription>
-                </HeaderInquilinos>
-                {selected === 'cadasterVisit' && (
-                    <Form onSubmit={handleCreate}>
-                        <H3Pessoal>Dados pessoais:</H3Pessoal>
-                        <ContainerForm>
-                            <InputComponent
-                                label="Nome do Visitante"
-                                name="nomevisitante"
-                                value={formData.nomevisitante}
-                                onChange={handleChange}
-                                required
-                            />
-                            <InputComponent
-                                label="CPF do Visitante (Apenas 6 digitos)"
-                                name="cpfvisitante"
-                                value={formData.cpfvisitante}
-                                onChange={handleChange}
-                                required
-                            />
-                        </ContainerForm>
-                        <H3Pessoal>Inicio e fim:</H3Pessoal>
-                        <ContainerForm>
-                            <LabelVisit $visitHour={visitPerHour}
-                            >
-                                <SpanVisit $visitHour={visitPerHour}>Diaria{visitPerHour ? <span>!</span> : <span>?</span>}</SpanVisit>
-                                <InputVisit
-                                    type="checkbox"
-                                    name="diaria"
-                                    checked={visitPerHour}
-                                    onChange={handleCheckboxChange}
-                                />
-                            </LabelVisit>
-                            {visitPerHour
-                                ?
-                                <span></span>
-                                :
-                                <ContainerFormStyles>
+        <GlobalStyles>
+            <GlobalStylesVisits>
+                <InquilinoSection $isSelectedCurrent={selected === 'currentVisit' ? true : false}>
+                    <ActionsInquilino>
+                        <IconInquilino>
+                            <h2>Gerenciamento de visita
+                            </h2>
+                            <MdEmojiPeople size={18} />
+                        </IconInquilino>
+                        <OptionsActionInquilos>
+                            <OptionAction onClick={() => alterSelected('cadasterVisit')} $isSelected={selected === 'cadasterVisit'}>
+                                <span>
+                                    Cadastro de visitantes
+                                </span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                            <OptionAction onClick={() => alterSelected('currentVisit')} $isSelected={selected === 'currentVisit'}>
+                                <span>
+                                    Visitas em andamento
+                                </span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                            <OptionAction onClick={() => alterSelected('finalizedVisit')} $isSelected={selected === 'finalizedVisit'}>
+                                <span>
+                                    Visitas finalizadas
+                                </span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                        </OptionsActionInquilos>
+                    </ActionsInquilino>
+                    <ActionsInquilinoRegister>
+                        <HeaderInquilinos>
+                            <TitleHeader>{title}</TitleHeader>
+                            <BrevelyDescription>
+                                <span>
+                                    Gerencie visitas de forma eficiente: cadastre, visualize, edite e acesse registros com facilidade.
+                                </span>
+                            </BrevelyDescription>
+                        </HeaderInquilinos>
+                        {selected === 'cadasterVisit' && (
+                            <Form onSubmit={handleCreate}>
+                                <H3Pessoal>Dados pessoais:</H3Pessoal>
+                                <ContainerForm>
                                     <InputComponent
-                                        label="Data da Visita"
-                                        type="date"
-                                        name="datavisita"
-                                        value={formData.datavisita}
+                                        label="Nome do Visitante"
+                                        name="nomevisitante"
+                                        value={formData.nomevisitante}
                                         onChange={handleChange}
+                                        required
                                     />
                                     <InputComponent
-                                        label="Fim da Visita"
-                                        type="date"
-                                        name="fimvisita"
-                                        value={formData.fimvisita}
+                                        label="CPF do Visitante (Apenas 6 digitos)"
+                                        name="cpfvisitante"
+                                        value={formData.cpfvisitante}
                                         onChange={handleChange}
+                                        required
                                     />
-                                </ContainerFormStyles>
-                            }
-                            <ContainerFormStyles>
-                                <InputComponent
-                                    label="Horário de Início"
-                                    type="time"
-                                    name="horarioinicio"
-                                    value={formData.horarioinicio}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <InputComponent
-                                    label="Horário de Fim"
-                                    type="time"
-                                    name="horariofim"
-                                    value={formData.horariofim}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </ContainerFormStyles>
-                        </ContainerForm>
-                        <H3Pessoal>Da visita:</H3Pessoal>
-                        <ContainerForm>
-                            <InputComponent
-                                label="Local da Visita: AP - Bloco"
-                                name="localvisita"
-                                value={formData.localvisita}
-                                onChange={handleChange}
-                                suggestions={validAp.map(ap => ap.label)}
-                                required
-                            />
-                            <InputComponent
-                                label="CPF do morador aprovador"
-                                name="cpfinquilinopermissao"
-                                value={formData.cpfinquilinopermissao}
-                                onChange={handleChange}
-                                suggestions={validCpfs}
-                                required
-                            />
-                            <DivLabel>
-                                <Label>
-                                    <InputWrapperStatus>
-                                        <InputStatus>* Tipo da visita</InputStatus>
-                                        <StyledSelectStatus
-                                            name="tipo_visita"
-                                            value={formData.tipo_visita}
+                                </ContainerForm>
+                                <H3Pessoal>Inicio e fim:</H3Pessoal>
+                                <ContainerForm>
+                                    <LabelVisit $visitHour={visitPerHour}
+                                    >
+                                        <SpanVisit $visitHour={visitPerHour}>Diaria{visitPerHour ? <span>!</span> : <span>?</span>}</SpanVisit>
+                                        <InputVisit
+                                            type="checkbox"
+                                            name="diaria"
+                                            checked={visitPerHour}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                    </LabelVisit>
+                                    {visitPerHour
+                                        ?
+                                        <span></span>
+                                        :
+                                        <ContainerFormStyles>
+                                            <InputComponent
+                                                label="Data da Visita"
+                                                type="date"
+                                                name="datavisita"
+                                                value={formData.datavisita}
+                                                onChange={handleChange}
+                                            />
+                                            <InputComponent
+                                                label="Fim da Visita"
+                                                type="date"
+                                                name="fimvisita"
+                                                value={formData.fimvisita}
+                                                onChange={handleChange}
+                                            />
+                                        </ContainerFormStyles>
+                                    }
+                                    <ContainerFormStyles>
+                                        <InputComponent
+                                            label="Horário de Início"
+                                            type="time"
+                                            name="horarioinicio"
+                                            value={formData.horarioinicio}
                                             onChange={handleChange}
                                             required
-                                        >
-                                            <option value=""></option>
-                                            <option value="amigo">Amigo</option>
-                                            <option value="familiar">Familiar</option>
-                                            <option value="manutencao">Manutenção</option>
-                                            <option value="naoInformado">Não informado</option>
-                                        </StyledSelectStatus>
-                                    </InputWrapperStatus>
-                                </Label>
-                            </DivLabel>
-                        </ContainerForm>
-                        <InputComponent
-                            label="Observações Adicionais"
-                            name="observacoes"
-                            type='textarea'
-                            value={formData.observacoes}
-                            onChange={handleChange}
-                            height={100}
-                        />
-                        <ButtonCreateVisit type="submit">Criar visita</ButtonCreateVisit>
-                    </Form>
-                )}
-                {selected === 'currentVisit' && (
-                    <CurrentVisits />
-                )}
-                {selected === 'finalizedVisit' && (
-                    <DeletedVisits />
-                )}
-            </ActionsInquilinoRegister>
-        </InquilinoSection>
+                                        />
+                                        <InputComponent
+                                            label="Horário de Fim"
+                                            type="time"
+                                            name="horariofim"
+                                            value={formData.horariofim}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </ContainerFormStyles>
+                                </ContainerForm>
+                                <H3Pessoal>Da visita:</H3Pessoal>
+                                <ContainerForm>
+                                    <InputComponent
+                                        label="Local da Visita: AP - Bloco"
+                                        name="localvisita"
+                                        value={formData.localvisita}
+                                        onChange={handleChange}
+                                        suggestions={validAp.map(ap => ap.label)}
+                                        required
+                                    />
+                                    <InputComponent
+                                        label="CPF do morador aprovador"
+                                        name="cpfinquilinopermissao"
+                                        value={formData.cpfinquilinopermissao}
+                                        onChange={handleChange}
+                                        suggestions={validCpfs}
+                                        required
+                                    />
+                                    <DivLabel>
+                                        <Label>
+                                            <InputWrapperStatus>
+                                                <InputStatus>* Tipo da visita</InputStatus>
+                                                <StyledSelectStatus
+                                                    name="tipo_visita"
+                                                    value={formData.tipo_visita}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value=""></option>
+                                                    <option value="amigo">Amigo</option>
+                                                    <option value="familiar">Familiar</option>
+                                                    <option value="manutencao">Manutenção</option>
+                                                    <option value="naoInformado">Não informado</option>
+                                                </StyledSelectStatus>
+                                            </InputWrapperStatus>
+                                        </Label>
+                                    </DivLabel>
+                                </ContainerForm>
+                                <InputComponent
+                                    label="Observações Adicionais"
+                                    name="observacoes"
+                                    type='textarea'
+                                    value={formData.observacoes}
+                                    onChange={handleChange}
+                                    height={100}
+                                />
+                                <ButtonCreateVisit type="submit">Criar visita</ButtonCreateVisit>
+                            </Form>
+                        )}
+                        {selected === 'currentVisit' && (
+                            <CurrentVisits />
+                        )}
+                        {selected === 'finalizedVisit' && (
+                            <DeletedVisits />
+                        )}
+                    </ActionsInquilinoRegister>
+                </InquilinoSection>
+            </GlobalStylesVisits>
+        </GlobalStyles>
     );
 }

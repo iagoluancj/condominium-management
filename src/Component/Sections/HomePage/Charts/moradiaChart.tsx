@@ -1,10 +1,27 @@
 import { SupaContext } from '@/Context/context';
 import { TypeInquilinos } from '@/Types/types';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 export const MoradiaChart = () => {
     const { typeInquilinos } = useContext(SupaContext);
+    const [chartSize, setChartSize] = useState({ width: 600, height: 300 });
+
+    const updateChartSize = () => {
+        const newWidth = Math.min(window.innerWidth * 0.8, 600);
+        const newHeight = Math.min(window.innerHeight * 0.4, 300); 
+        setChartSize({ width: newWidth, height: newHeight });
+    };
+
+    useEffect(() => {
+        updateChartSize();
+
+        window.addEventListener('resize', updateChartSize);
+
+        return () => {
+            window.removeEventListener('resize', updateChartSize);
+        };
+    }, []);
 
     const categorizeInquilinosByTime = (inquilinos: TypeInquilinos[]) => {
         const now = new Date();
@@ -52,7 +69,7 @@ export const MoradiaChart = () => {
     const data = categorizeInquilinosByTime(typeInquilinos);
 
     return (
-        <LineChart width={600} height={300} data={data}>
+        <LineChart width={chartSize.width} height={chartSize.height} data={data}>
             <XAxis dataKey="name" />
             <YAxis />
             <CartesianGrid stroke="#f2b017" strokeDasharray="5 5" />

@@ -1,6 +1,6 @@
 import { SupaContext } from '@/Context/context';
 import { TypeInquilinos } from '@/Types/types';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { PieChart, Pie, ResponsiveContainer, Sector, Cell } from 'recharts';
 
 const COLORS = ['#755706', '#B99634', '#ffbb00'];
@@ -78,6 +78,15 @@ const renderActiveShape = (props: any) => {
 const PizzaChart = () => {
     const { typeInquilinos } = useContext(SupaContext) as { typeInquilinos: TypeInquilinos[] };
     const [activeIndex, setActiveIndex] = useState(0);
+    const [windowWidth, setWindowWidth] = useState<number | null>(null); 
+    const [chartSize, setChartSize] = useState({ width: 400, height: 400 });
+
+    const updateChartSize = () => {
+        const newWidth = Math.min(window.innerWidth * 0.8, 400);
+        const newHeight = Math.min(window.innerHeight * 0.4, 400);
+        setChartSize({ width: newWidth, height: newHeight });
+        setWindowWidth(window.innerWidth);
+    };
 
     const onPieEnter = (_: any, index: number) => {
         setActiveIndex(index);
@@ -85,27 +94,50 @@ const PizzaChart = () => {
 
     const data = getInquilinoStats(typeInquilinos);
 
+    useEffect(() => {
+        updateChartSize();
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', updateChartSize);
+        }
+
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('resize', updateChartSize);
+            }
+        };
+    }, []);
+
     return (
-        <ResponsiveContainer width="100%" height="100%">
-            <PieChart width={400} height={400}>
-                <Pie
-                    activeIndex={activeIndex}
-                    activeShape={renderActiveShape}
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                    onMouseEnter={onPieEnter}
-                >
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                </Pie>
-            </PieChart>
-        </ResponsiveContainer>
+        <>
+            {windowWidth !== null && windowWidth < 800 ? (
+                <div style={{ textAlign: 'center', padding: '20px', color: '#888' }}>
+                    <p>Este gráfico não está disponível neste dispositivo, visualize atráves de um dispositivo de maioir resolução.</p>
+                    <p><i>Desktop, Notebook ou Tablet</i></p>
+                </div>
+            ) : (
+                <ResponsiveContainer width="100%" height={chartSize.height}>
+                    <PieChart width={chartSize.width} height={chartSize.height}>
+                        <Pie
+                            activeIndex={activeIndex}
+                            activeShape={renderActiveShape}
+                            data={data}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                            onMouseEnter={onPieEnter}
+                        >
+                            {data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                    </PieChart>
+                </ResponsiveContainer>
+            )}
+        </>
     );
 };
 

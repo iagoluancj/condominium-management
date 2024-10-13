@@ -43,7 +43,11 @@ import {
     SectionClassifyColor,
     SpanClassifyColorInquilino,
     SpanClassifyColorEncomenda,
-    SpanClassifyColorVisita
+    SpanClassifyColorVisita,
+    GlobalStyles,
+    SeparateChart,
+    ChartWrapperTwoCharts,
+    ChartWrapperPizza
 } from './newStyled';
 
 import { MdDashboard, MdEmojiPeople, MdLocalShipping } from 'react-icons/md';
@@ -155,124 +159,128 @@ export const HomePage = () => {
 
     return (
         <>
-            <Container>
-                <h4> <span>Dashboard</span><MdDashboard /></h4>
-                <SectionOptions>
-                    <Card>
-                        <IconWrapper>
-                            <Icon><IoPeopleSharp size={24} /></Icon>
-                        </IconWrapper>
-                        <CardSeparator>
-                            <Title>MORADORES</Title>
-                            <Description>{newResidents} novos nos últimos 3 meses.</Description>
-                        </CardSeparator>
-                    </Card>
-                    <CardVisitante>
-                        <IconWrapperVisitante>
-                            <Icon><MdEmojiPeople size={24} /></Icon>
-                        </IconWrapperVisitante>
-                        <CardSeparator>
-                            <Title>VISITAS</Title>
-                            <Description>{visitsThisWeek} agendadas para essa semana.</Description>
-                        </CardSeparator>
-                    </CardVisitante>
-                    <CardEncomenda>
-                        <IconWrapperEncomenda>
-                            <Icon><MdLocalShipping size={24} /></Icon>
-                        </IconWrapperEncomenda>
-                        <CardSeparator>
-                            <Title>ENCOMENDAS</Title>
-                            <Description>{deliveriesThisMonth} recebidas este mês.</Description>
-                        </CardSeparator>
-                    </CardEncomenda>
-                    <CardCreate>
-                        <IconWrapperCreate>
-                            <IconCreate><BiBuildings size={24} /> </IconCreate>
-                        </IconWrapperCreate>
-                        <CardSeparator>
-                            <Title>APARTAMENTOS</Title>
-                            <Description>{apartmentAvailable} de {contextApartamentos.length} disponíveis.</Description>
-                        </CardSeparator>
-                    </CardCreate>
-                </SectionOptions>
+            <GlobalStyles>
+                <Container>
+                    <h4> <span>Dashboard</span><MdDashboard /></h4>
+                    <SectionOptions>
+                        <Card>
+                            <IconWrapper>
+                                <Icon><IoPeopleSharp size={24} /></Icon>
+                            </IconWrapper>
+                            <CardSeparator>
+                                <Title>MORADORES</Title>
+                                <Description>{newResidents} novos nos últimos 3 meses.</Description>
+                            </CardSeparator>
+                        </Card>
+                        <CardVisitante>
+                            <IconWrapperVisitante>
+                                <Icon><MdEmojiPeople size={24} /></Icon>
+                            </IconWrapperVisitante>
+                            <CardSeparator>
+                                <Title>VISITAS</Title>
+                                <Description>{visitsThisWeek} agendadas para essa semana.</Description>
+                            </CardSeparator>
+                        </CardVisitante>
+                        <CardEncomenda>
+                            <IconWrapperEncomenda>
+                                <Icon><MdLocalShipping size={24} /></Icon>
+                            </IconWrapperEncomenda>
+                            <CardSeparator>
+                                <Title>ENCOMENDAS</Title>
+                                <Description>{deliveriesThisMonth} recebidas este mês.</Description>
+                            </CardSeparator>
+                        </CardEncomenda>
+                        <CardCreate>
+                            <IconWrapperCreate>
+                                <IconCreate><BiBuildings size={24} /> </IconCreate>
+                            </IconWrapperCreate>
+                            <CardSeparator>
+                                <Title>APARTAMENTOS</Title>
+                                <Description>{apartmentAvailable} de {contextApartamentos.length} disponíveis.</Description>
+                            </CardSeparator>
+                        </CardCreate>
+                    </SectionOptions>
 
-                <Section>
-                    <LeftColumn>
-                        <ChartWrapper>
-                            <HeaderChartTitle>
-                                <SectionTitle>Tempo de moradia</SectionTitle>
-                                <p>Confira abaixo o tempo de residencia dos moradores atuais.</p>
-                            </HeaderChartTitle>
-                            <Chart>
-                                <MoradiaChart />
-                            </Chart>
-                        </ChartWrapper>
-                        <ChartWrapper>
-                            <HeaderChartTitle>
-                                <SectionTitle>Apartamentos ocupados</SectionTitle>
-                                <p>Confira algumas informações uteis sobre os apartamentos.</p>
-                            </HeaderChartTitle>
-                            <ChartApartment>
-                                <ContainerSPAN>
-                                    <p><ColorSpan></ColorSpan><span>Atual ({((ocupados / contextApartamentos.length) * 100).toFixed(0)}%)</span></p>
-                                    <p><ColorSpanMeta></ColorSpanMeta><span>Meta (92%)</span></p>
-                                    <p><ColorSpanTotal></ColorSpanTotal><span>Máximo </span></p>
-                                </ContainerSPAN>
-                                <ChartApartamentSeparator>
-                                    <p>
-                                        Distribuição de Ocupação
-                                    </p>
-                                    <p> dos Apartamentos</p>
-                                    <PieChartComponent />
-                                </ChartApartamentSeparator>
-                                <ChartApartamentSeparator>
-                                    <P>Moradores por apartamento</P>
-                                    <BarChartComponent />
-                                </ChartApartamentSeparator>
-                            </ChartApartment>
-                        </ChartWrapper>
+                    <Section>
+                        <LeftColumn>
+                            <ChartWrapper>
+                                <HeaderChartTitle>
+                                    <SectionTitle>Tempo de moradia</SectionTitle>
+                                    <p>Confira abaixo o tempo de residencia dos moradores atuais.</p>
+                                </HeaderChartTitle>
+                                <Chart>
+                                    <MoradiaChart />
+                                </Chart>
+                            </ChartWrapper>
+                            <ChartWrapperTwoCharts>
+                                <HeaderChartTitle>
+                                    <SectionTitle>Apartamentos ocupados</SectionTitle>
+                                    <p>Confira algumas informações uteis sobre os apartamentos.</p>
+                                </HeaderChartTitle>
+                                <ChartApartment>
+                                    <SeparateChart>
+                                        <ContainerSPAN>
+                                            <p><ColorSpan></ColorSpan><span>Atual ({((ocupados / contextApartamentos.length) * 100).toFixed(0)}%)</span></p>
+                                            <p><ColorSpanMeta></ColorSpanMeta><span>Meta (92%)</span></p>
+                                            <p><ColorSpanTotal></ColorSpanTotal><span>Máximo </span></p>
+                                        </ContainerSPAN>
+                                        <ChartApartamentSeparator>
+                                            <p>
+                                                Distribuição de Ocupação
+                                            </p>
+                                            <p> dos Apartamentos</p>
+                                            <PieChartComponent />
+                                        </ChartApartamentSeparator>
+                                    </SeparateChart>
+                                    <ChartApartamentSeparator>
+                                        <P>Moradores por apartamento</P>
+                                        <BarChartComponent />
+                                    </ChartApartamentSeparator>
+                                </ChartApartment>
+                            </ChartWrapperTwoCharts>
 
-                        <ChartWrapper>
-                            <HeaderChartTitle>
-                                <SectionTitle>Relação de moradores</SectionTitle>
-                                <p>Distribuição de moradores, inquilinos e proprietários em relação às residências.</p>
-                            </HeaderChartTitle>
-                            <ChartApartment>
-                                <PizzaChart />
-                            </ChartApartment>
-                        </ChartWrapper>
-                        <ChartAdjunt>
-                        </ChartAdjunt>
-                    </LeftColumn>
+                            <ChartWrapperPizza>
+                                <HeaderChartTitle>
+                                    <SectionTitle>Relação de moradores</SectionTitle>
+                                    <p>Distribuição de moradores, inquilinos e proprietários em relação às residências.</p>
+                                </HeaderChartTitle>
+                                <ChartApartment>
+                                    <PizzaChart />
+                                </ChartApartment>
+                            </ChartWrapperPizza>
+                            <ChartAdjunt>
+                            </ChartAdjunt>
+                        </LeftColumn>
 
-                    <RightColumn>
-                        <InfoSection>
-                            <Vector1 />
-                            <Vector2 />
-                            <Vector3 />
-                            <Content>
-                                <InfoTitle>Acompanhe oque há de novo:</InfoTitle>
-                                <InfoDescription>Nesta última atualização, tivemos o dashboard criado, este que vós usais, e iniciado a concepção da tela de apartamentos.</InfoDescription>
-                            </Content>
-                            <Button onClick={() => toggleChangePage('Apartamentos')}>Ver</Button>
-                        </InfoSection>
-                        <CondoUpdatesContainer>
-                            <HeaderCondoUpdates>
-                                <SectionTitle>Acompanhe o dia de hoje</SectionTitle>
-                                <p>Veja as atualizações em tempo real sobre hoje.</p>
-                                <SectionClassifyColor>
-                                    <SpanClassifyColorInquilino>Novo morador</SpanClassifyColorInquilino>
-                                    <SpanClassifyColorEncomenda>Nova encomenda</SpanClassifyColorEncomenda>
-                                    <SpanClassifyColorVisita>Nova visita</SpanClassifyColorVisita>
-                                </SectionClassifyColor>
-                            </HeaderCondoUpdates>
-                            <div>
-                                <CondominiumUpdates />
-                            </div>
-                        </CondoUpdatesContainer>
-                    </RightColumn>
-                </Section>
-            </Container>
+                        <RightColumn>
+                            <InfoSection>
+                                <Vector1 />
+                                <Vector2 />
+                                <Vector3 />
+                                <Content>
+                                    <InfoTitle>Acompanhe oque há de novo:</InfoTitle>
+                                    <InfoDescription>Nesta última atualização, tivemos o dashboard criado, este que vós usais, e iniciado a concepção da tela de apartamentos.</InfoDescription>
+                                </Content>
+                                <Button onClick={() => toggleChangePage('Apartamentos')}>Acompanhe</Button>
+                            </InfoSection>
+                            <CondoUpdatesContainer>
+                                <HeaderCondoUpdates>
+                                    <SectionTitle>Acompanhe o dia de hoje</SectionTitle>
+                                    <p>Veja as atualizações em tempo real sobre hoje.</p>
+                                    <SectionClassifyColor>
+                                        <SpanClassifyColorInquilino>Novo morador</SpanClassifyColorInquilino>
+                                        <SpanClassifyColorEncomenda>Nova encomenda</SpanClassifyColorEncomenda>
+                                        <SpanClassifyColorVisita>Nova visita</SpanClassifyColorVisita>
+                                    </SectionClassifyColor>
+                                </HeaderCondoUpdates>
+                                <div>
+                                    <CondominiumUpdates />
+                                </div>
+                            </CondoUpdatesContainer>
+                        </RightColumn>
+                    </Section>
+                </Container>
+            </GlobalStyles>
         </>
     )
 };

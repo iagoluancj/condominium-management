@@ -60,7 +60,7 @@ function ValidarToken() {
                             if (user) {
                                 router.push(`/Paginas`); 
                             } else {
-                                router.push('/ErroNoCadastroDeCargoFuncionario');
+                                router.push('/'); //ErroNoCadastroDeCargoFuncionario
                             }
                         }
                     })

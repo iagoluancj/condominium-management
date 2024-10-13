@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { SupaContext } from "@/Context/context";
 import { toast } from "react-toastify";
-import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, DivLabel, FormContainer, InputStatus, InputWrapperStatus, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input, ImageDiv, H3, H3Pessoal, SeparationCarro, SeparationPessoal } from "./styles";
+import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader, Form, Label, DivLabel, FormContainer, InputStatus, InputWrapperStatus, InputFormCarro, LabelTemCarro, StyledSelectStatus, CreateInqui, SeparationResidenc, SpanTemCarro, Button, Input, ImageDiv, H3, H3Pessoal, SeparationCarro, SeparationPessoal, GlobalStyles } from "./styles";
 
 import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../../Modal/modal";
@@ -212,179 +212,181 @@ export default function Inquilinos() {
     const validAp = getValidAp(contextApartamentos, contextBlocos);
 
     return (
-        <InquilinoSection $isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
-            <ActionsInquilino>
-                <IconInquilino>
-                    <h2>Gerenciamento de inquilinos
-                    </h2>
-                    <IoPeopleSharp size={18} />
-                </IconInquilino>
-                <OptionsActionInquilos>
-                    <OptionAction onClick={() => alterSelected('cadasterInquilino')} $isSelected={selected === 'cadasterInquilino'}>
-                        <span>
-                            Cadastro de inquilino
-                        </span>
-                        <IoIosArrowForward />
-                    </OptionAction>
-                    <OptionAction onClick={() => alterSelected('currentInquilino')} $isSelected={selected === 'currentInquilino'}>
-                        <span>
-                            Inquilinos atuais
-                        </span>
-                        <IoIosArrowForward />
-                    </OptionAction>
-                    <OptionAction onClick={() => alterSelected('deletedsInquilinos')} $isSelected={selected === 'deletedsInquilinos'}>
-                        <span>
-                            Inquilinos deletados
-                        </span>
-                        <IoIosArrowForward />
-                    </OptionAction>
-                </OptionsActionInquilos>
-            </ActionsInquilino>
-            <ActionsInquilinoRegister>
-                <HeaderInquilinos>
-                    <TitleHeader>{title}</TitleHeader>
-                    <BrevelyDescription>
-                        <span>
-                            Gerencie inquilinos de forma eficiente: cadastre, visualize, edite e acesse registros com facilidade.
-                        </span>
-                    </BrevelyDescription>
-                </HeaderInquilinos>
-                <div {...obj} >
-                    {selected === 'cadasterInquilino' && (
-                        <Form onSubmit={handleCreate}>
-                            <FormContainer>
-                                <H3Pessoal>Dados pessoais</H3Pessoal>
-                                <SeparationPessoal>
-                                    <InputComponent
-                                        label="Nome completo"
-                                        name="nome"
-                                        value={formData.nome}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    <InputComponent
-                                        label="CPF"
-                                        type="text"
-                                        name="cpf"
-                                        value={formData.cpf.toString()}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </SeparationPessoal>
-                            </FormContainer>
-                            <FormContainer>
-                                <DivLabel>
-                                    <LabelTemCarro $selectedCar={formData.tem_carro}
-                                    >
-                                        <SpanTemCarro $selectedCar={formData.tem_carro}>Possui carro{possuiCar ? <span>!</span> : <span>?</span>}</SpanTemCarro>
-                                        <InputFormCarro
-                                            type="checkbox"
-                                            name="tem_carro"
-                                            checked={formData.tem_carro}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                    </LabelTemCarro>
-                                </DivLabel>
-                                <SeparationCarro>
-                                    <DivLabel>
+        <GlobalStyles>
+            <InquilinoSection $isSelectedCurrent={selected === 'currentInquilino' ? true : false}>
+                <ActionsInquilino>
+                    <IconInquilino>
+                        <h2>Gerenciamento de inquilinos
+                        </h2>
+                        <IoPeopleSharp size={18} />
+                    </IconInquilino>
+                    <OptionsActionInquilos>
+                        <OptionAction onClick={() => alterSelected('cadasterInquilino')} $isSelected={selected === 'cadasterInquilino'}>
+                            <span>
+                                Cadastro de inquilino
+                            </span>
+                            <IoIosArrowForward />
+                        </OptionAction>
+                        <OptionAction onClick={() => alterSelected('currentInquilino')} $isSelected={selected === 'currentInquilino'}>
+                            <span>
+                                Inquilinos atuais
+                            </span>
+                            <IoIosArrowForward />
+                        </OptionAction>
+                        <OptionAction onClick={() => alterSelected('deletedsInquilinos')} $isSelected={selected === 'deletedsInquilinos'}>
+                            <span>
+                                Inquilinos deletados
+                            </span>
+                            <IoIosArrowForward />
+                        </OptionAction>
+                    </OptionsActionInquilos>
+                </ActionsInquilino>
+                <ActionsInquilinoRegister>
+                    <HeaderInquilinos>
+                        <TitleHeader>{title}</TitleHeader>
+                        <BrevelyDescription>
+                            <span>
+                                Gerencie inquilinos de forma eficiente: cadastre, visualize, edite e acesse registros com facilidade.
+                            </span>
+                        </BrevelyDescription>
+                    </HeaderInquilinos>
+                    <div {...obj} >
+                        {selected === 'cadasterInquilino' && (
+                            <Form onSubmit={handleCreate}>
+                                <FormContainer>
+                                    <H3Pessoal>Dados pessoais</H3Pessoal>
+                                    <SeparationPessoal>
                                         <InputComponent
-                                            label="Quantos"
-                                            type="number"
-                                            name="quantidade_carros"
-                                            value={formData.quantidade_carros.toString()}
+                                            label="Nome completo"
+                                            name="nome"
+                                            value={formData.nome}
                                             onChange={handleChange}
-                                            disabled={!formData.tem_carro}
+                                            required
                                         />
-                                    </DivLabel>
-                                    <DivLabel>
                                         <InputComponent
-                                            label="Modelo"
+                                            label="CPF"
                                             type="text"
-                                            name="modelo_carro"
-                                            value={formData.modelo_carro}
+                                            name="cpf"
+                                            value={formData.cpf.toString()}
                                             onChange={handleChange}
-                                            disabled={!formData.tem_carro}
+                                            required
                                         />
+                                    </SeparationPessoal>
+                                </FormContainer>
+                                <FormContainer>
+                                    <DivLabel>
+                                        <LabelTemCarro $selectedCar={formData.tem_carro}
+                                        >
+                                            <SpanTemCarro $selectedCar={formData.tem_carro}>Possui carro{possuiCar ? <span>!</span> : <span>?</span>}</SpanTemCarro>
+                                            <InputFormCarro
+                                                type="checkbox"
+                                                name="tem_carro"
+                                                checked={formData.tem_carro}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                        </LabelTemCarro>
                                     </DivLabel>
+                                    <SeparationCarro>
+                                        <DivLabel>
+                                            <InputComponent
+                                                label="Quantos"
+                                                type="number"
+                                                name="quantidade_carros"
+                                                value={formData.quantidade_carros.toString()}
+                                                onChange={handleChange}
+                                                disabled={!formData.tem_carro}
+                                            />
+                                        </DivLabel>
+                                        <DivLabel>
+                                            <InputComponent
+                                                label="Modelo"
+                                                type="text"
+                                                name="modelo_carro"
+                                                value={formData.modelo_carro}
+                                                onChange={handleChange}
+                                                disabled={!formData.tem_carro}
+                                            />
+                                        </DivLabel>
+                                        <DivLabel>
+                                            <InputComponent
+                                                label="Placa"
+                                                type="text"
+                                                name="placa_carro"
+                                                value={formData.placa_carro}
+                                                onChange={handleChange}
+                                                disabled={!formData.tem_carro}
+                                            />
+                                        </DivLabel>
+                                    </SeparationCarro>
+                                </FormContainer>
+                                <FormContainer>
+                                    <H3>Da residencia</H3>
+                                    <SeparationResidenc>
+                                        <InputComponent
+                                            name="apartamento_id"
+                                            value={formData.apartamento_id}
+                                            label="* Apartamento"
+                                            onChange={handleChange}
+                                            suggestions={validAp.map(ap => ap.label)}
+                                            required
+                                        />
+                                        <DivLabel>
+                                            <Label>
+                                                <InputWrapperStatus>
+                                                    <InputStatus>* Status</InputStatus>
+                                                    <StyledSelectStatus
+                                                        name="status"
+                                                        value={formData.status}
+                                                        onChange={handleChange}
+                                                        required
+                                                    >
+                                                        <option value="inquilino">Inquilino</option>
+                                                        <option value="proprietario">Proprietário</option>
+                                                        <option value="morador">Morador</option>
+                                                    </StyledSelectStatus>
+                                                </InputWrapperStatus>
+                                            </Label>
+                                        </DivLabel>
+                                    </SeparationResidenc>
                                     <DivLabel>
                                         <InputComponent
-                                            label="Placa"
-                                            type="text"
-                                            name="placa_carro"
-                                            value={formData.placa_carro}
+                                            type="textarea"
+                                            name="comunicado_importante"
+                                            value={formData.comunicado_importante}
+                                            label="* Observações"
                                             onChange={handleChange}
-                                            disabled={!formData.tem_carro}
+                                            height={100}
                                         />
                                     </DivLabel>
-                                </SeparationCarro>
-                            </FormContainer>
-                            <FormContainer>
-                                <H3>Da residencia</H3>
-                                <SeparationResidenc>
-                                    <InputComponent
-                                        name="apartamento_id"
-                                        value={formData.apartamento_id}
-                                        label="* Apartamento"
-                                        onChange={handleChange}
-                                        suggestions={validAp.map(ap => ap.label)}
-                                        required
-                                    />
-                                    <DivLabel>
-                                        <Label>
-                                            <InputWrapperStatus>
-                                                <InputStatus>* Status</InputStatus>
-                                                <StyledSelectStatus
-                                                    name="status"
-                                                    value={formData.status}
-                                                    onChange={handleChange}
-                                                    required
-                                                >
-                                                    <option value="inquilino">Inquilino</option>
-                                                    <option value="proprietario">Proprietário</option>
-                                                    <option value="morador">Morador</option>
-                                                </StyledSelectStatus>
-                                            </InputWrapperStatus>
-                                        </Label>
-                                    </DivLabel>
-                                </SeparationResidenc>
-                                <DivLabel>
-                                    <InputComponent
-                                        type="textarea"
-                                        name="comunicado_importante"
-                                        value={formData.comunicado_importante}
-                                        label="* Observações"
-                                        onChange={handleChange}
-                                        height={100}
-                                    />
-                                </DivLabel>
-                            </FormContainer>
-                            <CreateInqui type="submit">Criar Inquilino</CreateInqui>
-                        </Form>
-                    )}
-                    {selected === 'currentInquilino' && (
-                        <div className="">
-                            <Tables />
-                        </div>
-                    )}
-                    {selected === 'deletedsInquilinos' && (
-                        <DeletedInquilinosTable />
-                    )}
-                </div>
-            </ActionsInquilinoRegister>
+                                </FormContainer>
+                                <CreateInqui type="submit">Criar Inquilino</CreateInqui>
+                            </Form>
+                        )}
+                        {selected === 'currentInquilino' && (
+                            <div className="">
+                                <Tables />
+                            </div>
+                        )}
+                        {selected === 'deletedsInquilinos' && (
+                            <DeletedInquilinosTable />
+                        )}
+                    </div>
+                </ActionsInquilinoRegister>
 
-            <ConfirmModal
-                show={showModal}
-                onClose={closeModal}
-                onConfirm={confirmSave}
-                message="Deseja prosseguir com a alteração?"
-            />
+                <ConfirmModal
+                    show={showModal}
+                    onClose={closeModal}
+                    onConfirm={confirmSave}
+                    message="Deseja prosseguir com a alteração?"
+                />
 
-            <ConfirmModal
-                show={showDeleteModal}
-                onClose={() => setShowDeleteModal(false)}
-                onConfirm={confirmDelete}
-                message="Realmente deseja deletar este inquilino?"
-            />
-        </InquilinoSection>
+                <ConfirmModal
+                    show={showDeleteModal}
+                    onClose={() => setShowDeleteModal(false)}
+                    onConfirm={confirmDelete}
+                    message="Realmente deseja deletar este inquilino?"
+                />
+            </InquilinoSection>
+        </GlobalStyles>
     )
 }

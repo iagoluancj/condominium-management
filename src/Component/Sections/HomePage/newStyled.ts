@@ -131,6 +131,20 @@ const ChartWrapper = styled.div`
     background: ${(props) => props.theme.background};
 `;
 
+export const ChartWrapperTwoCharts = styled(ChartWrapper)`
+    box-shadow: 0px 0px 10px .1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: ${(props) => props.theme.background};
+`;
+
+export const ChartWrapperPizza = styled(ChartWrapper)`
+    box-shadow: 0px 0px 10px .1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: ${(props) => props.theme.background};
+`;
+
+
+
 export const HeaderChartTitle = styled.div`
     border-bottom: 1px solid #80808050;
     padding: .4rem .0rem 0rem 0rem;
@@ -162,6 +176,17 @@ export const ChartAdjunt = styled.div`
 `;
 
 export const ChartApartment = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    width: 100%;
+    height: 282px;
+    padding: .4rem;
+    color: ${(props) => props.theme.secondary};
+`;
+
+export const SeparateChart = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -244,7 +269,6 @@ export const Vector3 = styled.div`
     border-radius: 10px;
     opacity: 0.7;
 `;
-
 
 export const Content = styled.div`
     position: relative;
@@ -344,14 +368,14 @@ export const ColorSpanTotal = styled(ColorSpan)`
 `;
 
 export const SectionClassifyColor = styled.div`
-margin-top: .5rem;
-display: flex;
-gap: 1rem;
-width: 100%;
-align-items: center;
-justify-content: center;
-text-align: center;
-margin-bottom: -.2rem;
+    margin-top: .5rem;
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: -.2rem;
 `
 export const SpanClassifyColor = styled.span`
     background-color: red;
@@ -372,7 +396,6 @@ export const SpanClassifyColorVisita = styled(SpanClassifyColor)`
     background-color: #048A42;
 `
 
-
 export {
     Container,
     Section,
@@ -390,3 +413,83 @@ export {
     InfoTitle,
     InfoDescription,
 };
+
+export const GlobalStyles = styled.div`
+    @media (max-width: 1200px) {
+        ${Container} {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        ${SectionOptions} {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        ${Section} {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        ${RightColumn} {
+            width: 55%;
+            padding: 2rem;
+        }
+    }
+
+    @media (max-width: 1064px) {
+        ${Content} {
+        }
+    }
+
+    @media (max-width: 992px) {
+        ${Content} {
+        }
+    }
+
+    @media (max-width: 768px) {
+        ${SeparateChart} {
+            width: 50%;
+            justify-content: center;
+        }  
+        ${ChartWrapperPizza} {
+            width: 70%;
+            padding: 2rem;
+        } 
+        ${LeftColumn} {
+            width: 100%;
+            margin: 0;
+        }           
+        ${RightColumn} {
+            width: 70%;
+            padding: 2rem;
+        } 
+        ${ChartWrapperTwoCharts} {
+            margin-bottom: 16rem;
+        } 
+        ${ChartApartment} {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+        } 
+        /* ${SeparateChart} {
+           display: flex;
+           flex-direction: row;
+        }  */
+    }
+
+    @media (max-width: 576px) {
+        ${Content} {
+        }
+    }
+
+    @media (max-width: 480px) {
+        ${Content} {
+        }
+    }
+`

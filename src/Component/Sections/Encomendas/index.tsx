@@ -3,7 +3,7 @@ import { FormEncomenda, Paragraph, Span, Title } from './styles';
 import InputComponent from '@/Component/Primitivy/Input';
 import { MdOutlineLocalShipping } from 'react-icons/md';
 import { IoIosArrowForward } from 'react-icons/io';
-import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
+import { ActionsInquilino, ActionsInquilinoRegister, BrevelyDescription, GlobalStyles, HeaderInquilinos, IconInquilino, InquilinoSection, OptionAction, OptionsActionInquilos, TitleHeader } from '../Inquilinos/styles';
 import { ButtonCreateVisit } from '../Visitantes/styles';
 import SupaProvider, { SupaContext } from '@/Context/context';
 import { toast } from 'react-toastify';
@@ -128,7 +128,7 @@ export default function Encomendas() {
                 deletedat: null,
                 acknowledgmentstatus: false,
                 date_deleted_at: '', // verificar se isso aqui não vai bugar.
-                
+
             });
             setFormData({
                 receivedBy: '',
@@ -166,107 +166,109 @@ export default function Encomendas() {
 
     return (
         <>
-            <InquilinoSection $isSelectedCurrent={selected === 'pendingEncomend' ? true : false} >
-                <ActionsInquilino>
-                    <IconInquilino>
-                        <h2>Gerenciamento de Encomendas</h2>
-                        <MdOutlineLocalShipping size={18} />
-                    </IconInquilino>
-                    <OptionsActionInquilos>
-                        <OptionAction onClick={() => alterSelected('receivedEncomenda')} $isSelected={selected === 'receivedEncomenda'}>
-                            <span>Registrar encomenda</span>
-                            <IoIosArrowForward />
-                        </OptionAction>
-                        <OptionAction onClick={() => alterSelected('pendingEncomend')} $isSelected={selected === 'pendingEncomend'}>
-                            <span>Aguardando retirada</span>
-                            <IoIosArrowForward />
-                        </OptionAction>
-                        <OptionAction onClick={() => alterSelected('deliveredEncomenda')} $isSelected={selected === 'deliveredEncomenda'}>
-                            <span>Encomendas entregues</span>
-                            <IoIosArrowForward />
-                        </OptionAction>
-                        <OptionAction onClick={() => alterSelected('deletedEncomenda')} $isSelected={selected === 'deletedEncomenda'}>
-                            <span>Encomendas deletadas</span>
-                            <IoIosArrowForward />
-                        </OptionAction>
-                    </OptionsActionInquilos>
-                </ActionsInquilino>
-                <ActionsInquilinoRegister>
-                    <HeaderInquilinos>
-                        <TitleHeader>{title}</TitleHeader>
-                        <BrevelyDescription>
-                            <span>
-                                Gerencie encomendas de forma eficiente: registre, visualize, edite e acesse registros com facilidade.
-                            </span>
-                        </BrevelyDescription>
-                    </HeaderInquilinos>
-                    {selected === 'receivedEncomenda' && (
-                        <FormEncomenda onSubmit={handleCreate}>
-                            <InputComponent
-                                label="Recebido por: "
-                                name="receivedBy"
-                                value={formData.receivedBy}
-                                onChange={handleChange}
-                                suggestions={funcionariosExctract}
-                                required
-                            />
-                            <InputComponent
-                                label="Entrega para: "
-                                name="receivedTo"
-                                value={formData.receivedTo}
-                                onChange={handleChange}
-                                suggestions={inqulinosExctract}
-                                required
-                            />
-                            <InputComponent
-                                label="Data e hora do recebimento: "
-                                type="datetime-local"
-                                name="dataRecived"
-                                value={formData.dataRecived}
-                                onChange={handleChange}
-                                required
-                            />
-                            <InputComponent
-                                label="Descrição do pacote: "
-                                type="textarea"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                height={100}
-                            />
-                            <ButtonCreateVisit type="submit">Registrar recebimento</ButtonCreateVisit>
-                            {
-                                title === 'dasfgg'
-                                    ?
-                                    <>
-                                        <Span>
-                                            Fazer isso no final - Após registrado, será enviado um email para o morador escolhido com base no email dele de cadastro, avisando sobre o recebimento.
-                                        </Span>
-                                        <Span>controlar isso via {`'acknowledgmentstatus'`} - Automaticamente vai para: `esperando retirada`.</Span>
-                                        <Span>
-                                            Dentro das páginas de encomendas, terá a opção para editar, e daí:
-                                        </Span>
-                                        <Paragraph>{`Clicar em 'entregue', daí vai para 'entregue ao morador'.`}</Paragraph>
-                                        <Paragraph>Aqui terá uma flag, onde caso desmarcada, marca a data e hora que foi retirado.</Paragraph>
-                                        <Paragraph>Caso marcada, dará dia, data e hora para selecionar a entrega.</Paragraph>
-                                        <Paragraph>{`No email enviado anteriormente terá uma opção de 'confirmar recebimento'.`}</Paragraph>
-                                    </>
-                                    :
-                                    <></>
-                            }
-                        </FormEncomenda>
-                    )}
-                    {selected === 'pendingEncomend' && (
-                        <TableEncomendas />
-                    )}
-                    {selected === 'deliveredEncomenda' && (
-                        <EncomendasEntregues />
-                    )}
-                    {selected === 'deletedEncomenda' && (
-                        <EncomendasDeletadas />
-                    )}
-                </ActionsInquilinoRegister>
-            </InquilinoSection >
+            <GlobalStyles>
+                <InquilinoSection $isSelectedCurrent={selected === 'pendingEncomend' ? true : false} >
+                    <ActionsInquilino>
+                        <IconInquilino>
+                            <h2>Gerenciamento de Encomendas</h2>
+                            <MdOutlineLocalShipping size={18} />
+                        </IconInquilino>
+                        <OptionsActionInquilos>
+                            <OptionAction onClick={() => alterSelected('receivedEncomenda')} $isSelected={selected === 'receivedEncomenda'}>
+                                <span>Registrar encomenda</span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                            <OptionAction onClick={() => alterSelected('pendingEncomend')} $isSelected={selected === 'pendingEncomend'}>
+                                <span>Aguardando retirada</span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                            <OptionAction onClick={() => alterSelected('deliveredEncomenda')} $isSelected={selected === 'deliveredEncomenda'}>
+                                <span>Encomendas entregues</span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                            <OptionAction onClick={() => alterSelected('deletedEncomenda')} $isSelected={selected === 'deletedEncomenda'}>
+                                <span>Encomendas deletadas</span>
+                                <IoIosArrowForward />
+                            </OptionAction>
+                        </OptionsActionInquilos>
+                    </ActionsInquilino>
+                    <ActionsInquilinoRegister>
+                        <HeaderInquilinos>
+                            <TitleHeader>{title}</TitleHeader>
+                            <BrevelyDescription>
+                                <span>
+                                    Gerencie encomendas de forma eficiente: registre, visualize, edite e acesse registros com facilidade.
+                                </span>
+                            </BrevelyDescription>
+                        </HeaderInquilinos>
+                        {selected === 'receivedEncomenda' && (
+                            <FormEncomenda onSubmit={handleCreate}>
+                                <InputComponent
+                                    label="Recebido por: "
+                                    name="receivedBy"
+                                    value={formData.receivedBy}
+                                    onChange={handleChange}
+                                    suggestions={funcionariosExctract}
+                                    required
+                                />
+                                <InputComponent
+                                    label="Entrega para: "
+                                    name="receivedTo"
+                                    value={formData.receivedTo}
+                                    onChange={handleChange}
+                                    suggestions={inqulinosExctract}
+                                    required
+                                />
+                                <InputComponent
+                                    label="Data e hora do recebimento: "
+                                    type="datetime-local"
+                                    name="dataRecived"
+                                    value={formData.dataRecived}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <InputComponent
+                                    label="Descrição do pacote: "
+                                    type="textarea"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    height={100}
+                                />
+                                <ButtonCreateVisit type="submit">Registrar recebimento</ButtonCreateVisit>
+                                {
+                                    title === 'dasfgg'
+                                        ?
+                                        <>
+                                            <Span>
+                                                Fazer isso no final - Após registrado, será enviado um email para o morador escolhido com base no email dele de cadastro, avisando sobre o recebimento.
+                                            </Span>
+                                            <Span>controlar isso via {`'acknowledgmentstatus'`} - Automaticamente vai para: `esperando retirada`.</Span>
+                                            <Span>
+                                                Dentro das páginas de encomendas, terá a opção para editar, e daí:
+                                            </Span>
+                                            <Paragraph>{`Clicar em 'entregue', daí vai para 'entregue ao morador'.`}</Paragraph>
+                                            <Paragraph>Aqui terá uma flag, onde caso desmarcada, marca a data e hora que foi retirado.</Paragraph>
+                                            <Paragraph>Caso marcada, dará dia, data e hora para selecionar a entrega.</Paragraph>
+                                            <Paragraph>{`No email enviado anteriormente terá uma opção de 'confirmar recebimento'.`}</Paragraph>
+                                        </>
+                                        :
+                                        <></>
+                                }
+                            </FormEncomenda>
+                        )}
+                        {selected === 'pendingEncomend' && (
+                            <TableEncomendas />
+                        )}
+                        {selected === 'deliveredEncomenda' && (
+                            <EncomendasEntregues />
+                        )}
+                        {selected === 'deletedEncomenda' && (
+                            <EncomendasDeletadas />
+                        )}
+                    </ActionsInquilinoRegister>
+                </InquilinoSection >
+            </GlobalStyles>
         </>
     )
 }

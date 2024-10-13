@@ -140,3 +140,23 @@ export const StyledSelectStatus = styled.select`
   border-radius: 10px;
   background-color: ${(props) => props.theme.background};
 `;
+
+export const GlobalStylesVisits = styled.div`
+    width: 100%;
+
+    @media (max-width: 1200px) {
+    }
+
+
+    @media (max-width: 854px) {
+        ${ContainerForm} {
+            flex-direction: column;
+        }
+    }
+    @media (max-width: 720px) {
+      }
+
+      @media (max-width: 426px) {
+
+      }
+  `
