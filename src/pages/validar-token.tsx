@@ -24,7 +24,7 @@ function ValidarToken() {
 
         async function fetchFuncionarios() {
             const { data, error } = await supabase
-                .from('funcionarios') 
+                .from('funcionarios')
                 .select('*');
 
             if (error) {
@@ -36,6 +36,11 @@ function ValidarToken() {
         }
 
         if (token) {
+            const timeoutId = setTimeout(() => {
+                console.log('Tempo limite excedido. Redirecionando para login...');
+                router.push('/Login');
+            }, 10000);
+
             const url = `https://backend-rastaurant-production.up.railway.app/validar-token?token=${token}`;
             const extractedToken = extractTokenFromUrl(url);
             const extractedEmail = extractEmailFromUrl(url);
@@ -51,7 +56,7 @@ function ValidarToken() {
                         } else {
                             setMessage('Token válido. Bem-vindo!');
                             console.log('Token válido');
-                            localStorage.setItem('authToken', extractedToken); 
+                            localStorage.setItem('authToken', extractedToken);
 
                             const funcionarios = await fetchFuncionarios();
 
@@ -60,7 +65,7 @@ function ValidarToken() {
                             );
 
                             if (user) {
-                                router.push(`/Paginas`); 
+                                router.push(`/Paginas`);
                                 console.log('/Paginas');
                             } else {
                                 console.log('/ErroNoCadastroDeCargoFuncionario');
@@ -69,20 +74,23 @@ function ValidarToken() {
                         }
                     })
                     .finally(() => setLoading(false));
+                        clearTimeout(timeoutId); 
+
             } else {
                 setMessage('Token ou e-mail ausentes ou inválidos.');
                 console.log('Token ou e-mail ausentes ou inválidos.');
                 setLoading(false);
+                clearTimeout(timeoutId); // Cancela o timeout se houver erro de token
             }
         }
     }, [token, router]);
 
     if (loading) {
         console.log('Loading');
-        return <ValidandoToken message={message}/>
+        return <ValidandoToken message={message} />
     }
-    
-    return (<ValidandoToken message={message}/>);
+
+    return (<ValidandoToken message={message} />);
 }
 
 export default ValidarToken;

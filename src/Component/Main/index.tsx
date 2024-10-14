@@ -19,7 +19,7 @@ export default function MainInquilinos() {
     const lightTheme = {
         main: "#000",
         mainBackground: "#fff",
-        cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.1)",
+        // cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.1)",
         background: "#fafcff",
         form: "#fff",
         table: "#c8ddfd",
@@ -33,7 +33,7 @@ export default function MainInquilinos() {
         main: "#FFF",
         background: "#333",
         form: "#fff",
-        cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.0)",
+        // cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.0)",
         mainBackground: "#171717",
         table: "#444",
         border: "#444",

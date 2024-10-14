@@ -175,7 +175,7 @@ export default function TableEncomendas() {
                         placeholder="Procure por nomes..."
                         value={filterTerm}
                         onChange={(e) => setFilterTerm(e.target.value)}
-                        className="p-2 border border-gray-300 rounded bg-blue-50 w-[80%]"
+                        className="p-2 border border-gray-300 rounded bg-blue-50 w-100"
                     />
                     <div className="flex space-x-2 text-center">
                         <button

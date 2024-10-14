@@ -49,7 +49,7 @@ export const GlobalStyles = styled.div`
 
     @media (max-width: 576px) {
       ${MainContainer} {
-        width: 800px !important;
+        width: 1000px !important;
       }
     }
 

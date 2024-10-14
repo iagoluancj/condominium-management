@@ -30,7 +30,7 @@ const Paginas: React.FC = () => {
     </>
 };
 
-export default Paginas;
-// export default userAuth(Paginas);
+// export default Paginas;
+export default userAuth(Paginas);
 
 
