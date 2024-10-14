@@ -177,7 +177,7 @@ export const GlobalStylesVisits = styled.div`
 }
 @media (max-width: 720px) {
   ${InquilinoVisit} {
-      width: 500px;
+      width: 800px;
     }
   ${DivLabel} {
       width: 100%;
@@ -199,7 +199,7 @@ export const GlobalStylesVisits = styled.div`
 
   @media (max-width: 558px) {
     ${InquilinoVisit} {
-      width: 400px;
+      width: 700px;
     }
   }
 
