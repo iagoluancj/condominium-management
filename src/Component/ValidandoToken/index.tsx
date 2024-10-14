@@ -1,3 +1,4 @@
+import FooterCM from "../Footer";
 import { ValidandoSection } from "./styles";
 
 interface ValidandoTokenProps {
@@ -16,6 +17,7 @@ export default function ValidandoToken({ message }: ValidandoTokenProps) {
                     <p>{message}</p>
                 </div>
             </ValidandoSection>
+            <FooterCM/>
         </>
     );
 }

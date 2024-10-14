@@ -36,11 +36,6 @@ function ValidarToken() {
         }
 
         if (token) {
-            const timeoutId = setTimeout(() => {
-                console.log('Tempo limite excedido. Redirecionando para login...');
-                router.push('/Login');
-            }, 10000);
-
             const url = `https://backend-rastaurant-production.up.railway.app/validar-token?token=${token}`;
             const extractedToken = extractTokenFromUrl(url);
             const extractedEmail = extractEmailFromUrl(url);
@@ -51,11 +46,9 @@ function ValidarToken() {
                     .then(async (data) => {
                         if (data.error) {
                             setMessage('Token inválido ou expirado.');
-                            console.log('Token inválido');
                             router.push('/Login');
                         } else {
                             setMessage('Token válido. Bem-vindo!');
-                            console.log('Token válido');
                             localStorage.setItem('authToken', extractedToken);
 
                             const funcionarios = await fetchFuncionarios();
@@ -66,27 +59,21 @@ function ValidarToken() {
 
                             if (user) {
                                 router.push(`/Paginas`);
-                                console.log('/Paginas');
                             } else {
-                                console.log('/ErroNoCadastroDeCargoFuncionario');
                                 router.push('/'); //ErroNoCadastroDeCargoFuncionario
                             }
                         }
                     })
                     .finally(() => setLoading(false));
-                        clearTimeout(timeoutId); 
 
             } else {
                 setMessage('Token ou e-mail ausentes ou inválidos.');
-                console.log('Token ou e-mail ausentes ou inválidos.');
                 setLoading(false);
-                clearTimeout(timeoutId); // Cancela o timeout se houver erro de token
             }
         }
     }, [token, router]);
 
     if (loading) {
-        console.log('Loading');
         return <ValidandoToken message={message} />
     }
 
