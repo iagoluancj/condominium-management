@@ -29,9 +29,38 @@ export default function VisitsTable() {
     });
 
     const visitasEmAndamento = contextVisits.filter((visit) => {
-        const fimvisitaDate = new Date(visit.fimvisita);
-        const horariofimDate = new Date(`${visit.fimvisita}T${visit.horariofim}`);
-        return fimvisitaDate > hoje || (fimvisitaDate.toDateString() === hoje.toDateString() && horariofimDate > hoje);
+        try {
+            const fimvisitaDate = new Date(visit.fimvisita);
+            const horariofimDate = new Date(`${visit.fimvisita}T${visit.horariofim}`);
+
+            // Verifica se ambas as datas são válidas
+            if (isNaN(fimvisitaDate.getTime()) || isNaN(horariofimDate.getTime())) {
+                console.warn('Data inválida detectada:', visit);
+                return false;
+            }
+
+            // Comparação para visitas em andamento
+            const hojeData = hoje.toISOString().split('T')[0];  // Data de hoje em formato yyyy-mm-dd
+            const hojeHora = hoje.getTime();  // Timestamp para comparar horários
+
+            const fimvisitaData = fimvisitaDate.toISOString().split('T')[0];  // Data da visita
+            const horariofimTimestamp = horariofimDate.getTime();  // Timestamp do horário final da visita
+
+            // Se a data de fim da visita é no futuro, inclui
+            if (fimvisitaData > hojeData) {
+                return true;
+            }
+
+            // Se a visita é hoje, verifica o horário final
+            if (fimvisitaData === hojeData && horariofimTimestamp > hojeHora) {
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error('Erro ao filtrar visita:', visit, error);
+            return false;
+        }
     });
 
     const closeModal = () => {
@@ -100,9 +129,9 @@ export default function VisitsTable() {
                     return (
                         <tr
                             key={visit.id}
-                            className="odd:bg-blue-100 even:bg-gray-50  border-b  drop-shadow-xl"
+                            className=" border-b  drop-shadow-xl"
                         >
-                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            <td className="px-6 py-4 font-medium whitespace-nowrap">
                                 {editId === visit.id ? (
                                     <input
                                         type="text"

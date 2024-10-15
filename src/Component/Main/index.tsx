@@ -22,9 +22,11 @@ export default function MainInquilinos() {
         // cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.1)",
         background: "#fafcff",
         form: "#fff",
+        tableSecond: '#fff',
         table: "#c8ddfd",
         border: "#CCC",
         secondary: "#222",
+        colorShadow: "rgb(0, 0, 0, .2)",
         Footer: '#ff0000'
 
     };
@@ -35,9 +37,11 @@ export default function MainInquilinos() {
         form: "#fff",
         // cardShadow: "0px 0px 10px .1px rgba(0, 0, 0, 0.0)",
         mainBackground: "#171717",
+        tableSecond: '#29313b',
         table: "#444",
         border: "#444",
         secondary: "#F7F7F7",
+        colorShadow: "rgb(255, 255, 255, .9)",
         Footer: '#ff00ff'
     };
 

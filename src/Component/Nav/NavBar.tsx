@@ -49,7 +49,7 @@ export default function NavBar() {
             {toggleMenu ?
                 <MenuDiv $changeTheme={ChangeTheme}>
                     <NavMenu>
-                        <NavIconMenu>
+                        <NavIconMenu onClick={() => toggleChangePage('HomePage')}>
                             <Image src={logo} width={80} height={0} alt='Logo'></Image>
                             <span>Condominium Management</span>
                         </NavIconMenu>

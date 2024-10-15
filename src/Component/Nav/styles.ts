@@ -95,6 +95,9 @@ export const NavIconMenu = styled.div`
     background: linear-gradient(135deg, #00c6ff, #0072ff);
 
     transition: ease-in .1s;
+    :hover {
+        cursor: pointer;
+    }
 `
 
 export const MenuContainer = styled.div`

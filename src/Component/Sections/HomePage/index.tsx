@@ -163,7 +163,7 @@ export const HomePage = () => {
                 <Container>
                     <h4> <span>Dashboard</span><MdDashboard /></h4>
                     <SectionOptions>
-                        <Card>
+                        <Card onClick={() => toggleChangePage('Inquilinos')}>
                             <IconWrapper>
                                 <Icon><IoPeopleSharp size={24} /></Icon>
                             </IconWrapper>
@@ -172,7 +172,7 @@ export const HomePage = () => {
                                 <Description>{newResidents} novos nos últimos 3 meses.</Description>
                             </CardSeparator>
                         </Card>
-                        <CardVisitante>
+                        <CardVisitante onClick={() => toggleChangePage('Visitantes')}>
                             <IconWrapperVisitante>
                                 <Icon><MdEmojiPeople size={24} /></Icon>
                             </IconWrapperVisitante>
@@ -181,7 +181,7 @@ export const HomePage = () => {
                                 <Description>{visitsThisWeek} agendadas para essa semana.</Description>
                             </CardSeparator>
                         </CardVisitante>
-                        <CardEncomenda>
+                        <CardEncomenda onClick={() => toggleChangePage('Encomendas')}>
                             <IconWrapperEncomenda>
                                 <Icon><MdLocalShipping size={24} /></Icon>
                             </IconWrapperEncomenda>
@@ -190,7 +190,7 @@ export const HomePage = () => {
                                 <Description>{deliveriesThisMonth} recebidas este mês.</Description>
                             </CardSeparator>
                         </CardEncomenda>
-                        <CardCreate>
+                        <CardCreate onClick={() => toggleChangePage('Apartamentos')}>
                             <IconWrapperCreate>
                                 <IconCreate><BiBuildings size={24} /> </IconCreate>
                             </IconWrapperCreate>

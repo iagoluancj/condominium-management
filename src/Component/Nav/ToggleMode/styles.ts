@@ -38,7 +38,7 @@ export const Ball = styled.span<Selected>`
   height: 22px;
   position: absolute;
   left: 2px;
-  top: 2px;
+  top: 1px;
   border-radius: 50%;
   left: ${({ isDark }) => (isDark ? '24px' : '2px')};
   background-color: ${({ isDark }) => (isDark ? '#333' : '#fafcff')};

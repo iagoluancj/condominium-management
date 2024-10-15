@@ -369,8 +369,8 @@ export const H3Pessoal = styled.h3`
 `
 
 export const SpanContext = styled.div`
-  overflow-x: auto; /* Define rolagem horizontal */
-  white-space: nowrap; /* Impede a quebra de linha dos elementos internos */
+  overflow-x: auto; 
+  white-space: nowrap; 
   
   tr {
     color: ${(props) => props.theme.secondary};
@@ -391,18 +391,17 @@ export const SpanContext = styled.div`
     }
 
     &:nth-child(even) {
-
       td {
       background-color: ${(props) => props.theme.table};
       color: ${(props) => props.theme.secondary};
     }
     }
     &:nth-last-child(even) {
-      background-color: ${(props) => props.theme.mainBackground};
+      background-color: ${(props) => props.theme.tableSecond};
       color: ${(props) => props.theme.secondary};
 
       td {
-      background-color: ${(props) => props.theme.mainBackground};
+      background-color: ${(props) => props.theme.tableSecond};
       color: ${(props) => props.theme.secondary};
     }
     }

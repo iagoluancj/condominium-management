@@ -6,6 +6,7 @@ const Container = styled.div`
     max-width: 1100px;
     gap: 1rem;
     margin-top: 15vh;
+    margin-bottom: 2rem;
 
     h4 {
       font-size: 32px;
@@ -43,11 +44,12 @@ const Card = styled.div`
 
     align-items: center;
     justify-content: space-evenly;
-    transition: .2s ease-in-out;
+    transition: .2s ease;
 
     &:hover {
-        transform: scale(1.01);
-        transition: .2s ease-in-out;
+        box-shadow: 3px 3px 10px 1px ${(props) => props.theme.colorShadow};
+        transition: .2s ease;
+        cursor: pointer;
     }
 `;
 
