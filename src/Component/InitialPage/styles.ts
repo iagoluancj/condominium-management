@@ -12,6 +12,26 @@ const slideDown = keyframes`
   }
 `;
 
+const fadeInUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  `
+
+const fadeIn = keyframes`
+0% {
+  opacity: 0;
+}
+100% {
+  opacity: 1;
+}
+`;
+
 
 export const HeroSection = styled.section`
   display: flex;
@@ -24,19 +44,18 @@ export const HeroSection = styled.section`
   color: white;
   font-family: ubuntu;
   z-index: 2;
+  animation: ${slideDown} 2s ease forwards; 
 
   img {
     width: auto;
     height: auto;
   }
-  
-  animation: ${slideDown} 2s ease forwards; 
 `;
 
 export const Title = styled.h1`
   font-size: 4rem;
   margin-bottom: 1rem;
-  animation: fadeIn .5s ease-in-out;
+  animation: ${fadeIn} .5s ease-in-out;
 
   @media (max-width: 768px) {
     font-size: 55px;
@@ -52,6 +71,8 @@ export const Icon = styled.span`
   padding: 5px;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   border-radius: 50%;
+  animation: ${slideDown} 2s ease forwards; 
+
 `;
 
 
@@ -60,7 +81,7 @@ export const Description = styled.p`
   margin-bottom: 2rem;
   max-width: 600px;
   line-height: 1.6;
-  animation: fadeInUp 1.8s ease-in-out;
+  animation: ${fadeInUp} 1.8s ease-in-out;
 `;
 
 export const LoginButton = styled(Button)`
@@ -73,7 +94,7 @@ export const LoginButton = styled(Button)`
   cursor: pointer;
   transition:  0.3s ease;
   border: 1px solid transparent;
-  animation: fadeInUp 2s ease-in-out;
+  animation: ${fadeInUp} 2s ease-in-out;
 
   &:hover {
     background: #fff;
@@ -100,6 +121,8 @@ export const CardsDiv = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
+  animation: ${fadeInUp} 1.8s ease-in-out;
+
 
   @media (max-width: 950px) {
     flex-wrap: wrap;
@@ -238,6 +261,7 @@ export const ServiceCard = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  animation: ${slideDown} 2s ease forwards; 
 `;
 
 export const ServiceTitle = styled.h3`
