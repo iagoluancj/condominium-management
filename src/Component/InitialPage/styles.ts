@@ -1,5 +1,17 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Button } from "../Sections/Inquilinos/styles";
+
+const slideDown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-50px); 
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+`;
+
 
 export const HeroSection = styled.section`
   display: flex;
@@ -17,7 +29,8 @@ export const HeroSection = styled.section`
     width: auto;
     height: auto;
   }
-
+  
+  animation: ${slideDown} 2s ease forwards; 
 `;
 
 export const Title = styled.h1`
@@ -166,7 +179,7 @@ export const Logo = styled.div`
   margin-top: 2rem;
   display: flex;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 2;
 
   img {
     width: 100px;
@@ -183,7 +196,7 @@ export const SeparatorWhite = styled.div`
   height: 190px;
   background: var(--brancoPastelFont);
   background-color: #8E7FFE;
-   opacity: .7;
+  opacity: .7;
   color: #000;
 
   h2 {
@@ -235,6 +248,8 @@ export const ServiceTitle = styled.h3`
 export const TitleFunc = styled.h3`
   font-size: 34px;
   color: var(--defaultText);
+  color: #0072ff;
+
 `;
 
 export const ServiceDescription = styled.p`
@@ -294,11 +309,11 @@ export const ContactSection = styled.div`
 `;
 
 export const ContactSeparator = styled.div`
-  width: 100%;
-  padding: 20px 0px;
+  padding: 5px 0px;
+  padding-right: 20px;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   text-align: center;
-  margin-top: 40px;
+  margin: 24px;
   border-radius: 70px 0px 70px 0px;
   box-shadow: 0 10px 10px 8px rgba(0, 0, 0, .2);
 `;
