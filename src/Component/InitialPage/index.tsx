@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import logo from '../../Assets/iconLogo.png';
 import FooterCM from "@/Component/Footer";
 import Image from "next/image";
-import { Card, CardDescription, CardsContainer, CardsDiv, CardTitle, ContactCard, ContactInfo, ContactSection, ContactSeparator, ContactText, ContactTitle, Description, HeaderHero, HeroSection, LoginButton, Logo, SeparatorWhite, ServiceCard, ServiceDescription, ServicesGrid, ServicesTitle, ServicesWrapper, ServiceTitle, StatCard, StatLabel, StatNumber, StatsGrid, StatsWrapper, Title } from "./styles";
-import { BiEnvelope, BiLogoWhatsapp } from "react-icons/bi";
-import { MdWhatsapp } from "react-icons/md";
+import { Card, CardDescription, CardsContainer, CardsDiv, CardTitle, ContactCard, ContactInfo, ContactSection, ContactSeparator, ContactText, ContactTitle, Description, HeaderHero, HeroSection, Icon, LoginButton, Logo, SeparatorWhite, ServiceCard, ServiceDescription, ServicesGrid, ServicesTitle, ServicesWrapper, ServiceTitle, StatCard, StatLabel, StatNumber, StatsGrid, StatsWrapper, Title, TitleFunc, Vector1, Vector2 } from "./styles";
+import { BiCalendar, BiCalendarHeart, BiEnvelope, BiLogoWhatsapp, BiSolidReport } from "react-icons/bi";
+import { MdDashboard, MdDeliveryDining, MdLocalShipping, MdManageAccounts, MdManageHistory, MdOutlineDeliveryDining, MdWhatsapp } from "react-icons/md";
+import { CgBolt } from "react-icons/cg";
 
 // Styled components
 
@@ -32,17 +33,26 @@ export default function InitialPage() {
           <Description>Gerencie todos os aspectos do seu condomínio de forma eficiente e moderna.</Description>
         </HeaderHero>
         <ServicesWrapper>
-          <ServicesTitle>Nossas Funcionalidades</ServicesTitle>
+          <TitleFunc>Nossas Funcionalidades</TitleFunc>
           <ServicesGrid>
             <ServiceCard>
+              <Icon>
+                <MdManageAccounts size={24} />
+              </Icon>
               <ServiceTitle>Gerenciamento de Moradores</ServiceTitle>
-              <ServiceDescription>Ferramenta completa com tudo que você precisa saber sobre os moradores.</ServiceDescription>
+              <ServiceDescription>Ferramenta completa com tudo que você precisa para gerenciar os moradores.</ServiceDescription>
             </ServiceCard>
             <ServiceCard>
+              <Icon>
+                <MdLocalShipping size={24} />
+              </Icon>
               <ServiceTitle>Controle de Encomendas</ServiceTitle>
               <ServiceDescription>Função para gerenciar o recebimento, controle e entrega de encomendas de forma organizada.</ServiceDescription>
             </ServiceCard>
             <ServiceCard>
+              <Icon>
+                <MdDashboard size={30} />
+              </Icon>
               <ServiceTitle>Dashboard Inteligente</ServiceTitle>
               <ServiceDescription>Acesse um painel com dados em tempo real sobre a gestão do seu condomínio.</ServiceDescription>
             </ServiceCard>
@@ -66,22 +76,23 @@ export default function InitialPage() {
             </Card>
           </CardsDiv>
         </CardsContainer>
+        {/* <Vector2 /> */}
         <SeparatorWhite />
         <StatsWrapper>
           <ServicesTitle>Nossos números</ServicesTitle>
           <StatsGrid>
             <StatCard>
-              <StatNumber>⚡</StatNumber>
+              <StatNumber><Icon><CgBolt /></Icon></StatNumber>
               <StatNumber>1 semana</StatNumber>
               <StatLabel>Implantação rápida do sistema</StatLabel>
             </StatCard>
             <StatCard>
-              <StatNumber>📊</StatNumber>
+              <StatNumber><Icon><BiSolidReport /></Icon></StatNumber>
               <StatNumber>+4 relatórios</StatNumber>
               <StatLabel><p>Relatórios disponíveis para extração</p> manual no banco de dados</StatLabel>
             </StatCard>
             <StatCard>
-              <StatNumber>📅</StatNumber>
+              <StatNumber><Icon><BiCalendarHeart /></Icon></StatNumber>
               <StatNumber>2024</StatNumber>
               <StatLabel>Ano de Lançamento</StatLabel>
             </StatCard>

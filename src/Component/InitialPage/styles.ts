@@ -11,6 +11,7 @@ export const HeroSection = styled.section`
   text-align: center;
   color: white;
   font-family: ubuntu;
+  z-index: 2;
 
   img {
     width: auto;
@@ -28,6 +29,18 @@ export const Title = styled.h1`
     font-size: 55px;
   }
 `;
+
+
+export const Icon = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  padding: 5px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border-radius: 50%;
+`;
+
 
 export const Description = styled.p`
   font-size: 1.5rem;
@@ -67,6 +80,7 @@ export const CardsContainer = styled.div`
   gap: 20px;
   max-width: 1200px;
   width: 100%;
+  z-index: 1;
 `;
 
 export const CardsDiv = styled.div`
@@ -105,7 +119,7 @@ export const CardTitle = styled.h3`
 
 export const CardDescription = styled.p`
   font-size: 1rem;
-  color: var(--defaultText);
+  color: var(--brancoPastelFont);
 `;
 
 export const HeaderHero = styled.div`
@@ -118,6 +132,29 @@ export const HeaderHero = styled.div`
   @media (max-width: 768px) {
     padding: 4rem 1rem;
   }
+`;
+
+export const Vector1 = styled.div`
+    position: absolute;
+    top: -200px;
+    right: -450px;
+    width: 1000px;
+    height: 500px;
+    background-color: #8E7FFE;
+    transform: rotate(45deg);
+    border-radius: 10px;
+    opacity: .7;
+`;
+
+export const Vector2 = styled.div`
+    position: absolute;
+    top: 1200px;
+    right: 50px;
+    width: 1000px;
+    height: 100px;
+    background-color: #8E7FFE;
+    border-radius: 70px 0px 70px 0px;
+    opacity: .7;
 `;
 
 export const Logo = styled.div`
@@ -145,6 +182,8 @@ export const SeparatorWhite = styled.div`
   margin-top: -7rem;
   height: 190px;
   background: var(--brancoPastelFont);
+  background-color: #8E7FFE;
+   opacity: .7;
   color: #000;
 
   h2 {
@@ -162,7 +201,7 @@ export const ServicesWrapper = styled.div`
 
 export const ServicesTitle = styled.h2`
   font-size: 36px;
-  color: #333;
+  color: var(--brancoPastelFont);
 `;
 
 export const ServicesGrid = styled.div`
@@ -178,6 +217,10 @@ export const ServicesGrid = styled.div`
 `;
 
 export const ServiceCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
@@ -187,6 +230,11 @@ export const ServiceCard = styled.div`
 export const ServiceTitle = styled.h3`
   font-size: 24px;
   color: #0070f3;
+`;
+
+export const TitleFunc = styled.h3`
+  font-size: 34px;
+  color: var(--defaultText);
 `;
 
 export const ServiceDescription = styled.p`
@@ -228,6 +276,13 @@ export const StatCard = styled.div`
 export const StatNumber = styled.div`
   font-size: 32px;
   color: #0070f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: #ff4081;
+  }
 `;
 
 export const StatLabel = styled.div`
@@ -244,14 +299,13 @@ export const ContactSeparator = styled.div`
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   text-align: center;
   margin-top: 40px;
-  border: .1px solid #fff;
   border-radius: 70px 0px 70px 0px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 10px 8px rgba(0, 0, 0, .2);
 `;
 
 export const ContactTitle = styled.h2`
   font-size: 2rem;
-  color: #333;
+  color: var(--brancoPastelFont);
   font-weight: 600;
 `;
 
@@ -272,7 +326,6 @@ export const ContactCard = styled.div`
   gap: 5px;
   padding: 10px 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease-in-out;
 
   &:hover {
