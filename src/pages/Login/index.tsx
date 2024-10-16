@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { BackgroundCircles, DivLogin, ErrorMessage, ForgotPassword, Form, FormContainer, HeaderForm, ImageContainer, InputField, Label, LoginContainer, Logo, LogoContainer, PageWrapper, SendEmailContainer, SeparatorLogin, SubmitButton, Subtitle, Title, TitleContainer } from '../../styles/loginStyles';
 import { Button } from '@/Component/Sections/Inquilinos/styles';
 import logo from '../../Component/Footer/images/condominiumManagement.png'
@@ -7,6 +7,7 @@ import imageLogin from '../../Assets/predio.jpg'
 import Image from 'next/image';
 import { supabase } from '@/services/supabase';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 
 const LoginPage: React.FC = () => {
@@ -15,6 +16,7 @@ const LoginPage: React.FC = () => {
     const [isDisabled, setIsDisabled] = useState(true)
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({ email: '' });
+    const router = useRouter();
     const [formData, setFormData] = useState({
         email: '',
     });
@@ -117,6 +119,36 @@ const LoginPage: React.FC = () => {
         }, 5000);
     }
 
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            const validateToken = async () => {
+                try {
+                    const response = await fetch('https://backend-rastaurant-production.up.railway.app/validar-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ token })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.valid) {
+                        router.push('/Paginas');
+                    } else {
+                        localStorage.removeItem('authToken');
+                        router.push('/Login');
+                    }
+                } catch (error) {
+                    console.error('Erro ao validar o token:', error);
+                }
+            };
+
+            validateToken();
+        }
+    }, [router]);
+
     return (
         <>
             <Head>
@@ -130,7 +162,7 @@ const LoginPage: React.FC = () => {
                         <LoginContainer>
                             <TitleContainer>
                                 <Logo>
-                                    <Image alt='Logo' src={logo}/>
+                                    <Image alt='Logo' src={logo} />
                                 </Logo>
                                 <Title>Email enviado</Title>
                                 <Subtitle>Verifique sua caixa de email</Subtitle>
@@ -149,7 +181,7 @@ const LoginPage: React.FC = () => {
                         <LoginContainer>
                             <TitleContainer>
                                 <Logo>
-                                    <Image alt='Logo' src={logo}/>
+                                    <Image alt='Logo' src={logo} />
                                 </Logo>
                                 <Title>Bem-vindo(a)</Title>
                                 <Subtitle>Acesse seu painel</Subtitle>
