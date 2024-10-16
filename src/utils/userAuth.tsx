@@ -25,22 +25,24 @@ function userAuth(Component: any) {
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
-                            router.push(`/${savedToken}`); 
+                            // router.push(`/${savedToken}`); 
+                            router.push(`/`); 
+                            console.log('Token invalido')
                         } else {
-                            setIsValid(true); 
+                            setIsValid(true);
                         }
                     })
-                    .finally(() => { 
+                    .finally(() => {
                         setLoading(false)
-                        clearTimeout(timeoutId) 
+                        clearTimeout(timeoutId)
                     });
             } else if (router.isReady && token) {
                 router.push('/Login');
             }
-        }, [token, router.isReady, router]); 
+        }, [token, router.isReady, router]);
 
         if (loading) {
-            return  <ValidandoToken message={messageLog}/>;
+            return <ValidandoToken message={messageLog} />;
         }
 
         return isValid ? <Component {...props} /> : null;

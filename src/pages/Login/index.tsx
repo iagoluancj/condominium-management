@@ -16,10 +16,10 @@ const LoginPage: React.FC = () => {
     const [isDisabled, setIsDisabled] = useState(true)
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({ email: '' });
-    const router = useRouter();
     const [formData, setFormData] = useState({
         email: '',
     });
+    const router = useRouter();
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -122,30 +122,10 @@ const LoginPage: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
-            const validateToken = async () => {
-                try {
-                    const response = await fetch('https://backend-rastaurant-production.up.railway.app/validar-token', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ token })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.valid) {
-                        router.push('/Paginas');
-                    } else {
-                        localStorage.removeItem('authToken');
-                        router.push('/Login');
-                    }
-                } catch (error) {
-                    console.error('Erro ao validar o token:', error);
-                }
-            };
-
-            validateToken();
+            console.log('token valido')
+            router.push('/Paginas');
+        } else {
+            console.log('token invalido')
         }
     }, [router]);
 
