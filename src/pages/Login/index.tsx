@@ -122,10 +122,24 @@ const LoginPage: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
-            console.log('token valido')
-            router.push('/Paginas');
+            fetch(`https://backend-rastaurant-production.up.railway.app/validar-token?token=${token}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.log('Token inválido ou expirado');
+                        // Redirecionar para /Login ou exibir uma mensagem se o token for inválido
+                    } else {
+                        console.log('Token válido');
+                        // Redireciona diretamente para a página protegida
+                        router.push('/Paginas');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Erro ao validar o token:', error);
+                    // Em caso de erro, pode exibir uma mensagem de erro ou manter na página de login
+                });
         } else {
-            console.log('token invalido')
+            console.log('Token não encontrado. Exibindo página de login.');
         }
     }, [router]);
 
