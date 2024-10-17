@@ -196,7 +196,7 @@ const LoginPage: React.FC = () => {
                                 </SubmitButton>
                             </Form>
 
-                            <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
+                            <ForgotPassword>Falha ao solicitar token?</ForgotPassword>
                         </LoginContainer>
                     </SeparatorLogin>
                     <DivLogin>

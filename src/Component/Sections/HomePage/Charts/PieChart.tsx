@@ -16,7 +16,7 @@ const PieChartComponent = () => {
         const calculateData = () => {
             const totalApartamentos = contextApartamentos.length;
             const ocupados = typeInquilinos.filter(inquilino => !inquilino.is_deleted).length;
-            const metaAno = Math.ceil(totalApartamentos * 0.92); // 92% dos apartamentos
+            const metaAno = Math.ceil(totalApartamentos * 0.92); 
             const disponivel = totalApartamentos - ocupados - (metaAno - ocupados);
 
             return [

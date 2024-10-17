@@ -184,7 +184,7 @@ export default function Tables() {
                     value={filterTerm}
                     onChange={(e) => setFilterTerm(e.target.value)}
                     className="p-2 border border-gray-300 rounded bg-blue-50 w-100"
-                    />
+                />
                 <div className="flex space-x-2">
                     <button
                         onClick={() => setSortField('nome')}
@@ -352,25 +352,29 @@ export default function Tables() {
                                     </td>
                                     <td className="px-4 py-4 ">
                                         {editId === inquilino.id ? (
-                                            <>
-                                                <select
-                                                    name="status"
-                                                    value={formData.status}
-                                                    onChange={handleChange}
-                                                    className="border rounded p-1 mb-2"
-                                                >
-                                                    <option value="inquilino"><strong>Inquilino</strong></option>
-                                                    <option value="proprietario">Proprietário</option>
-                                                    <option value="morador">Morador</option>
-                                                </select>
-                                                <textarea
-                                                    name="comunicado_importante"
-                                                    value={formData.comunicado_importante}
-                                                    onChange={handleChange}
-                                                    className="border rounded p-1"
-                                                    rows={3}
-                                                />
-                                            </>
+                                            <span className="flex flex-row items-center justify-center gap-2">
+                                                <span>
+                                                    <select
+                                                        name="status"
+                                                        value={formData.status}
+                                                        onChange={handleChange}
+                                                        className="border rounded p-1 mb-2"
+                                                    >
+                                                        <option value="inquilino"><strong>Inquilino</strong></option>
+                                                        <option value="proprietario">Proprietário</option>
+                                                        <option value="morador">Morador</option>
+                                                    </select>
+                                                </span>
+                                                <span>
+                                                    <textarea
+                                                        name="comunicado_importante"
+                                                        value={formData.comunicado_importante}
+                                                        onChange={handleChange}
+                                                        className="border rounded p-1"
+                                                        rows={3}
+                                                    />
+                                                </span>
+                                            </span>
                                         ) : (
                                             <>
                                                 <p><strong>
