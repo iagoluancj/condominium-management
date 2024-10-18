@@ -107,13 +107,15 @@ export default function Encomendas() {
             return;
         }
 
+        setLoading(true);
+
         const received = formData.dataRecived !== "0"
             ? formData.dataRecived
             : currentDate.slice(0, 10);
 
         try {
             setMessage('Email para confirmação enviado com sucesso.')
-            toast.error('parte de sucesso' + formData.email)
+            toast.success('Email para confirmação enviado ao morador.')
             setTypeMessage(true)
             const response = await fetch('https://backend-rastaurant-production.up.railway.app/send-confirm-delivery', {
                 method: 'POST',
@@ -124,7 +126,7 @@ export default function Encomendas() {
             });
             if (!response.ok) {
                 toast.error(formData.email)
-                toast.error('Falha ao email de confirmação.');
+                toast.error('Falha ao enviar email de confirmação.');
                 setTypeMessage(false)
             }
         } catch (error) {
@@ -255,7 +257,7 @@ export default function Encomendas() {
                                     onChange={handleChange}
                                     height={100}
                                 />
-                                <ButtonCreateVisit type="submit">Registrar recebimento</ButtonCreateVisit>
+                                <ButtonCreateVisit type="submit" disabled={loading}>Registrar recebimento</ButtonCreateVisit>
                                 {/* {
                                     title === 'dasfgg'
                                         ?
