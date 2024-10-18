@@ -62,7 +62,6 @@ export default function Encomendas() {
             setIsTooLong(false);
         }
 
-
         setFormData({
             ...formData,
             [name]: value,
@@ -72,44 +71,31 @@ export default function Encomendas() {
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const currentDate = new Date().toISOString();
+
         const extractCpf = (input: string): string | null => {
             const regexWithText = /^(\d+)\s*-\s*/;
             const matchWithText = input.match(regexWithText);
-
-            if (matchWithText) {
-                return matchWithText[1];
-            }
-
-            const regexOnlyNumbers = /^\d+$/;
-            if (regexOnlyNumbers.test(input)) {
-                return input;
-            }
-
-            return null;
+            return matchWithText ? matchWithText[1] : null;
         };
 
-        const formDataValue = formData.receivedTo.trim();
-
-        const cpf = extractCpf(formDataValue);
-
-        if (cpf) {
-            const selectedInquilino = typeInquilinos.find(inquilino =>
-                inquilino.cpf.toString() === cpf
-            );
-
-            if (selectedInquilino) {
-                setFormData((prevData) => ({
-                    ...prevData,
-                    email: selectedInquilino.email || '' 
-                }));
-                console.log('Inquilino encontrado:', selectedInquilino);
-            } else {
-                toast.error('Inquilino não encontrado');
-                return;
-            }
-        } else {
-            console.log('Formato do CPF inválido');
+        const cpf = extractCpf(formData.receivedTo);
+        if (!cpf) {
+            toast.error('CPF inválido no campo "Entrega para".');
+            return;
         }
+
+        const inquilino = typeInquilinos.find(inquilino => String(inquilino.cpf) === cpf);
+
+
+        if (!inquilino) {
+            toast.error('Inquilino não encontrado para o CPF informado.');
+            return;
+        } 
+
+        setFormData(prevData => ({
+            ...prevData,
+            email: inquilino.email || '',
+        }));
 
         if (!formData.receivedBy || !formData.receivedTo) {
             toast.error('Preencha os campos obrigatórios.');
@@ -127,15 +113,17 @@ export default function Encomendas() {
 
         try {
             setMessage('Email para confirmação enviado com sucesso.')
+            toast.error('parte de sucesso' + formData.email)
             setTypeMessage(true)
             const response = await fetch('https://backend-rastaurant-production.up.railway.app/send-confirm-delivery', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.email, funcionario: formData.receivedBy, packageDescription: formData.description, morador: formData.receivedTo }),
+                body: JSON.stringify({ email: inquilino.email, funcionario: formData.receivedBy, packageDescription: formData.description, morador: formData.receivedTo }),
             });
             if (!response.ok) {
+                toast.error(formData.email)
                 toast.error('Falha ao email de confirmação.');
                 setTypeMessage(false)
             }
