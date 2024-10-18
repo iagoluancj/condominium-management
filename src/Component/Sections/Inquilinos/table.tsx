@@ -218,7 +218,7 @@ export default function Tables() {
                         <tr className="justify-center items-center">
                             <th scope="col" className="px-4 py-3 w-24">Nome</th>
                             <th scope="col" className="px-4 py-3 w-32">CPF</th>
-                            <th scope="col" className="px-4 py-3 w-20">Tem Carro</th>
+                            <th scope="col" className="px-4 py-3 w-20">E-mail </th>
                             <th scope="col" className="px-4 py-3 w-40">Carro</th>
                             <th scope="col" className="px-4 py-3 w-40">Localização</th>
                             <th scope="col" className="px-4 py-3 w-64">Status e Observação</th>
@@ -254,19 +254,35 @@ export default function Tables() {
                                     </td>
                                     <td className="px-4 py-4 w-[8%]">
                                         {editId === inquilino.id ? (
+                                            // <Input
+                                            //     type="checkbox"
+                                            //     name="tem_carro"
+                                            //     checked={formData.tem_carro}
+                                            //     onChange={handleCheckboxChange}
+                                            // />
                                             <Input
-                                                type="checkbox"
-                                                name="tem_carro"
-                                                checked={formData.tem_carro}
-                                                onChange={handleCheckboxChange}
+                                                type="string"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
                                             />
-                                        ) : inquilino.tem_carro ? "Sim" : "Não"}
+                                        ) : inquilino.email}
                                     </td>
                                     <td className="px-4 py-4 w-[10%]">
                                         {editId === inquilino.id ? (
-                                            <div>
-                                                <span>
-                                                    Quantidade:
+                                            <div className="flex flex-col gap-1 items-end">
+                                                {/* <span>
+                                                    <Input
+                                                        type="checkbox"
+                                                        name="tem_carro"
+                                                        checked={formData.tem_carro}
+                                                        onChange={handleCheckboxChange}
+                                                    />
+                                                </span> */}
+                                                <span className="flex flex-row items-center w-[100%] justify-evenly">
+                                                    <span>
+                                                        Quantidade:
+                                                    </span>
                                                     <Input
                                                         type="number"
                                                         name="quantidade_carros"
@@ -275,8 +291,8 @@ export default function Tables() {
                                                         disabled={!possuiCar}
                                                     />
                                                 </span>
-                                                <span>
-                                                    Modelo:
+                                                <span className="flex flex-row items-center w-[100%] justify-evenly">
+                                                    <span>Modelo:</span>
                                                     <Input
                                                         type="text"
                                                         name="modelo_carro"
@@ -285,8 +301,10 @@ export default function Tables() {
                                                         disabled={!possuiCar}
                                                     />
                                                 </span>
-                                                <span>
-                                                    Placa:
+                                                <span className="flex flex-row items-center w-[100%] justify-evenly">
+                                                    <span>
+                                                        Placa:
+                                                    </span>
                                                     <Input
                                                         type="text"
                                                         name="placa_carro"

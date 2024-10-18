@@ -15,6 +15,10 @@ import EncomendasDeletadas from './deleteds';
 
 export default function Encomendas() {
     const [selected, setSelected] = useState('receivedEncomenda')
+    const [message, setMessage] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+    const [typeMessage, setTypeMessage] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(true)
     const [title, setTitle] = useState('Registrar recebimento de encomenda')
     const { createEncomenda, contextFuncionarios, typeInquilinos } = useContext(SupaContext);
     const [isTooLong, setIsTooLong] = useState(false);
@@ -23,6 +27,7 @@ export default function Encomendas() {
         receivedTo: '',
         dataRecived: '0',
         description: '',
+        email: '',
     });
 
     const getNomeFuncionarios = (contextFuncionarios: TypeFuncionarios[]): string[] => {
@@ -67,7 +72,6 @@ export default function Encomendas() {
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const currentDate = new Date().toISOString();
-        //--------------------
         const extractCpf = (input: string): string | null => {
             const regexWithText = /^(\d+)\s*-\s*/;
             const matchWithText = input.match(regexWithText);
@@ -86,8 +90,6 @@ export default function Encomendas() {
 
         const formDataValue = formData.receivedTo.trim();
 
-        console.log('FormData ReceivedTo:', formDataValue);
-
         const cpf = extractCpf(formDataValue);
 
         if (cpf) {
@@ -96,15 +98,19 @@ export default function Encomendas() {
             );
 
             if (selectedInquilino) {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    email: selectedInquilino.email || '' 
+                }));
                 console.log('Inquilino encontrado:', selectedInquilino);
             } else {
                 toast.error('Inquilino não encontrado');
-                return
+                return;
             }
         } else {
             console.log('Formato do CPF inválido');
         }
-        //------------------
+
         if (!formData.receivedBy || !formData.receivedTo) {
             toast.error('Preencha os campos obrigatórios.');
             return;
@@ -118,6 +124,31 @@ export default function Encomendas() {
         const received = formData.dataRecived !== "0"
             ? formData.dataRecived
             : currentDate.slice(0, 10);
+
+        try {
+            setMessage('Email para confirmação enviado com sucesso.')
+            setTypeMessage(true)
+            const response = await fetch('https://backend-rastaurant-production.up.railway.app/send-confirm-delivery', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: formData.email, funcionario: formData.receivedBy, packageDescription: formData.description, morador: formData.receivedTo }),
+            });
+            if (!response.ok) {
+                toast.error('Falha ao email de confirmação.');
+                setTypeMessage(false)
+            }
+        } catch (error) {
+            toast.error('Erro interno. Tente novamente ou contacte o suporte.');
+            setTypeMessage(false)
+        } finally {
+            setLoading(false);
+            setTimeout(() => {
+                setMessage('');
+                setIsDisabled(false)
+            }, 5000);
+        }
 
         try {
             await createEncomenda({
@@ -135,6 +166,7 @@ export default function Encomendas() {
                 receivedTo: '',
                 dataRecived: '0',
                 description: '',
+                email: ''
             });
             console.log("Encomenda criada com sucesso!");
         } catch (error) {
@@ -236,7 +268,7 @@ export default function Encomendas() {
                                     height={100}
                                 />
                                 <ButtonCreateVisit type="submit">Registrar recebimento</ButtonCreateVisit>
-                                {
+                                {/* {
                                     title === 'dasfgg'
                                         ?
                                         <>
@@ -254,7 +286,7 @@ export default function Encomendas() {
                                         </>
                                         :
                                         <></>
-                                }
+                                } */}
                             </FormEncomenda>
                         )}
                         {selected === 'pendingEncomend' && (

@@ -32,6 +32,7 @@ export default function Inquilinos() {
         status: "inquilino",
         comunicado_importante: "",
         is_deleted: false,
+        email: '',
         bloco: '',
         created_at: ''
     });
@@ -260,6 +261,13 @@ export default function Inquilinos() {
                                             label="Nome completo"
                                             name="nome"
                                             value={formData.nome}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        <InputComponent
+                                            label="E-mail"
+                                            name="email"
+                                            value={formData.email || ''}
                                             onChange={handleChange}
                                             required
                                         />

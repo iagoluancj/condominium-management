@@ -14,6 +14,7 @@ export type TypeInquilinos = {
     bloco: string
     created_at: string;
     localvisitaId?: string;
+    email?:string;
 };
 
 export type TypeVisit = {
