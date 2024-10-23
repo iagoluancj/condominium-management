@@ -14,6 +14,7 @@ import InputComponent from "@/Component/Primitivy/Input";
 export default function Inquilinos() {
     const [selected, setSelected] = useState('cadasterInquilino')
     const [possuiCar, setPossuiCar] = useState(false)
+    const [apIsValid, setApIsValid] = useState(false)
     const [title, setTitle] = useState('Cadastrar novo inquilino')
     const { updateInquilino, createInquilino, deletedInquilino, typeInquilinos, contextApartamentos, contextBlocos } = useContext(SupaContext);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -66,6 +67,14 @@ export default function Inquilinos() {
         const { name, value, type } = e.target;
         const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
         let updatedValue = value;
+
+        if (name === 'apartamento_id') {
+            const isValid = validAp.some(ap => ap.label === value);
+
+            if (isValid) {
+                setApIsValid(true)
+            }
+        }
 
         if (type === "checkbox") {
             const { checked } = e.target as HTMLInputElement;
@@ -129,38 +138,52 @@ export default function Inquilinos() {
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!formData.nome || !formData.cpf) {
-            toast.error('Preencha os campos obrigatórios.');
+        const presentEmail = typeInquilinos.some(inquilino => inquilino.email === formData.email);
+
+        if (presentEmail) {
+            toast.error("E-mail já cadastrado.");
             return;
         }
+        
+        if (!apIsValid) {
+            toast.error("Apartamento inválido, selecione o valor da lista.")
+        } else {
 
-        const currentDate = new Date();
-        currentDate.setHours(currentDate.getHours() - 3);
+            if (!formData.nome || !formData.cpf) {
+                toast.error('Preencha os campos obrigatórios.');
+                return;
+            }
 
-        const currentDateISO = currentDate.toISOString();
-        try {
-            await createInquilino({
-                ...formData,
-                apartamento_id: formData.localvisitaId || 'deu ruim',
-                created_at: currentDateISO
-            });
-            setFormData({
-                id: 0,
-                nome: "",
-                cpf: 0,
-                tem_carro: false,
-                quantidade_carros: 0,
-                modelo_carro: "",
-                placa_carro: "",
-                apartamento_id: "",
-                status: "inquilino",
-                comunicado_importante: "",
-                is_deleted: false,
-                bloco: '',
-                created_at: ''
-            });
-        } catch (error) {
-            console.log(error)
+            const currentDate = new Date();
+            currentDate.setHours(currentDate.getHours() - 3);
+
+            const currentDateISO = currentDate.toISOString();
+            try {
+                await createInquilino({
+                    ...formData,
+                    apartamento_id: formData.localvisitaId || 'deu ruim',
+                    created_at: currentDateISO
+                });
+                setFormData({
+                    id: 0,
+                    nome: "",
+                    cpf: 0,
+                    tem_carro: false,
+                    quantidade_carros: 0,
+                    modelo_carro: "",
+                    placa_carro: "",
+                    apartamento_id: "",
+                    status: "inquilino",
+                    comunicado_importante: "",
+                    is_deleted: false,
+                    bloco: '',
+                    created_at: ''
+                });
+
+                setApIsValid(false)
+            } catch (error) {
+                console.log(error)
+            }
         }
     };
 

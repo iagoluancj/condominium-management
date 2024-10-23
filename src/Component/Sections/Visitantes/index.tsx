@@ -15,6 +15,7 @@ export default function Visitantes() {
     const { createVisit, typeInquilinos, contextApartamentos, contextBlocos } = useContext(SupaContext);
     const [selected, setSelected] = useState('cadasterVisit')
     const [visitPerHour, setVisitPerHour] = useState(false)
+    const [apIsValid, setApIsValid] = useState(false)
     const [title, setTitle] = useState('Cadastrar uma nova visita')
     const [formData, setFormData] = useState<TypeVisit>({
         id: 0,
@@ -35,6 +36,14 @@ export default function Visitantes() {
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         let updatedValue = value;
+
+        if (name === 'apartamento_id') { // localvisita
+            const isValid = validAp.some(ap => ap.label === value);
+
+            if (isValid) {
+                setApIsValid(true)
+            }
+        }
 
         if (name === 'cpfvisitante' || name === 'cpfinquilinopermissao') {
             if (!/^\d*$/.test(value)) {
@@ -145,8 +154,8 @@ export default function Visitantes() {
             return;
         }
 
-        if (!formData.localvisitaId || formData.localvisitaId === '') {
-            toast.error('Preencha o local da visita.');
+        if (!formData.localvisitaId || formData.localvisitaId === '' || apIsValid) {
+            toast.error('Apartamento inválido, selecione o valor da lista.');
             return;
         }
 
@@ -191,10 +200,12 @@ export default function Visitantes() {
                 tipo_visita: ""
             });
             console.log("Visita criada com sucesso!");
+
         } catch (error) {
             console.error("Erro ao registrar a visita:", error);
         }
     };
+
 
     const alterSelected = (inquilino: string) => {
         let newTitle = '';

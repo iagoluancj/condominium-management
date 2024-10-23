@@ -68,6 +68,103 @@ export default function Encomendas() {
         });
     };
 
+    // const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     const currentDate = new Date().toISOString();
+
+    //     const extractCpf = (input: string): string | null => {
+    //         const regexWithText = /^(\d+)\s*-\s*/;
+    //         const matchWithText = input.match(regexWithText);
+    //         return matchWithText ? matchWithText[1] : null;
+    //     };
+
+    //     const cpf = extractCpf(formData.receivedTo);
+    //     if (!cpf) {
+    //         toast.error('CPF inválido no campo "Entrega para", selecione algum valor da lista.');
+    //         return;
+    //     }
+
+    //     const inquilino = typeInquilinos.find(inquilino => String(inquilino.cpf) === cpf);
+
+
+    //     if (!inquilino) {
+    //         toast.error('Inquilino não encontrado para o CPF informado.');
+    //         return;
+    //     }
+
+    //     setFormData(prevData => ({
+    //         ...prevData,
+    //         email: inquilino.email || '',
+    //     }));
+
+    //     if (!formData.receivedBy || !formData.receivedTo) {
+    //         toast.error('Preencha os campos obrigatórios.');
+    //         return;
+    //     }
+
+    //     if (formData.dataRecived > currentDate) {
+    //         toast.error('Data no futuro, insira uma data válida.');
+    //         return;
+    //     }
+
+    //     setLoading(true);
+
+    //     const received = formData.dataRecived !== "0"
+    //         ? formData.dataRecived
+    //         : currentDate.slice(0, 10);
+
+    //     try {
+    //         setMessage('Email para confirmação enviado com sucesso.')
+    //         setTypeMessage(true)
+    //         // const response = await fetch('https://backend-rastaurant-production.up.railway.app/send-confirm-delivery', {
+    //         const response = await fetch('http://localhost:3001/send-confirm-delivery', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ email: inquilino.email, funcionario: formData.receivedBy, packageDescription: formData.description, morador: formData.receivedTo }),
+    //         });
+    //         if (!response.ok) {
+    //             toast.error('Falha ao enviar email de confirmação.');
+    //             setTypeMessage(false)
+    //         } else {
+    //             toast.success('Email de confirmação enviado com sucesso ao morador.')
+    //         }
+    //     } catch (error) {
+    //         toast.error('Erro interno. Tente novamente ou contacte o suporte.');
+    //         setTypeMessage(false)
+    //     } finally {
+    //         setLoading(false);
+    //         setTimeout(() => {
+    //             setMessage('');
+    //             setIsDisabled(false)
+    //         }, 5000);
+    //     }
+
+    //     try {
+    //         await createEncomenda({
+    //             receivedby: formData.receivedBy,
+    //             receivedto: formData.receivedTo,
+    //             datareceived: received,
+    //             description: formData.description,
+    //             deletedat: null,
+    //             acknowledgmentstatus: false,
+    //             date_deleted_at: '', // verificar se isso aqui não vai bugar.
+    //             tokendelivery: false
+    //         });
+    //         setFormData({
+    //             receivedBy: '',
+    //             receivedTo: '',
+    //             dataRecived: '0',
+    //             description: '',
+    //             email: ''
+    //         });
+    //         console.log("Encomenda criada com sucesso!");
+    //     } catch (error) {
+    //         console.error("Erro ao registrar a encomenda:", error);
+    //     }
+    // };
+
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const currentDate = new Date().toISOString();
@@ -80,17 +177,16 @@ export default function Encomendas() {
 
         const cpf = extractCpf(formData.receivedTo);
         if (!cpf) {
-            toast.error('CPF inválido no campo "Entrega para".');
+            toast.error('CPF inválido no campo "Entrega para", selecione algum valor da lista.');
             return;
         }
 
         const inquilino = typeInquilinos.find(inquilino => String(inquilino.cpf) === cpf);
 
-
         if (!inquilino) {
             toast.error('Inquilino não encontrado para o CPF informado.');
             return;
-        } 
+        }
 
         setFormData(prevData => ({
             ...prevData,
@@ -114,34 +210,8 @@ export default function Encomendas() {
             : currentDate.slice(0, 10);
 
         try {
-            setMessage('Email para confirmação enviado com sucesso.')
-            toast.success('Email para confirmação enviado ao morador.')
-            setTypeMessage(true)
-            const response = await fetch('https://backend-rastaurant-production.up.railway.app/send-confirm-delivery', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: inquilino.email, funcionario: formData.receivedBy, packageDescription: formData.description, morador: formData.receivedTo }),
-            });
-            if (!response.ok) {
-                toast.error(formData.email)
-                toast.error('Falha ao enviar email de confirmação.');
-                setTypeMessage(false)
-            }
-        } catch (error) {
-            toast.error('Erro interno. Tente novamente ou contacte o suporte.');
-            setTypeMessage(false)
-        } finally {
-            setLoading(false);
-            setTimeout(() => {
-                setMessage('');
-                setIsDisabled(false)
-            }, 5000);
-        }
-
-        try {
-            await createEncomenda({
+            // Criação da encomenda
+            const encomendaid = await createEncomenda({
                 receivedby: formData.receivedBy,
                 receivedto: formData.receivedTo,
                 datareceived: received,
@@ -149,8 +219,42 @@ export default function Encomendas() {
                 deletedat: null,
                 acknowledgmentstatus: false,
                 date_deleted_at: '', // verificar se isso aqui não vai bugar.
-
+                tokendelivery: false
             });
+
+            // Enviar email de confirmação
+            // const response = await fetch('http://localhost:3001/send-confirm-delivery', {
+            const response = await fetch('https://backend-rastaurant-production.up.railway.app/send-confirm-delivery', {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: inquilino.email,
+                    funcionario: formData.receivedBy,
+                    packageDescription: formData.description,
+                    morador: formData.receivedTo,
+                    encomendaid, // Enviar o ID da encomenda
+                }),
+            });
+
+            if (!response.ok) {
+                toast.error('Falha ao enviar email de confirmação.');
+                setTypeMessage(false);
+            } else {
+                toast.success('Email de confirmação enviado com sucesso ao morador.');
+            }
+        } catch (error) {
+            toast.error('Erro interno. Tente novamente ou contacte o suporte.');
+            setTypeMessage(false);
+        } finally {
+            setLoading(false);
+            setTimeout(() => {
+                setMessage('');
+                setIsDisabled(false);
+            }, 5000);
+
             setFormData({
                 receivedBy: '',
                 receivedTo: '',
@@ -158,9 +262,6 @@ export default function Encomendas() {
                 description: '',
                 email: ''
             });
-            console.log("Encomenda criada com sucesso!");
-        } catch (error) {
-            console.error("Erro ao registrar a encomenda:", error);
         }
     };
 

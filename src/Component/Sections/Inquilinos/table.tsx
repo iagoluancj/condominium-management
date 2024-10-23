@@ -3,6 +3,7 @@ import { SupaContext } from "@/Context/context";
 import ConfirmModal from "../../Modal/modal";
 import { Button, ButtonDeleted, ButtonSave, Input, SpanContext } from "./styles";
 import { TypeInquilinos } from "@/Types/types";
+import { toast } from "react-toastify";
 
 type SortField = keyof TypeInquilinos;
 
@@ -70,6 +71,13 @@ export default function Tables() {
     };
 
     const confirmSave = async () => {
+        const presentEmail = typeInquilinos.some(inquilino => inquilino.email === formData.email);
+
+        if (presentEmail) {
+            toast.error("Não foi possível editar o e-mail. E-mail presente no cadastro de outro morador.");
+            return;
+        }
+        
         try {
             await updateInquilino(formData);
             setEditMode(null);

@@ -289,19 +289,25 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
                         datareceived,
                         description,
                         deletedat: deletedat || null,
-                        acknowledgmentstatus: acknowledgmentstatus || false
+                        acknowledgmentstatus: acknowledgmentstatus || false,
+                        tokendelivery: false,
                     }
-                ]);
+                ])
+                .select()
+                .single();
 
             if (error) {
                 console.error(error);
                 toast.error("Erro ao criar a encomenda.");
+                return null;
             } else {
-                toast.success("Encomenda criada com sucesso.");
+                toast.success("Encomenda criada com sucesso.")
+                return data.id
             }
         } catch (error) {
             console.error(error);
             toast.error("Erro ao criar a encomenda.");
+            return null;
         }
     };
 
