@@ -35,7 +35,7 @@ export type TypeVisit = {
 };
 
 export type TypeEncomendas = {
-    id?: number;
+    id: number;
     receivedby: string;
     receivedto: string;
     datareceived: string;
@@ -43,7 +43,7 @@ export type TypeEncomendas = {
     deletedat: string | null;
     acknowledgmentstatus: boolean;
     date_deleted_at: string;
-    tokendelivery: boolean
+    tokendelivery?: boolean
 };
 
 export type TypeFuncionarios = {
