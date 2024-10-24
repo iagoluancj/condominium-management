@@ -25,7 +25,8 @@ const ConfirmarRecebimento = () => {
 
                 setMessage('Encomenda marcada como recebida com sucesso.');
             } catch (error) {
-                setMessage('Erro ao conectar com o servidor.');
+                console.log(error)
+                setMessage(`Erro ao conectar com o servidor ${error}.`);
             } finally {
                 setLoading(false);
             }
