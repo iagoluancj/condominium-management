@@ -111,3 +111,10 @@ export const ValidandoSection = styled.div`
         }
     }
 `;
+
+export const ValidandoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+

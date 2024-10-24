@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ValidandoToken from '@/Component/ValidandoToken';
+import ResultadoValidacao from '@/Component/Finally';
 
 const ConfirmarRecebimento = () => {
     const router = useRouter();
     const { tokenDelivery } = router.query;
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); 
+    const [sucessOrError, setSucessOrError] = useState(false);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
@@ -18,14 +20,22 @@ const ConfirmarRecebimento = () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    setMessage(`Recebimento confirmado com sucesso para o email: ${data.email}`);
+                    // setTimeout(() => {
+                    //     router.push('/Paginas');
+                    // }, 5000);
+
+                    setSucessOrError(true)
+                    setMessage(`Recebimento confirmado com sucesso para o email: ${data.message}`);
                 } else {
                     setMessage(`Erro: ${data.message || 'Falha na confirmação.'}`);
+                    setSucessOrError(false)
                 }
 
                 setMessage('Encomenda marcada como recebida com sucesso.');
+                setSucessOrError(true)
             } catch (error) {
                 console.log(error)
+                setSucessOrError(false)
                 setMessage(`Erro ao conectar com o servidor ${error}.`);
             } finally {
                 setLoading(false);
@@ -39,7 +49,7 @@ const ConfirmarRecebimento = () => {
         return <ValidandoToken message={message} />
     }
 
-    return (<ValidandoToken message={message} />);
+    return (<ResultadoValidacao message={message} isSuccess={sucessOrError} />);
 
 };
 
