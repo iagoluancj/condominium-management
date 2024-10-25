@@ -15,7 +15,7 @@ export default function ResultadoValidacao({ message, isSuccess }: ResultadoVali
         <>
             <ValidandoSection>
                 <ValidandoContainer>
-                    {!isSuccess ? (
+                    {isSuccess ? (
                         <div>
                             <SpanSeparate>
                                 <span>Uhuuul, novas encomendas são sempre boas, e melhor ainda quando recebidas sem complicações.</span>
