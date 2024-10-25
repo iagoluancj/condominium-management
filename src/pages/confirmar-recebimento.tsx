@@ -25,18 +25,19 @@ const ConfirmarRecebimento = () => {
                     // }, 5000);
 
                     setSucessOrError(true)
-                    setMessage(`Recebimento confirmado com sucesso para o email: ${data.message}`);
+                    setMessage(`Encomenda marcada como recebida com sucesso.`);
                 } else {
-                    setMessage(`Erro: ${data.message || 'Falha na confirmação.'}`);
+                    console.log(`Erro: ${data.message || 'Falha na confirmação.'}`)
+                    setMessage(`Falha ao confirmar recebimento, tente novamente ou contacte o suporte.`);
                     setSucessOrError(false)
                 }
 
                 setMessage('Encomenda marcada como recebida com sucesso.');
                 setSucessOrError(true)
             } catch (error) {
-                console.log(error)
                 setSucessOrError(false)
-                setMessage(`Erro ao conectar com o servidor ${error}.`);
+                console.log(`Erro ao conectar com o servidor ${error}.`)
+                setMessage(`Erro ao conectar com o servidor, tente novamente ou contacte o suporte.`);
             } finally {
                 setLoading(false);
             }

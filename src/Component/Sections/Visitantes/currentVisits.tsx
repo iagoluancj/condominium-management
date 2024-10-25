@@ -131,7 +131,7 @@ export default function VisitsTable() {
                             key={visit.id}
                             className=" border-b  drop-shadow-xl"
                         >
-                            <td className="px-6 py-4 font-medium whitespace-nowrap">
+                            <td className="px-6 py-4 font-medium whitespace-nowrap"  style={{ backgroundColor: editId === visit.id ? '#0072ff' : 'unset' }}>
                                 {editId === visit.id ? (
                                     <input
                                         type="text"
@@ -144,7 +144,7 @@ export default function VisitsTable() {
                                     visit.nomevisitante
                                 )}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4"  style={{ backgroundColor: editId === visit.id ? '#0072ff' : 'unset' }}>
                                 {editId === visit.id ? (
                                     <input
                                         type="text"
@@ -158,7 +158,7 @@ export default function VisitsTable() {
                                     visit.cpfvisitante
                                 )}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4"  style={{ backgroundColor: editId === visit.id ? '#0072ff' : 'unset' }}>
                                 {editId === visit.id ? (
                                     <input
                                         type="text"
@@ -172,7 +172,7 @@ export default function VisitsTable() {
                                     inquilinoAprovador ? inquilinoAprovador.nome : 'Não encontrado'
                                 )}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4"  style={{ backgroundColor: editId === visit.id ? '#0072ff' : 'unset' }}>
                                 {editId === visit.id ? (
                                     <input
                                         name="localvisita"
@@ -213,7 +213,7 @@ export default function VisitsTable() {
                                     })()
                                 )}
                             </td>
-                            <td className="px-6 mb-5">
+                            <td className="px-6 mb-5"  style={{ backgroundColor: editId === visit.id ? '#0072ff' : 'unset' }}>
                                 {editId === visit.id ? (
                                     <div>
                                         <div className="pb-5">
@@ -244,7 +244,7 @@ export default function VisitsTable() {
                                     </div>
                                 )}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4"  style={{ backgroundColor: editId === visit.id ? '#0072ff' : 'unset' }}>
                                 {editId === visit.id ? (
                                     <textarea
                                         name="observacoes"

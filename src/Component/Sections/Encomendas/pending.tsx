@@ -226,7 +226,7 @@ export default function TableEncomendas() {
                                                 name="description"
                                                 value={formData.description}
                                                 onChange={handleChange}
-                                                className="border rounded px-2 py-1 w-[20%]"
+                                                className="border rounded px-2 py-1 w-[100%]"
                                             />
                                         ) : (
                                             encomenda.description

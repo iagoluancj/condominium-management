@@ -8,6 +8,10 @@ interface OptionsCar {
   $isDisabled: boolean;
 }
 
+interface Edited {
+  $isEdited: boolean;
+}
+
 interface selectCar {
   $selectedCar: boolean;
 }
@@ -375,7 +379,7 @@ export const SpanContext = styled.div`
   tr {
     color: ${(props) => props.theme.secondary};
     background-color: ${(props) => props.theme.table};
-
+    
    input {
     color: ${(props) => props.theme.secondary};
     background-color: ${(props) => props.theme.table};
@@ -414,7 +418,7 @@ export const GlobalStyles = styled.div`
         ${InquilinoSection} {
           flex-direction: column;
           padding-right: 2rem;
-          width: 800px;
+          width: 1000px;
         }
         ${ActionsInquilino} {
           width: 100%;
@@ -436,10 +440,16 @@ export const GlobalStyles = styled.div`
         }
     }
 
+    @media (max-width: 950px) {
+        ${InquilinoSection} {
+          width: 900px;
+        }
+      }
+
     @media (max-width: 854px) {
         ${InquilinoSection} {
           padding-right: 2rem;
-          width: 600px;
+          width: 800px;
         }
         ${SeparationPessoal} {
             flex-direction: column;
@@ -474,6 +484,14 @@ export const GlobalStyles = styled.div`
           padding: 0;
           margin: 0;
           margin-bottom: 1rem;
+        }
+      }
+
+      @media (max-width: 577px) {
+        ${InquilinoSection} {
+          padding: 0rem;
+          padding-right: 2rem;
+          width: 900px;
         }
       }
 

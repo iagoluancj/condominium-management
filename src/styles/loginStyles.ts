@@ -156,18 +156,48 @@ export const LoginContainer = styled.div`
   max-width: 400px;
   z-index: 1;
   animation: fadeIn 1s ease-in-out;
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+
+    li {
+      display: flex;
+      flex-direction: row;
     }
   }
+
+  @keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 `;
+
+export const AnimationDiv = styled.span`  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+
+  @keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+`
 
 export const TitleContainer = styled.div`
   text-align: center;

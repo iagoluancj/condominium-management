@@ -14,6 +14,7 @@ export default function Tables() {
     const [editMode, setEditMode] = useState<number | null>(null);
     const [filterTerm, setFilterTerm] = useState<string>("");
     const [filterByName, setFilterByName] = useState(false);
+    const [isEdited, setIsEdited] = useState(false);
     const [itemsPerPage, setItemsPerPage] = useState<number>(10);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPageOptions = [5, 10, 20];
@@ -71,13 +72,14 @@ export default function Tables() {
     };
 
     const confirmSave = async () => {
-        const presentEmail = typeInquilinos.some(inquilino => inquilino.email === formData.email);
-
+        const presentEmail = typeInquilinos.some(inquilino => 
+            inquilino.email === formData.email && inquilino.id !== formData.id
+        );
         if (presentEmail) {
             toast.error("Não foi possível editar o e-mail. E-mail presente no cadastro de outro morador.");
             return;
         }
-        
+
         try {
             await updateInquilino(formData);
             setEditMode(null);
@@ -86,8 +88,15 @@ export default function Tables() {
             console.error("Erro ao editar o inquilino:", error);
         } finally {
             setShowModal(false);
+            setIsEdited(false)
         }
     };
+
+    const confirmCancel = async () => {
+        setIsEdited(false)
+        setEditId(null)
+    };
+
 
     const confirmDelete = async () => {
         if (cpfToDelete !== null) {
@@ -138,6 +147,7 @@ export default function Tables() {
 
     const handleEditTable = (inquilino: TypeInquilinos) => {
         setEditId(inquilino.id);
+        setIsEdited(true)
         setFormData({
             ...inquilino,
         });
@@ -193,7 +203,7 @@ export default function Tables() {
                     onChange={(e) => setFilterTerm(e.target.value)}
                     className="p-2 border border-gray-300 rounded bg-blue-50 w-100"
                 />
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 ">
                     <button
                         onClick={() => setSortField('nome')}
                         className={`p-2 rounded ${sortField === 'nome' ? 'bg-blue-500 text-white border-b-4 border-blue-500' : 'bg-blue-100 text-gray-700 border-b-2 border-gray-300'}`}
@@ -239,7 +249,8 @@ export default function Tables() {
                             .filter((inquilino) => !inquilino.is_deleted)
                             .map((inquilino) => (
                                 <tr key={inquilino.id} className="odd:bg-blue-100  even:bg-gray-50  border-b  drop-shadow-xl">
-                                    <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap  w-[3%]">
+                                    <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap  w-[3%]" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}
+                                    >
                                         {editId === inquilino.id ? (
                                             <Input
                                                 type="text"
@@ -249,7 +260,7 @@ export default function Tables() {
                                             />
                                         ) : inquilino.nome}
                                     </td>
-                                    <td className="px-4 py-4 w-[3%]">
+                                    <td className="px-4 py-4 w-[3%]" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}>
                                         {editId === inquilino.id ? (
                                             <Input
                                                 type="number"
@@ -260,7 +271,7 @@ export default function Tables() {
                                             />
                                         ) : inquilino.cpf}
                                     </td>
-                                    <td className="px-4 py-4 w-[8%]">
+                                    <td className="px-4 py-4 w-[8%]" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}>
                                         {editId === inquilino.id ? (
                                             // <Input
                                             //     type="checkbox"
@@ -276,7 +287,7 @@ export default function Tables() {
                                             />
                                         ) : inquilino.email}
                                     </td>
-                                    <td className="px-4 py-4 w-[10%]">
+                                    <td className="px-4 py-4 w-[10%]" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}>
                                         {editId === inquilino.id ? (
                                             <div className="flex flex-col gap-1 items-end">
                                                 {/* <span>
@@ -330,7 +341,7 @@ export default function Tables() {
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}>
                                         {editId === inquilino.id ? (
                                             <div>
                                                 <span>
@@ -376,7 +387,7 @@ export default function Tables() {
                                             })()
                                         )}
                                     </td>
-                                    <td className="px-4 py-4 ">
+                                    <td className="px-4 py-4" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}>
                                         {editId === inquilino.id ? (
                                             <span className="flex flex-row items-center justify-center gap-2">
                                                 <span>
@@ -414,7 +425,7 @@ export default function Tables() {
                                     </td>
                                     {sortField === 'created_at'
                                         ?
-                                        <td className="px-4 ">
+                                        <td className="px-4" style={{ backgroundColor: editId === inquilino.id ? '#0072ff' : 'unset' }}>
                                             {editId === inquilino.id ? (
                                                 <div>
                                                     <div>
@@ -435,7 +446,7 @@ export default function Tables() {
                                         {editId === inquilino.id ? (
                                             <>
                                                 <ButtonSave className="" onClick={confirmSave}>Salvar</ButtonSave>
-                                                <ButtonDeleted onClick={() => setEditId(null)}>Cancelar</ButtonDeleted>
+                                                <ButtonDeleted onClick={confirmCancel}>Cancelar</ButtonDeleted>
                                             </>
                                         ) : (
                                             <>

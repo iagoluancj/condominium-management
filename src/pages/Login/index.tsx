@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { BackgroundCircles, DivLogin, ErrorMessage, ForgotPassword, Form, FormContainer, HeaderForm, ImageContainer, InputField, Label, LoginContainer, Logo, LogoContainer, PageWrapper, SendEmailContainer, SeparatorLogin, SubmitButton, Subtitle, Title, TitleContainer } from '../../styles/loginStyles';
+import { AnimationDiv, BackgroundCircles, DivLogin, ErrorMessage, ForgotPassword, Form, FormContainer, HeaderForm, ImageContainer, InputField, Label, Logo, LogoContainer, PageWrapper, SendEmailContainer, SeparatorLogin, SubmitButton, Subtitle, Title, TitleContainer } from '../../styles/loginStyles';
 import { Button } from '@/Component/Sections/Inquilinos/styles';
 import logo from '../../Component/Footer/images/condominiumManagement.png'
 import FavIcon from '../../Assets/iconLogo.png'
@@ -8,12 +8,59 @@ import Image from 'next/image';
 import { supabase } from '@/services/supabase';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { BiArrowFromLeft } from 'react-icons/bi';
+import { IoIosArrowForward } from 'react-icons/io';
+import styled, { keyframes } from 'styled-components';
 
+interface LoginContainerProps {
+    shouldAnimate: boolean;
+}
+
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
+
+const LoginContainer = styled.div<LoginContainerProps>`
+  animation: ${({ shouldAnimate }) => shouldAnimate && fadeIn} 1s ease;
+  position: relative;
+  background-color: var(--brancoPastelFont);
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  z-index: 1;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+
+    li {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+`;
 
 const LoginPage: React.FC = () => {
     const [message, setMessage] = useState<string>('');
     const [typeMessage, setTypeMessage] = useState(false)
     const [isDisabled, setIsDisabled] = useState(true)
+    const [errorRequestToken, setErrorRequestToken] = useState(true)
+    const [animate, setAnimate] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({ email: '' });
     const [formData, setFormData] = useState({
@@ -35,6 +82,7 @@ const LoginPage: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
+        setAnimate(true);
         setIsDisabled(true);
         const emailError = validateEmail(formData.email);
 
@@ -119,6 +167,16 @@ const LoginPage: React.FC = () => {
         }, 5000);
     }
 
+    // const handleErrorRequestToken = () => {
+    //     if (errorRequestToken) {
+    //         setErrorRequestToken(false)
+    //     } else if (!errorRequestToken) {
+    //         setErrorRequestToken(true)
+    //     } else {
+    //         console.log('inesperado, mas necessário')
+    //     }
+    // }
+
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
@@ -141,7 +199,16 @@ const LoginPage: React.FC = () => {
         } else {
             console.log('Token não encontrado. Exibindo página de login.');
         }
-    }, [router]);
+
+        setAnimate(true);
+        const timer = setTimeout(() => setAnimate(false), 1000);
+        return () => clearTimeout(timer);
+
+    }, [router, errorRequestToken]);
+
+    const handleErrorRequestToken = () => {
+        setErrorRequestToken(!errorRequestToken);
+    };
 
     return (
         <>
@@ -153,50 +220,77 @@ const LoginPage: React.FC = () => {
             {typeMessage ?
                 <PageWrapper>
                     <Form>
-                        <LoginContainer>
-                            <TitleContainer>
-                                <Logo>
-                                    <Image alt='Logo' src={logo} />
-                                </Logo>
-                                <Title>Email enviado</Title>
-                                <Subtitle>Verifique sua caixa de email</Subtitle>
-                            </TitleContainer>
-                            <SendEmailContainer>
-                                {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
-                                <Button disabled={isDisabled} onClick={backToLogin}>Enviar email novamente</Button>
-                            </SendEmailContainer>
-                        </LoginContainer>
+                        <SeparatorLogin>
+                            <LoginContainer shouldAnimate={animate}>
+                                <TitleContainer>
+                                    <Logo>
+                                        <Image alt='Logo' src={logo} />
+                                    </Logo>
+                                    <Title>Email enviado</Title>
+                                    <Subtitle>Verifique sua caixa de email</Subtitle>
+                                </TitleContainer>
+                                <SendEmailContainer>
+                                    {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
+                                    <Button disabled={isDisabled} onClick={backToLogin}>Enviar email novamente</Button>
+                                </SendEmailContainer>
+                            </LoginContainer>
+                        </SeparatorLogin>
                     </Form>
                 </PageWrapper>
                 :
                 <PageWrapper>
                     <SeparatorLogin>
                         <BackgroundCircles />
-                        <LoginContainer>
-                            <TitleContainer>
-                                <Logo>
-                                    <Image alt='Logo' src={logo} />
-                                </Logo>
-                                <Title>Bem-vindo(a)</Title>
-                                <Subtitle>Acesse seu painel</Subtitle>
-                            </TitleContainer>
+                        <LoginContainer shouldAnimate={animate}>
+                            <>
+                                {
+                                    errorRequestToken ?
+                                        <>
+                                            <TitleContainer>
+                                                <Logo>
+                                                    <Image alt='Logo' src={logo} />
+                                                </Logo>
+                                                <Title>Bem-vindo(a)</Title>
+                                                <Subtitle>Acesse seu painel</Subtitle>
+                                            </TitleContainer>
 
-                            <Form onSubmit={handleSubmit}>
-                                <input
-                                    placeholder="E-mail"
-                                    type="text"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
-                                <SubmitButton type="submit" disabled={loading}>
-                                    {loading ? "Enviando token..." : "Enviar token"}
-                                </SubmitButton>
-                            </Form>
+                                            <Form onSubmit={handleSubmit}>
+                                                <input
+                                                    placeholder="E-mail"
+                                                    type="text"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                {message && <ErrorMessage $typeMessage={typeMessage}>{message}</ErrorMessage>}
+                                                <SubmitButton type="submit" disabled={loading}>
+                                                    {loading ? "Enviando token..." : "Enviar token"}
+                                                </SubmitButton>
+                                            </Form>
 
-                            <ForgotPassword>Falha ao solicitar token?</ForgotPassword>
+                                            <ForgotPassword onClick={handleErrorRequestToken}>Falha ao solicitar token?</ForgotPassword>
+                                        </>
+                                        :
+                                        <>
+                                            <TitleContainer>
+                                                <Logo>
+                                                    <Image alt='Logo' src={logo} />
+                                                </Logo>
+                                                <Title>Não consegue logar?</Title>
+                                                <Subtitle>Siga as dicas abaixo:</Subtitle>
+                                            </TitleContainer>
+                                            <ul>
+                                                <li>
+                                                    <IoIosArrowForward size={30} />
+                                                    <span>Verifique se o e-mail não foi enviado para a pasta de spam ou lixo eletrônico.</span></li>
+                                                <li><IoIosArrowForward size={30} /> Verifique se o seu provedor de e-mail não está bloqueando mensagens do nosso domínio.</li>
+                                                <li><IoIosArrowForward size={30} /> Caso o problema persista, entre em contato com seu administrador/sindico.</li>
+                                            </ul>
+                                            <SubmitButton onClick={handleErrorRequestToken}>Voltar para o login.</SubmitButton>
+                                        </>
+                                }
+                            </>
                         </LoginContainer>
                     </SeparatorLogin>
                     <DivLogin>

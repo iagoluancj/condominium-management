@@ -21,13 +21,6 @@ export const MainContainerDiv = styled.div`
 `
 export const GlobalStyles = styled.div`
     @media (max-width: 1200px) {
-        /* ${MainContainerDiv} {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        } */
     }
 
     @media (max-width: 1064px) {

@@ -6,6 +6,7 @@ export const ValidandoSection = styled.section`
     align-items: center;
 
     width: 100%;
+    height: 100vh;
     margin: 2rem 0rem;
 `;
 
@@ -16,7 +17,6 @@ export const ValidandoContainer = styled.div`
     border-radius: 8px;
 
     span {
-        margin-bottom: 1rem;
         font-size: 1.5rem;
 
         display: flex;
@@ -41,4 +41,10 @@ export const ValidandoContainer = styled.div`
 `;
 
 export const SpanSeparate = styled.div`
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 `

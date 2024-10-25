@@ -15,21 +15,19 @@ export default function ResultadoValidacao({ message, isSuccess }: ResultadoVali
         <>
             <ValidandoSection>
                 <ValidandoContainer>
-                    {isSuccess ? (
+                    {!isSuccess ? (
                         <div>
                             <SpanSeparate>
-                                <span>Recebimento de encomenda registrado com sucesso.
-                                    <FaCheckCircle size={30} color="green" />
-                                </span>
+                                <span>Uhuuul, novas encomendas são sempre boas, e melhor ainda quando recebidas sem complicações.</span>
+                                <FaCheckCircle size={30} color="green" />
                             </SpanSeparate>
                             <Image src={sucessMessage} alt="Imagem de erro" />
                         </div>
                     ) : (
                         <div>
                             <SpanSeparate>
-                                <span>Erro ao confirmar recebimento da encomenda
-                                    <FaTimesCircle size={30} color="red" />
-                                </span>
+                                <span>Erro ao confirmar recebimento da encomenda</span>
+                                <FaTimesCircle size={30} color="red" />
                             </SpanSeparate>
                             <Image src={errorM} alt="Imagem de erro" />
                         </div>

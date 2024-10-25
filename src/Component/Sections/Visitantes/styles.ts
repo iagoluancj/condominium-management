@@ -147,9 +147,15 @@ export const InquilinoVisit = styled(InquilinoSection)`
 
 
 export const GlobalStylesVisits = styled.div`
-  @media (max-width: 1200px) {
+  @media (max-width: 1700px) {
     ${InquilinoVisit} {
       flex-direction: column;
+      width: 1200px;
+    }
+  }
+  @media (max-width: 1200px) {
+    ${InquilinoVisit} {
+      width: 1000px;
     }
     ${StyledSelectStatus} {
       width: 95%;
@@ -157,29 +163,34 @@ export const GlobalStylesVisits = styled.div`
     ${InputStatus} {
       width: 52% !important;
     }
-}
+  }
 
-@media (max-width: 854px) {
-  ${ContainerForm} {
+  @media (max-width: 960px) {
+    ${InquilinoVisit} {
+      width: 800px;
+    }
+  }
+
+  @media (max-width: 854px) {
+    ${ContainerForm} {
       flex-direction: column;
     }
-
     ${DivLabel} {
-        width: 100%;
+      width: 100%;
     }
     ${StyledSelectStatus} {
       width: 100%;
     }
-
     ${InputStatus} {
       width: 32% !important;
     }
-}
-@media (max-width: 720px) {
-  ${InquilinoVisit} {
+  }
+
+  @media (max-width: 720px) {
+    ${InquilinoVisit} {
       width: 800px;
     }
-  ${DivLabel} {
+    ${DivLabel} {
       width: 100%;
       padding: 0;
       margin: 0;
@@ -197,16 +208,15 @@ export const GlobalStylesVisits = styled.div`
     }
   }
 
-  @media (max-width: 558px) {
+  @media (max-width: 576px) {
     ${InquilinoVisit} {
-      width: 700px;
+      width: 1000px;
     }
   }
 
   @media (max-width: 462px) {
-
+    // Adicione estilos adicionais, se necessário
   }
-  `
+`;
 export const GlobalStyles = styled.div`
-
 `
