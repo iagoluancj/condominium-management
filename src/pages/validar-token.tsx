@@ -58,6 +58,8 @@ function ValidarToken() {
                             );
 
                             if (user) {
+                                console.log(user)
+                                localStorage.setItem('userSession', JSON.stringify(user));
                                 router.push(`/Paginas`);
                             } else {
                                 router.push('/'); //ErroNoCadastroDeCargoFuncionario

@@ -71,11 +71,12 @@ export default function Tables() {
         }
     };
 
-    const confirmSave = async () => {
-        const presentEmail = typeInquilinos.some(inquilino => 
+    const confirmSave = async (inquilinoId: number) => {
+        const presentEmail = typeInquilinos.find(inquilino =>
             inquilino.email === formData.email && inquilino.id !== formData.id
         );
-        if (presentEmail) {
+
+        if (presentEmail && presentEmail.id !== inquilinoId) {
             toast.error("Não foi possível editar o e-mail. E-mail presente no cadastro de outro morador.");
             return;
         }
@@ -445,7 +446,7 @@ export default function Tables() {
                                     <td className="px-4 py-4 flex flex-col w-[120px] h-[100%]">
                                         {editId === inquilino.id ? (
                                             <>
-                                                <ButtonSave className="" onClick={confirmSave}>Salvar</ButtonSave>
+                                                <ButtonSave className="" onClick={() => confirmSave(inquilino.id)}>Salvar</ButtonSave>
                                                 <ButtonDeleted onClick={confirmCancel}>Cancelar</ButtonDeleted>
                                             </>
                                         ) : (
@@ -498,7 +499,7 @@ export default function Tables() {
             <ConfirmModal
                 show={showModal}
                 onClose={closeModal}
-                onConfirm={confirmSave}
+                onConfirm={() => confirmSave(0)}
                 message="Deseja prosseguir com a alteração?"
             />
 

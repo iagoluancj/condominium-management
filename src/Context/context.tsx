@@ -68,10 +68,22 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
     const [changeTheme, setChangeTheme] = useState(true)
 
     const updateInquilino = async (inquilinoData: TypeInquilinos) => {
-        const { id, ...fieldsToUpdate } = inquilinoData;
+        const { id, email, ...fieldsToUpdate } = inquilinoData;
+
+        const { data: existingEmail } = await supabase
+            .from('inquilinos')
+            .select('id')
+            .eq('email', email)
+            .single(); 
+
+        if (existingEmail && existingEmail.id !== id) {
+            toast.error("Este email já está em uso por outro inquilino.");
+            return;
+        }
+
         const { data, error } = await supabase
             .from('inquilinos')
-            .update(fieldsToUpdate)
+            .update({ email, ...fieldsToUpdate })
             .eq('id', id);
 
         if (error) {
@@ -193,6 +205,22 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         const { nome, cpf, tem_carro, quantidade_carros, modelo_carro, placa_carro, apartamento_id, status, comunicado_importante, email, bloco, created_at } = inquilinoData;
 
         try {
+            const { data: existingInquilino, error: emailCheckError } = await supabase
+                .from('inquilinos')
+                .select('id')
+                .eq('email', email);
+
+            if (emailCheckError) {
+                console.error(emailCheckError);
+                toast.error("Erro ao verificar o email.");
+                return;
+            }
+
+            if (existingInquilino && existingInquilino.length > 0) {
+                toast.error("O email já está cadastrado.");
+                return;
+            }
+
             const { data, error } = await supabase
                 .from('inquilinos')
                 .insert([

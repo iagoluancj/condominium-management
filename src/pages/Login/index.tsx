@@ -167,16 +167,6 @@ const LoginPage: React.FC = () => {
         }, 5000);
     }
 
-    // const handleErrorRequestToken = () => {
-    //     if (errorRequestToken) {
-    //         setErrorRequestToken(false)
-    //     } else if (!errorRequestToken) {
-    //         setErrorRequestToken(true)
-    //     } else {
-    //         console.log('inesperado, mas necessário')
-    //     }
-    // }
-
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
