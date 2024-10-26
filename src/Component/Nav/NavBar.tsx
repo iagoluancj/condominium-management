@@ -1,17 +1,25 @@
 import { BiBuildings, BiLogOut, BiMenu } from 'react-icons/bi'
 import { CloseMenu, IconDarkOrLight, Icons, IconsContainer, IconsMenu, IconsRight, MenuContainer, MenuDiv, NavContainer, NavIconMenu, Navigation, NavMenu } from './styles'
-import { GrLogout, GrNotification, GrUser } from 'react-icons/gr'
-import { useContext, useState } from 'react'
+import { GrLogout, GrNotification, GrUser, GrUserAdmin } from 'react-icons/gr'
+import { useContext, useEffect, useState } from 'react'
 import { IoClose, IoPeopleSharp } from 'react-icons/io5'
 import { SupaContext } from '@/Context/context'
-import { MdDarkMode, MdDashboard, MdEmojiPeople, MdLightMode, MdLocalShipping } from "react-icons/md";
+import { MdAdminPanelSettings, MdDarkMode, MdDashboard, MdEmojiPeople, MdLightMode, MdLocalShipping, MdOutlineSupervisorAccount } from "react-icons/md";
 import logo from '../../Assets/iconLogo.png'
 import Image from 'next/image';
 import DarkModeToggle from './ToggleMode';
 import { useRouter } from 'next/router';
 
+type UserSession = {
+    id: number;
+    email: string;
+    is_supervisor: boolean | null;
+    nome: string;
+};
+
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
+    const [isSupervisor, setIsSupervisor] = useState(false)
     const { ChangePage, handleChangePage, handleChangeTheme, ChangeTheme } = useContext(SupaContext);
     const router = useRouter();
 
@@ -24,9 +32,27 @@ export default function NavBar() {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('authToken'); 
-        router.push('/Login'); 
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userSession');
+        router.push('/Login');
     };
+
+    useEffect(() => {
+        const userSession = localStorage.getItem('userSession');
+
+        if (userSession) {
+            const user = JSON.parse(userSession);
+
+            if (user.is_supervisor === true) {
+                setIsSupervisor(true);
+            } else {
+                setIsSupervisor(false);
+            }
+        } else {
+            console.log('userSession não encontrado')
+        }
+    }, []);
+
     return (
         <>
             <Navigation>
@@ -76,6 +102,12 @@ export default function NavBar() {
                                 <BiBuildings size={24} />
                                 <span>Apartamentos</span>
                             </IconsMenu>
+                            {isSupervisor &&
+                                <IconsMenu $isActive={ChangePage === 'Supervisor'} onClick={() => toggleChangePage('Supervisor')}>
+                                    <MdAdminPanelSettings size={24} />
+                                    <span>Supervisor</span>
+                                </IconsMenu>
+                            }
                         </IconsContainer>
                     </MenuContainer>
                     <CloseMenu onClick={handleMenu}>

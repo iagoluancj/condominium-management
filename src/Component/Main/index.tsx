@@ -11,6 +11,7 @@ import { HomePage } from "../Sections/HomePage";
 import { ThemeProvider } from "styled-components";
 import Apartamentos from "../Sections/Apartamentos";
 import FooterCM from "../Footer";
+import Supervisor from "../Sections/Supervisor";
 
 
 export default function MainInquilinos() {
@@ -63,6 +64,8 @@ export default function MainInquilinos() {
                                     return <Apartamentos />;
                                 case 'Encomendas':
                                     return <Encomendas />;
+                                case 'Supervisor':
+                                    return <Supervisor />;
                                 default:
                                     return null; // ou qualquer outro componente de fallback
                             }
