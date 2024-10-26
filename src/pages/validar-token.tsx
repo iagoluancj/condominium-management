@@ -54,7 +54,7 @@ function ValidarToken() {
                             const funcionarios = await fetchFuncionarios();
 
                             const user = funcionarios.find(
-                                (funcionario) => funcionario.email === extractedEmail
+                                (funcionario) => funcionario.email === extractedEmail && funcionario.deleted_at === null
                             );
 
                             if (user) {
