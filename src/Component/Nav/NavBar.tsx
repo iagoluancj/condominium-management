@@ -19,7 +19,7 @@ type UserSession = {
 
 export default function NavBar() {
     const [toggleMenu, setToggleMenu] = useState(false)
-    const [isSupervisor, setIsSupervisor] = useState(false)
+    const [isSupervisor, setIsSupervisor] = useState(false) // Ao realizar deploy deve estar como "FALSE"
     const { ChangePage, handleChangePage, handleChangeTheme, ChangeTheme } = useContext(SupaContext);
     const router = useRouter();
 
@@ -98,16 +98,16 @@ export default function NavBar() {
                                 <MdLocalShipping size={24} />
                                 <span>Encomendas</span>
                             </IconsMenu>
-                            <IconsMenu $isActive={ChangePage === 'Apartamentos'} onClick={() => toggleChangePage('Apartamentos')}>
-                                <BiBuildings size={24} />
-                                <span>Apartamentos</span>
-                            </IconsMenu>
                             {isSupervisor &&
                                 <IconsMenu $isActive={ChangePage === 'Supervisor'} onClick={() => toggleChangePage('Supervisor')}>
                                     <MdAdminPanelSettings size={24} />
                                     <span>Supervisor</span>
                                 </IconsMenu>
                             }
+                            <IconsMenu $isActive={ChangePage === 'Apartamentos'} onClick={() => toggleChangePage('Apartamentos')}>
+                                <BiBuildings size={24} />
+                                <span>Apartamentos</span>
+                            </IconsMenu>
                         </IconsContainer>
                     </MenuContainer>
                     <CloseMenu onClick={handleMenu}>

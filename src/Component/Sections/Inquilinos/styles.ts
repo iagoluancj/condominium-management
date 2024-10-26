@@ -226,7 +226,7 @@ export const Button = styled.button`
   font-size: 14px;
   text-align: center;
   border: 1px solid transparent;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 
   &:hover {
     background-color: transparent;

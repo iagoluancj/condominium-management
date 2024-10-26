@@ -51,6 +51,8 @@ export type TypeFuncionarios = {
     nome: string;
     cpf: string;
     email: string;
+    description?: string;
+    deleted_at?: Date;
 };
 
 export type TypeApartamento = {

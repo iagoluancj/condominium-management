@@ -102,7 +102,7 @@ const LoginPage: React.FC = () => {
         const funcionarios = await fetchFuncionarios();
 
         const user = funcionarios.find(
-            (funcionario) => funcionario.email === formData.email
+            (funcionario) => funcionario.email === formData.email && !funcionario.deleted_at
         );
 
         if (!user) {

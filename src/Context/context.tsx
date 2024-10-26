@@ -18,11 +18,14 @@ type SupaContextType = {
     updateInquilino: (inquilinoData: TypeInquilinos) => void;
     updateVisitante: (visitanteData: TypeVisit) => void;
     updateEncomenda: (encomendaData: TypeEncomendas) => void;
+    updateFuncionario: (funcionarioData: TypeFuncionarios) => void;
     createInquilino: (inquilinoData: Omit<TypeInquilinos, 'id'>) => void;
+    createFuncionario: (funcionarioData: Omit<TypeFuncionarios, 'id'>) => void;
     createVisit: (visitData: Omit<TypeVisit, 'id'>) => void;
     createEncomenda: (encomendaData: Omit<TypeEncomendas, 'id'>) => void;
     deletedInquilinoDEFINITIVY: (cpf: number) => void
     deletedInquilino: (cpf: number) => void
+    deletedFuncionario: (id: number, dateDeletedAt: Date) => void
     deletedEncomenda: (id: number, dateDeletedAt: string) => void
     deletedVisits: (cpf: number) => void
     handleChangePage: (change: string) => void
@@ -49,8 +52,11 @@ export const SupaContext = createContext({
     deletedInquilino: () => { },
     deletedEncomenda: () => { },
     deletedVisits: () => { },
+    updateFuncionario: () => { },
+    deletedFuncionario: () => { },
     createInquilino: () => { },
     createVisit: () => { },
+    createFuncionario: () => { },
     createEncomenda: () => { },
     handleChangePage: () => { },
     handleChangeTheme: () => { },
@@ -74,7 +80,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             .from('inquilinos')
             .select('id')
             .eq('email', email)
-            .single(); 
+            .single();
 
         if (existingEmail && existingEmail.id !== id) {
             toast.error("Este email já está em uso por outro inquilino.");
@@ -118,6 +124,62 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             toast.error("Ocorreu um erro ao tentar editar a encomenda.");
         } else {
             console.log("Encomenda editado com sucesso.");
+        }
+    };
+
+    const updateFuncionario = async (funcionarioData: TypeFuncionarios) => { // VERIFICAR SE O UPDATED VAI ATUALIZAR AUTOMATICO.
+        const { id, ...fieldsToUpdate } = funcionarioData;
+        const userSession = JSON.parse(localStorage.getItem("userSession") || "{}");
+        const userId = userSession?.id;
+
+        if (id && userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('funcionarios')
+                    .update({
+                        ...fieldsToUpdate,
+                        updated_by: userId 
+                    })
+                    .eq('id', id);
+
+                if (error) {
+                    console.error("Erro ao editar o funcionário:", error);
+                    toast.error("Ocorreu um erro ao tentar editar o funcionário.");
+                } else {
+                    toast.success("Funcionário editado com sucesso!");
+                }
+            } catch (error) {
+                console.error("Erro ao se conectar com o servidor", error);
+                toast.error("Erro ao se conectar com o servidor.");
+            }
+        }
+    };
+
+    const deletedFuncionario = async (id: number, dateDeletedAt: Date) => { // VERIFICAR SE O UPDATED VAI ATUALIZAR AUTOMATICO.
+        const userSession = JSON.parse(localStorage.getItem("userSession") || "{}");
+        const userId = userSession?.id;
+
+        if (id) {
+            try {
+                const { data, error } = await supabase
+                    .from('funcionarios')
+                    .update({
+                        deleted_at: dateDeletedAt,
+                        deleted_by: userId,
+                        updated_by: userId
+                    })
+                    .eq('id', id);
+
+                if (error) {
+                    console.error("Erro ao deletar o funcionário:", error);
+                    toast.error("Ocorreu um erro ao tentar deletar o funcionário.");
+                } else {
+                    toast.success("Funcionário deletado com sucesso!");
+                }
+            } catch (error) {
+                console.error("Erro ao se conectar com o servidor", error);
+                toast.error("Erro ao se conectar com o servidor.");
+            }
         }
     };
 
@@ -339,6 +401,43 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
         }
     };
 
+    const createFuncionario = async (
+        funcionarioData: Omit<TypeFuncionarios, 'id'>
+    ) => {
+        const userSession = JSON.parse(localStorage.getItem("userSession") || "{}");
+        const userId = userSession?.id;
+
+        const {
+            nome,
+            cpf,
+            email
+        } = funcionarioData;
+    
+        try {
+            const { data, error } = await supabase
+                .from('funcionarios')
+                .insert([
+                    {
+                        nome,
+                        cpf,
+                        email,
+                        created_by: userId,
+                        updated_by: userId
+                    }
+                ]);
+    
+            if (error) {
+                console.error(error);
+                toast.error("Erro ao registrar o funcionário.");
+            } else {
+                toast.success("Funcionário registrado com sucesso!");
+            }
+        } catch (error) {
+            console.error("Erro ao se conectar com o servidor", error);
+            toast.error("Erro ao se conectar com o servidor.");
+        }
+    };
+
     const handleChangePage = (change: string) => {
         setChangePage(change)
     }
@@ -514,7 +613,7 @@ const SupaProvider: React.FC<SupaProviderProps> = ({ children }) => {
             ChangePage: changePage,
             typeInquilinos: inquilinos,
             contextVisits: visits,
-            updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, createInquilino, updateVisitante, handleChangePage, handleChangeTheme, deletedVisits, createVisit, createEncomenda, deletedEncomenda, updateEncomenda
+            updateInquilino, deletedInquilino, deletedInquilinoDEFINITIVY, deletedFuncionario, updateFuncionario, createFuncionario, createInquilino, updateVisitante, handleChangePage, handleChangeTheme, deletedVisits, createVisit, createEncomenda, deletedEncomenda, updateEncomenda
         }}>
             <ToastProvider>
                 {children}
