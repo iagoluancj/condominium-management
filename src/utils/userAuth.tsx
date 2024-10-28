@@ -8,7 +8,7 @@ function userAuth(Component: any) {
         const { token } = router.query;
         const [loading, setLoading] = useState(true);
         const [isValid, setIsValid] = useState(false);
-        const [messageLog, setMessageLog] = useState('Validando token...')
+        const [messageLog, setMessageLog] = useState('Verificando seu acesso...')
 
         useEffect(() => {
             const timeoutMessage = setTimeout(() => {

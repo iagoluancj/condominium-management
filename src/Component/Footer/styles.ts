@@ -13,6 +13,14 @@ export const FooterWrapper = styled.div`
 
     font-size: 14px;
     font-weight: 400;
+
+    @media (max-width: 708px) {
+        padding: .7rem 2rem;
+    }
+
+    @media (max-width: 470px) {
+        padding: .7rem 4rem;
+    }
 `;
 
 export const FooterSection = styled.div`

@@ -72,7 +72,6 @@ export const Icon = styled.span`
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   border-radius: 50%;
   animation: ${slideDown} 2s ease forwards; 
-
 `;
 
 
@@ -215,13 +214,15 @@ export const Logo = styled.div`
 
 export const SeparatorWhite = styled.div`
   width: 100%;
-  margin-top: -7rem;
+  max-width: 920px;
+  border-radius: 15px;
+  margin-top: -13rem;
   height: 190px;
   background: var(--brancoPastelFont);
   background-color: #8E7FFE;
   opacity: .7;
-  color: #000;
-
+  padding: 1rem;
+  
   h2 {
     margin-top: 160px;
   }
@@ -232,7 +233,13 @@ export const ServicesWrapper = styled.div`
   margin: 2rem;
   border-radius: 20px;
   background-color: #f0f0f0;
+  max-width: 1000px;
   text-align: center;
+
+  /* @media (max-width: 380px) {
+      margin: 0;
+      padding: 10px;
+    } */
 `;
 
 export const ServicesTitle = styled.h2`
@@ -283,6 +290,7 @@ export const ServiceDescription = styled.p`
 
 // Seção de Estatísticas
 export const StatsWrapper = styled.div`
+  margin-top: 2rem;
   padding: 50px;
   background-color: #f0f0f000;
   text-align: center;
@@ -320,7 +328,7 @@ export const StatNumber = styled.div`
   justify-content: center;
 
   span {
-    color: #ff4081;
+    color: #fff;
   }
 `;
 
@@ -330,16 +338,18 @@ export const StatLabel = styled.div`
 `;
 
 export const ContactSection = styled.div`
+  width: 100%;
+  margin: 5rem 0rem;
+  padding: 1rem;
 `;
 
 export const ContactSeparator = styled.div`
-  padding: 5px 0px;
-  padding-right: 20px;
+  padding: 2rem;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   text-align: center;
-  margin: 24px;
-  border-radius: 70px 0px 70px 0px;
-  box-shadow: 0 10px 10px 8px rgba(0, 0, 0, .2);
+  border-radius: 15px;
+  /* border-radius: 70px 0px 70px 0px;
+  box-shadow: 0 10px 10px 8px rgba(0, 0, 0, .2); */
 `;
 
 export const ContactTitle = styled.h2`
@@ -369,6 +379,7 @@ export const ContactCard = styled.div`
 
   &:hover {
     transform: scale(1.02);
+    text-decoration: underline;
     transition: transform 0.2s ease-in-out;
   }
 
