@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const ValidandoContainerDiv = styled.div`
+    height: 100%;
+`
+
 export const ValidandoSection = styled.div`
     padding: 5rem 0rem;
     text-align: center;
@@ -118,3 +122,8 @@ export const ValidandoContainer = styled.div`
     align-items: center;
 `
 
+export const NavValidando = styled.div`
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+`

@@ -1,6 +1,6 @@
 import FooterCM from "../Footer";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import { SpanSeparate, ValidandoContainer, ValidandoSection } from "./styles";
+import { FinallyComponent, NavFinally, SpanSeparate, ValidandoContainer, ValidandoSection } from "./styles";
 import sucessMessage from '../../Assets/sucss.jpg'
 import errorM from '../../Assets/error.png'
 import Image from "next/image";
@@ -12,7 +12,8 @@ interface ResultadoValidacaoProps {
 
 export default function ResultadoValidacao({ message, isSuccess }: ResultadoValidacaoProps) {
     return (
-        <>
+        <FinallyComponent>
+            <NavFinally></NavFinally>
             <ValidandoSection>
                 <ValidandoContainer>
                     {isSuccess ? (
@@ -36,6 +37,6 @@ export default function ResultadoValidacao({ message, isSuccess }: ResultadoVali
                 </ValidandoContainer>
             </ValidandoSection>
             <FooterCM />
-        </>
+        </FinallyComponent>
     );
 }

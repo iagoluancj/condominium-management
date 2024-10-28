@@ -1,5 +1,6 @@
+import { NavFinally } from "../Finally/styles";
 import FooterCM from "../Footer";
-import { ValidandoContainer, ValidandoSection } from "./styles";
+import { NavValidando, ValidandoContainer, ValidandoContainerDiv, ValidandoSection } from "./styles";
 
 interface ValidandoTokenProps {
     message: string;
@@ -7,7 +8,8 @@ interface ValidandoTokenProps {
 
 export default function ValidandoToken({ message }: ValidandoTokenProps) {
     return (
-        <>
+        <ValidandoContainerDiv>
+            <NavValidando></NavValidando>
             <ValidandoSection>
                 <ValidandoContainer>
                     <h3>Validando Token</h3>
@@ -18,6 +20,6 @@ export default function ValidandoToken({ message }: ValidandoTokenProps) {
                 </ValidandoContainer>
             </ValidandoSection>
             <FooterCM/>
-        </>
+        </ValidandoContainerDiv>
     );
 }

@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
+export const FinallyComponent = styled.div`
+    margin: -7rem 0rem;
+`;
+
 export const ValidandoSection = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
     height: 100vh;
-    margin: 2rem 0rem;
 `;
 
 export const ValidandoContainer = styled.div`
@@ -47,4 +49,10 @@ export const SpanSeparate = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+`
+
+export const NavFinally = styled.div`
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
 `
