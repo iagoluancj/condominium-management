@@ -356,10 +356,10 @@ export const StatLabel = styled.div`
 export const ContactSection = styled.div`
   margin-top: 4rem;
   padding: 1rem;
+  width: 100%;
 `;
 
 export const ContactSeparator = styled.div`
-  padding: 2rem;
   padding: 4rem;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   text-align: center;
