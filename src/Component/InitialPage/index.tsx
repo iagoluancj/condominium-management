@@ -2,6 +2,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import logo from '../../Assets/iconLogo.png';
+import bg from '../../../public/bg.jpg';
 import FooterCM from "@/Component/Footer";
 import Image from "next/image";
 import { Card, CardDescription, CardsContainer, CardsDiv, CardTitle, ContactCard, ContactInfo, ContactSection, ContactSeparator, ContactText, ContactTitle, Description, HeaderHero, HeroSection, Icon, LoginButton, Logo, SeparatorWhite, ServiceCard, ServiceDescription, ServicesGrid, ServicesTitle, ServicesWrapper, ServiceTitle, StatCard, StatLabel, StatNumber, StatsGrid, StatsWrapper, Title, TitleFunc, Vector1, Vector2 } from "./styles";
@@ -79,6 +80,7 @@ export default function InitialPage() {
         {/* <Vector2 /> */}
         <SeparatorWhite />
         <StatsWrapper>
+          <img src={bg.src} alt="background" className="bg-image" />
           <ServicesTitle>Nossos números</ServicesTitle>
           <StatsGrid>
             <StatCard>

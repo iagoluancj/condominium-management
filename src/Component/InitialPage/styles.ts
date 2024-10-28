@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Button } from "../Sections/Inquilinos/styles";
+import bg from '../../Assets/bg.jpg';
 
 const slideDown = keyframes`
   from {
@@ -229,7 +230,7 @@ export const SeparatorWhite = styled.div`
 `;
 
 export const ServicesWrapper = styled.div`
-  padding: 50px;
+  padding: 25px;
   margin: 2rem;
   border-radius: 20px;
   background-color: #f0f0f0;
@@ -290,10 +291,25 @@ export const ServiceDescription = styled.p`
 
 // Seção de Estatísticas
 export const StatsWrapper = styled.div`
-  margin-top: 2rem;
-  padding: 50px;
-  background-color: #f0f0f000;
+  margin-top: 5rem;
+  padding: 70px;
+  position: relative;
   text-align: center;
+  color: #fff;
+  overflow: hidden;
+
+  .bg-image {
+    padding: 12px;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Coloca a imagem atrás do conteúdo */
+    opacity: 0.8; /* Ajuste a opacidade conforme necessário */
+  }
 `;
 
 export const StatsTitle = styled.h2`
@@ -338,13 +354,13 @@ export const StatLabel = styled.div`
 `;
 
 export const ContactSection = styled.div`
-  width: 100%;
-  margin: 5rem 0rem;
+  margin-top: 4rem;
   padding: 1rem;
 `;
 
 export const ContactSeparator = styled.div`
   padding: 2rem;
+  padding: 4rem;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   text-align: center;
   border-radius: 15px;
