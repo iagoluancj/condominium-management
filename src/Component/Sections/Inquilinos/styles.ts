@@ -212,9 +212,6 @@ export const LabelTemCarro = styled(Label) <selectCar>`
     }
 `
 
-
-// CSS Table
-
 export const Button = styled.button`
   background-color: #007bff;
   color: #fff;
